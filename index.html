@@ -1,19 +1,324 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Project Site</title>
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;}
-    main{max-width:900px;margin:0 auto;padding:32px;}
-    p{color:#555}
-  </style>
+  <title>Praxis | Project Site</title>
+  <meta name="description" content="Praxis project site: deliverables, evidence, and reflections." />
+  <meta name="theme-color" content="#0b0f19" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <main>
-    <h1>My Project Site</h1>
-    <p>Hosted on GitHub Pages.</p>
+  <!-- subtle background decoration -->
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="./" aria-label="Home">
+        <span class="brand-dot"></span>
+        <span>praxis</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#deliverables">Deliverables</a>
+        <a href="#projects">Projects</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle theme">
+          <!-- moon/sun icon -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 13.2A8.4 8.4 0 1 1 10.8 3a7 7 0 1 0 10.2 10.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <a class="pill-btn" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </div>
+
+    <div class="container hero">
+      <div class="hero-left">
+        <p class="kicker">
+          GitHub Pages（GitHub Pages） · Project site（Project site）
+        </p>
+
+        <h1 class="title">
+          Praxis Project
+          <span class="title-accent">Showcase</span>
+        </h1>
+
+        <p class="lead">
+          A clean, evidence-first hub for deliverables, design decisions, and reflections.
+        </p>
+
+        <div class="chips">
+          <span class="chip">Author: <strong>Shupei Zhang</strong></span>
+          <span class="chip">Handle: <code>sp-zh</code></span>
+          <span class="chip">Updated: <strong id="updated"></strong></span>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn primary" href="#projects">
+            View Projects
+            <span class="arrow">→</span>
+          </a>
+          <a class="btn ghost" href="#deliverables">Jump to Deliverables</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="badge">Now</span>
+            <span class="muted">Status</span>
+          </div>
+          <div class="metric-title">Building & documenting</div>
+          <div class="metric-sub">Process → Evidence → Outcome</div>
+
+          <div class="mini-grid">
+            <div class="mini">
+              <div class="mini-k">Frame</div>
+              <div class="mini-v">Scope</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Diverge</div>
+              <div class="mini-v">Options</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Converge</div>
+              <div class="mini-v">Tradeoffs</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Represent</div>
+              <div class="mini-v">Clarity</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="glass-title">Quick links</div>
+          <a class="q" href="#deliverables">Deliverables</a>
+          <a class="q" href="#projects">Projects</a>
+          <a class="q" href="#process">Process</a>
+          <a class="q" href="#about">About</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <!-- Deliverables -->
+    <section id="deliverables" class="section">
+      <div class="section-head">
+        <h2>Deliverables</h2>
+        <p class="muted">Upload files under <code>assets/</code> and link with relative paths.</p>
+      </div>
+
+      <div class="cards">
+        <a class="card" href="#" title="Replace with assets/portfolio.pdf">
+          <div class="card-icon">📄</div>
+          <div class="card-body">
+            <div class="card-title">Design Portfolio (PDF)</div>
+            <div class="card-sub">assets/portfolio.pdf</div>
+          </div>
+          <div class="card-cta">Open →</div>
+        </a>
+
+        <a class="card" href="#" title="Replace with your link">
+          <div class="card-icon">🎥</div>
+          <div class="card-body">
+            <div class="card-title">Position Statement</div>
+            <div class="card-sub">Video / essay / transcript</div>
+          </div>
+          <div class="card-cta">Open →</div>
+        </a>
+
+        <a class="card" href="#" title="Replace with your link">
+          <div class="card-icon">🧾</div>
+          <div class="card-body">
+            <div class="card-title">Project One-pagers</div>
+            <div class="card-sub">3 × one-page summaries</div>
+          </div>
+          <div class="card-cta">Open →</div>
+        </a>
+
+        <a class="card" href="#" title="Replace with your link">
+          <div class="card-icon">🔗</div>
+          <div class="card-body">
+            <div class="card-title">References</div>
+            <div class="card-sub">Sources & citations</div>
+          </div>
+          <div class="card-cta">Open →</div>
+        </a>
+      </div>
+
+      <div class="hint">
+        <strong>Tip:</strong> 把 <code>href="#"</code> 改成比如 <code>href="assets/portfolio.pdf"</code>（相对路径，项目站点不会丢 <code>/praxis/</code>）。
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section">
+      <div class="section-head row">
+        <div>
+          <h2>Projects</h2>
+          <p class="muted">Evidence-first summaries. Each card can link to a dedicated page under <code>projects/</code>.</p>
+        </div>
+        <span class="tag">Featured</span>
+      </div>
+
+      <div class="project-grid">
+        <article class="proj">
+          <div class="proj-top">
+            <h3>Project A — Community Partner</h3>
+            <span class="pill">impact</span>
+          </div>
+          <p class="muted">
+            One sentence: problem context + why it matters.
+          </p>
+          <ul class="list">
+            <li><strong>Role:</strong> research / prototyping / testing</li>
+            <li><strong>Constraints:</strong> time / budget / stakeholders</li>
+            <li><strong>Outcome:</strong> measurable result / decision</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="#">Read page →</a>
+            <a class="link" href="#">Evidence →</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <h3>Project B — Design Iteration</h3>
+            <span class="pill">iteration</span>
+          </div>
+          <p class="muted">
+            One sentence: what you built + what you learned.
+          </p>
+          <ul class="list">
+            <li><strong>Method:</strong> interviews / experiments / analysis</li>
+            <li><strong>Tradeoffs:</strong> what you chose and why</li>
+            <li><strong>Next:</strong> what you’d do with more time</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="#">Read page →</a>
+            <a class="link" href="#">Evidence →</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <h3>Project C — Representation</h3>
+            <span class="pill">story</span>
+          </div>
+          <p class="muted">
+            One sentence: how you communicated the design to the audience.
+          </p>
+          <ul class="list">
+            <li><strong>Artifacts:</strong> diagrams / poster / visuals</li>
+            <li><strong>Audience:</strong> who and what they need</li>
+            <li><strong>Impact:</strong> changed decisions / understanding</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="#">Read page →</a>
+            <a class="link" href="#">Evidence →</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="hint">
+        想做独立项目页：新建 <code>projects/project-a.html</code>，然后这里把 “Read page” 链接改成 <code>projects/project-a.html</code>。
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="section">
+      <div class="section-head">
+        <h2>Process</h2>
+        <p class="muted">A clean structure: Frame → Diverge → Converge → Represent.</p>
+      </div>
+
+      <div class="step-grid">
+        <div class="step">
+          <div class="step-n">01</div>
+          <div class="step-t">Frame</div>
+          <div class="step-d">Define stakeholders, constraints, success metrics.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">02</div>
+          <div class="step-t">Diverge</div>
+          <div class="step-d">Generate options, explore alternatives, gather evidence.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">03</div>
+          <div class="step-t">Converge</div>
+          <div class="step-d">Decide with tradeoffs, test, iterate, document rationale.</div>
+        </div>
+        <div class="step">
+          <div class="step-n">04</div>
+          <div class="step-t">Represent</div>
+          <div class="step-d">Communicate clearly with visuals, tables, and narrative.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="section-head">
+        <h2>About</h2>
+        <p class="muted">Keep it concrete. What you care about, how you work, where to find you.</p>
+      </div>
+
+      <div class="about">
+        <div class="about-card">
+          <div class="about-title">Working style</div>
+          <ul class="list">
+            <li>Evidence-driven decisions</li>
+            <li>Fast iteration + clean documentation</li>
+            <li>Strong emphasis on communication</li>
+          </ul>
+        </div>
+
+        <div class="about-card">
+          <div class="about-title">Links</div>
+          <div class="about-links">
+            <a class="link" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub →</a>
+            <a class="link" href="#" title="Replace with your contact link">Contact →</a>
+          </div>
+          <p class="muted small">Replace placeholders with your real links.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> <span class="muted">sp-zh</span></div>
+      <div class="muted">Built with HTML（HTML） + CSS（CSS） on GitHub Pages（GitHub Pages）</div>
+    </footer>
   </main>
+
+  <script>
+    // footer/year + updated date
+    document.getElementById("y").textContent = new Date().getFullYear();
+    document.getElementById("updated").textContent = new Date().toISOString().slice(0, 10);
+
+    // theme toggle (persist)
+    const root = document.documentElement;
+    const key = "praxis_theme";
+    const saved = localStorage.getItem(key);
+    if (saved) root.setAttribute("data-theme", saved);
+
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      const next = cur === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      localStorage.setItem(key, next);
+    });
+  </script>
 </body>
 </html>
