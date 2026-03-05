@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects | Praxis</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="../" aria-label="Home">
+        <span class="brand-dot"></span><span>praxis</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="./">Projects</a>
+        <a href="../#deliverables">Deliverables</a>
+        <a href="../#process">Process</a>
+        <a href="../#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="pill-btn" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub</a>
+      </div>
+    </div>
+
+    <div class="container hero" style="padding-bottom: 6px;">
+      <div class="hero-left">
+        <p class="kicker">Directory</p>
+        <h1 class="title">Project <span class="title-accent">Index</span></h1>
+        <p class="lead">Three projects: CIV102 bridge, Praxis I shaker bottle, Praxis II filming.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <section class="section">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <p class="muted">Click a card to open the project page.</p>
+      </div>
+
+      <div class="project-grid">
+        <article class="proj">
+          <div class="proj-top">
+            <h3>CIV102 Bridge（CIV102 桥梁）</h3>
+            <span class="pill">structural</span>
+          </div>
+          <p class="muted">Bridge design, analysis, testing, and iteration.</p>
+          <ul class="list">
+            <li><strong>Course:</strong> CIV102（CIV102）</li>
+            <li><strong>Focus:</strong> design constraints, failure modes, evidence</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="./civ102-bridge.html">Open →</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <h3>Praxis I Shaker Bottle（Praxis I 摇摇杯）</h3>
+            <span class="pill">product</span>
+          </div>
+          <p class="muted">Design problem framing + prototype / evaluation.</p>
+          <ul class="list">
+            <li><strong>Course:</strong> Praxis I（Praxis I）</li>
+            <li><strong>Focus:</strong> user needs, iterations, tradeoffs</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="./praxis1-shakerbottle.html">Open →</a>
+          </div>
+        </article>
+
+        <article class="proj">
+          <div class="proj-top">
+            <h3>Praxis II Filming（Praxis II 拍摄）</h3>
+            <span class="pill">media</span>
+          </div>
+          <p class="muted">Filming workflow, story structure, and representation.</p>
+          <ul class="list">
+            <li><strong>Course:</strong> Praxis II（Praxis II）</li>
+            <li><strong>Focus:</strong> communication, narrative, artifacts</li>
+          </ul>
+          <div class="proj-actions">
+            <a class="link" href="./praxis2-filming.html">Open →</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="hint">
+        <strong>Tip:</strong> 目录页链接必须用相对路径（例如 <code>./civ102-bridge.html</code>），这样在 <code>/praxis/</code> 项目站点下不会跳错。
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>© <span id="y"></span> <span class="muted">sp-zh</span></div>
+      <div class="muted">Projects directory</div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
