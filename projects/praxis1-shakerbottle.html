@@ -1,18 +1,429 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Praxis I Shaker Bottle | Praxis</title>
+  <meta name="description" content="Praxis I Shaker Bottle — annotated design process, evidence, and CTMF mapping." />
+  <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="../style.css" />
+
+  <!-- Image placeholders (so page looks good even before you add photos) -->
+  <style>
+    .img-card{
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      margin-top: 12px;
+      position: relative;
+    }
+    .img-card img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .img-ph{
+      padding: 18px;
+      color: var(--muted);
+      font-weight: 800;
+      background:
+        radial-gradient(800px 400px at 20% 0%, rgba(122,162,255,.18), transparent 60%),
+        radial-gradient(700px 380px at 90% 20%, rgba(140,255,214,.14), transparent 60%),
+        var(--panel2);
+    }
+    .img-ph small{
+      display:block;
+      margin-top: 6px;
+      font-weight: 600;
+      opacity: .9;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="../" aria-label="Home">
+        <span class="brand-dot"></span><span>praxis</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="./">Projects</a>
+        <a href="../#deliverables">Deliverables</a>
+        <a href="../#process">Process</a>
+        <a href="../#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="pill-btn" href="./">Back to Index</a>
+      </div>
+    </div>
+
+    <div class="container hero" style="padding-bottom: 10px;">
+      <div class="hero-left">
+        <p class="kicker">Praxis I（Praxis I） · Product Design（产品设计）</p>
+        <h1 class="title">Shaker Bottle <span class="title-accent">Project</span></h1>
+        <p class="lead">
+          An evidence-first redesign of a daily-use shaker bottle: I framed user pain points, generated multiple concepts,
+          prototyped key mechanisms, and converged on a final direction with a clear tradeoff rationale.
+        </p>
+
+        <div class="chips">
+          <span class="chip">Role: <strong>【TODO: your role】</strong></span>
+          <span class="chip">Team: <strong>【TODO: solo / team size】</strong></span>
+          <span class="chip">Outcome: <strong>【TODO: final concept一句话】</strong></span>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn primary" href="#toc">Read the annotation <span class="arrow">→</span></a>
+          <a class="btn ghost" href="#deliverables">Jump to Deliverables</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="badge">Now</span>
+            <span class="muted">Focus</span>
+          </div>
+          <div class="metric-title">User → Evidence → Decision</div>
+          <div class="metric-sub">Needs → prototypes → tradeoffs</div>
+
+          <div class="mini-grid">
+            <div class="mini">
+              <div class="mini-k">Frame</div>
+              <div class="mini-v">Needs</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Diverge</div>
+              <div class="mini-v">Concepts</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Converge</div>
+              <div class="mini-v">Select</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Represent</div>
+              <div class="mini-v">Explain</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="glass-title">Quick links</div>
+          <a class="q" href="#overview">Overview</a>
+          <a class="q" href="#needfinding">Needfinding</a>
+          <a class="q" href="#concepts">Concepts</a>
+          <a class="q" href="#prototype">Prototype & tests</a>
+          <a class="q" href="#ctmfs">CTMFs</a>
+          <a class="q" href="#evidence">Evidence</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <main class="container main">
-    <section class="section">
-      <h1>Praxis I Shaker Bottle</h1>
-      <p class="muted">Project page (placeholder).</p>
-      <p><a class="link" href="./">← Back to Projects</a></p>
+    <!-- TOC -->
+    <section id="toc" class="section">
+      <div class="section-head">
+        <h2>Table of contents</h2>
+        <p class="muted">Written as a portfolio annotation: context → decisions → evidence → reflection.</p>
+      </div>
+
+      <ul class="list">
+        <li><a class="link" href="#overview">1) Overview（概览）→</a></li>
+        <li><a class="link" href="#deliverables">2) Deliverables（交付物）→</a></li>
+        <li><a class="link" href="#needfinding">3) Needfinding & framing（需求发现与定义）→</a></li>
+        <li><a class="link" href="#requirements">4) Requirements & constraints（需求与约束）→</a></li>
+        <li><a class="link" href="#concepts">5) Divergence: concepts（发散：概念方案）→</a></li>
+        <li><a class="link" href="#prototype">6) Prototypes & tests（原型与测试）→</a></li>
+        <li><a class="link" href="#final">7) Final direction（收敛：最终方向）→</a></li>
+        <li><a class="link" href="#ctmfs">8) CTMF mapping + assessment（工具映射与评价）→</a></li>
+        <li><a class="link" href="#evidence">9) Evidence gallery（证据区）→</a></li>
+        <li><a class="link" href="#reflection">10) Reflection（反思）→</a></li>
+      </ul>
     </section>
+
+    <!-- Overview -->
+    <section id="overview" class="section">
+      <div class="section-head">
+        <h2>1) Overview</h2>
+        <p class="muted">What problem, for whom, and what “success” means.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Context:</strong> Shaker bottles are used for protein/milkshake mixing, but daily use reveals recurring pain points (mixing, cleaning, leakage, portability, etc.).</li>
+        <li><strong>Stakeholders:</strong> primary users (gym / students / commuters), secondary stakeholders (people nearby—noise/odor concerns; manufacturers—cost/assembly).</li>
+        <li><strong>Problem statement（问题陈述）:</strong> 【TODO: 1–2 sentences, your version】</li>
+        <li><strong>Success metrics（成功指标）:</strong> e.g., leakage resistance, mixing performance (clump reduction), cleaning time, odor retention, ease-of-use, and manufacturability/cost.</li>
+      </ul>
+
+      <div class="hint">
+        Tip: 尽量把 success metrics 写成“可测试”的句子，比如：“10 次摇晃后无明显结块”、“清洗时间 ≤ 30 秒”、“倒置 30 秒无渗漏”等（把阈值改成你实际的）。
+      </div>
+    </section>
+
+    <!-- Deliverables -->
+    <section id="deliverables" class="section">
+      <div class="section-head">
+        <h2>2) Deliverables</h2>
+        <p class="muted">Upload files under <code>assets/docs/</code> and link with relative paths.</p>
+      </div>
+
+      <ul class="list">
+        <li>
+          <a class="link" href="../assets/docs/praxis1-shaker-onepager.pdf" target="_blank" rel="noreferrer">
+            One-pager (PDF) → <span class="muted">(assets/docs/praxis1-shaker-onepager.pdf)</span>
+          </a>
+        </li>
+        <li>
+          <a class="link" href="../assets/docs/praxis1-shaker-research-notes.pdf" target="_blank" rel="noreferrer">
+            Research / interview notes (PDF) → <span class="muted">(optional)</span>
+          </a>
+        </li>
+        <li>
+          <a class="link" href="../assets/docs/praxis1-shaker-test-matrix.pdf" target="_blank" rel="noreferrer">
+            Test matrix & results (PDF) → <span class="muted">(optional)</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="hint">
+        如果你现在还没这些 PDF，先保留链接占位；等你上传后，把文件名改成一致即可。
+      </div>
+    </section>
+
+    <!-- Needfinding -->
+    <section id="needfinding" class="section">
+      <div class="section-head">
+        <h2>3) Needfinding & framing</h2>
+        <p class="muted">Evidence first: what users actually experience.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Methods:</strong> 【TODO: e.g., observation / interviews / quick surveys / self-use diary】</li>
+        <li><strong>Key pain points (examples):</strong>
+          leakage around lid, powder clumping, difficult cleaning in corners, lingering odor, inconvenient drinking spout, noisy mixing element, inaccurate measurement markings.
+        </li>
+        <li><strong>Insights（洞察）:</strong> 【TODO: 2–4 bullet insights, each backed by evidence】</li>
+      </ul>
+
+      <div class="hint">
+        写法建议：每条 insight 用 “Observation → Why it matters → Design implication” 三段式。
+      </div>
+    </section>
+
+    <!-- Requirements -->
+    <section id="requirements" class="section">
+      <div class="section-head">
+        <h2>4) Requirements & constraints</h2>
+        <p class="muted">Turn messy user feedback into checkable requirements.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Functional requirements:</strong> must mix effectively; must seal reliably; must be easy to clean; must be safe for food contact.</li>
+        <li><strong>Non-functional requirements:</strong> low-cost/low-part-count; durable; comfortable ergonomics; minimal odor retention; visually understandable.</li>
+        <li><strong>Constraints:</strong> 【TODO: materials available, time, tools, budget, manufacturing assumptions】</li>
+        <li><strong>Test plan:</strong> 【TODO: how you test leakage/mixing/cleaning, thresholds】</li>
+      </ul>
+
+      <div class="hint">
+        这里是你后面 Converge（Converge）最有力的依据：最终方案“满足了哪些 requirement、牺牲了哪些、为什么合理”。
+      </div>
+    </section>
+
+    <!-- Concepts (Diverge) -->
+    <section id="concepts" class="section">
+      <div class="section-head">
+        <h2>5) Divergence: concepts</h2>
+        <p class="muted">Generate options before committing to one direction.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Concept set:</strong> 【TODO: list 3–6 concepts, one line each】</li>
+        <li><strong>Idea themes:</strong> e.g., alternative mixing mechanisms, lid locking strategies, modular cleaning-friendly geometry, odor-resistant materials, measurement redesign.</li>
+        <li><strong>Early filters:</strong> feasibility, user value, build/test time, part complexity, safety.</li>
+      </ul>
+
+      <div class="hint">
+        如果你用过发散工具（比如 SCAMPER、Morphological chart、Crazy-8s、Random input），把它的产出（草图/表格）放进 Evidence，并在 CTMFs 里引用。
+      </div>
+    </section>
+
+    <!-- Prototype & tests -->
+    <section id="prototype" class="section">
+      <div class="section-head">
+        <h2>6) Prototypes & tests</h2>
+        <p class="muted">Prototype the risky assumptions; test what matters.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Prototype 1（low-fi）:</strong> 【TODO: what you mocked up and why】</li>
+        <li><strong>Prototype 2（mechanism）:</strong> 【TODO: key mechanism prototype—lid lock / gasket / mixer】</li>
+        <li><strong>Test results:</strong> 【TODO: 2–4 bullet results with numbers if possible】</li>
+        <li><strong>Learning:</strong> 【TODO: what changed in the next iteration】</li>
+      </ul>
+
+      <div class="hint">
+        最加分的写法：每次测试都回答 “What failed? Why? What changed next?”，并贴证据（照片/表格/短视频链接）。
+      </div>
+    </section>
+
+    <!-- Final direction (Converge) -->
+    <section id="final" class="section">
+      <div class="section-head">
+        <h2>7) Final direction</h2>
+        <p class="muted">Converge with explicit tradeoffs.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Final concept summary:</strong> 【TODO: 1–2 sentences】</li>
+        <li><strong>What it improves:</strong> 【TODO: list improvements vs baseline】</li>
+        <li><strong>Tradeoffs:</strong> 【TODO: what you sacrificed and why】</li>
+        <li><strong>Next steps:</strong> 【TODO: what you’d do with more time】</li>
+      </ul>
+
+      <div class="hint">
+        你可以加一个简单的 decision matrix（决策矩阵）：criteria（密封/清洁/混合/成本/复杂度/安全）+ score，放在 Evidence 里。
+      </div>
+    </section>
+
+    <!-- CTMF mapping -->
+    <section id="ctmfs" class="section">
+      <div class="section-head">
+        <h2>8) CTMF mapping + assessment</h2>
+        <p class="muted">Show evidence-of-use, and evaluate what worked for you.</p>
+      </div>
+
+      <ul class="list">
+        <li>
+          <strong>Frame — Requirements table（需求表） + stakeholder map（利益相关者）:</strong>
+          Turned user pain points into testable requirements and success metrics.
+          <br/><span class="muted">Evidence:</span> link your requirements table / notes (PDF) in Deliverables or Evidence.
+          <br/><span class="muted">Assessment:</span> prevented scope drift; made “what to test” obvious.
+        </li>
+        <li>
+          <strong>Diverge — Morphological chart（形态学表） / SCAMPER（SCAMPER） / Crazy-8s（Crazy-8s）:</strong>
+          Generated multiple mechanism + lid concepts before selecting a direction.
+          <br/><span class="muted">Evidence:</span> sketches/photos of brainstorming outputs.
+          <br/><span class="muted">Assessment:</span> useful to break fixation on a single “obvious” design.
+        </li>
+        <li>
+          <strong>Converge — Decision matrix（决策矩阵） / Pugh matrix（Pugh）:</strong>
+          Chose final direction with explicit criteria and tradeoffs.
+          <br/><span class="muted">Evidence:</span> matrix screenshot/table + final selection reasoning.
+          <br/><span class="muted">Assessment:</span> made the decision defensible and communicable.
+        </li>
+        <li>
+          <strong>Represent — Annotated photos + structured narrative（注释图 + 结构化叙事）:</strong>
+          Communicated the design story: claim → evidence → decision.
+          <br/><span class="muted">Evidence:</span> this page + one-pager.
+          <br/><span class="muted">Assessment:</span> improved clarity for assessors and teammates.
+        </li>
+      </ul>
+    </section>
+
+    <!-- Evidence gallery -->
+    <section id="evidence" class="section">
+      <div class="section-head">
+        <h2>9) Evidence gallery</h2>
+        <p class="muted">
+          Put your images under <code>assets/img/shaker/</code>. Filenames below are placeholders—edit them to match your uploads.
+        </p>
+      </div>
+
+      <!-- Cover / hero image -->
+      <div class="img-card">
+        <img src="../assets/img/shaker/cover.jpg" alt="Shaker bottle cover"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Shaker cover image placeholder
+          <small>Upload: assets/img/shaker/cover.jpg</small>
+        </div>
+        <div class="img-ph">
+          Shaker cover image placeholder
+          <small>Upload: assets/img/shaker/cover.jpg</small>
+        </div>
+      </div>
+      <p class="muted small">Figure 1 — Overall concept / final prototype photo. (Add: what this proves.)</p>
+
+      <!-- Prototype detail -->
+      <div class="img-card">
+        <img src="../assets/img/shaker/prototype-detail.jpg" alt="Prototype detail"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Prototype detail placeholder
+          <small>Upload: assets/img/shaker/prototype-detail.jpg</small>
+        </div>
+        <div class="img-ph">
+          Prototype detail placeholder
+          <small>Upload: assets/img/shaker/prototype-detail.jpg</small>
+        </div>
+      </div>
+      <p class="muted small">Figure 2 — Key mechanism / detail. (Add: what changed after testing.)</p>
+
+      <!-- Test evidence -->
+      <div class="img-card">
+        <img src="../assets/img/shaker/test-setup.jpg" alt="Test setup"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Test setup placeholder
+          <small>Upload: assets/img/shaker/test-setup.jpg</small>
+        </div>
+        <div class="img-ph">
+          Test setup placeholder
+          <small>Upload: assets/img/shaker/test-setup.jpg</small>
+        </div>
+      </div>
+      <p class="muted small">Figure 3 — Test setup / results evidence. (Add: metric + outcome.)</p>
+
+      <div class="hint">
+        Caption trick: 每张图用 “Claim / Evidence / So what” 三句写完，读者会觉得你非常专业。
+      </div>
+
+      <ul class="list" style="margin-top:14px;">
+        <li><a class="link" href="../assets/docs/praxis1-shaker-onepager.pdf" target="_blank" rel="noreferrer">One-pager (PDF) →</a></li>
+        <li><a class="link" href="../assets/docs/praxis1-shaker-test-matrix.pdf" target="_blank" rel="noreferrer">Test matrix (PDF) →</a></li>
+      </ul>
+    </section>
+
+    <!-- Reflection -->
+    <section id="reflection" class="section">
+      <div class="section-head">
+        <h2>10) Reflection</h2>
+        <p class="muted">What I learned + how my design practice changed.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>What worked:</strong> 【TODO】</li>
+        <li><strong>What surprised me:</strong> 【TODO】</li>
+        <li><strong>What I’d do next:</strong> 【TODO】</li>
+      </ul>
+
+      <p style="margin-top:14px;">
+        <a class="link" href="./">← Back to Projects</a>
+      </p>
+    </section>
+
+    <footer class="footer">
+      <div><a class="link" href="../">← Home</a></div>
+      <div class="muted">Praxis I（Praxis I） Shaker Bottle page</div>
+    </footer>
   </main>
+
+  <script>
+    // keep theme consistent with home
+    const root = document.documentElement;
+    const key = "praxis_theme";
+    const saved = localStorage.getItem(key);
+    if (saved) root.setAttribute("data-theme", saved);
+  </script>
 </body>
 </html>
