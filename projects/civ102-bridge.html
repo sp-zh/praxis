@@ -300,6 +300,35 @@
       </div>
     </section>
 
+    <section id="model3d" class="section">
+  <div class="section-head">
+    <h2>Interactive 3D model</h2>
+    <p class="muted">
+      Drag to rotate · Scroll/trackpad to zoom · Right-drag (or two-finger) to pan.
+    </p>
+  </div>
+
+  <div id="bridge-3d" class="bridge-viewer"></div>
+
+  <div class="hint">
+    If you later export a real model, upload it as <code>assets/models/bridge.glb</code> and it will load automatically.
+  </div>
+</section>
+
+<style>
+  /* Minimal viewer styling (keeps it responsive) */
+  .bridge-viewer{
+    width: 100%;
+    height: 520px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: var(--panel2);
+    overflow: hidden;
+  }
+  @media (max-width: 720px){
+    .bridge-viewer{ height: 420px; }
+  }
+</style>
     <!-- Evidence -->
     <section id="evidence" class="section">
       <div class="section-head">
