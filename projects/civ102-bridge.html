@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CIV102 Bridge | Praxis</title>
-  <meta name="description" content="CIV102 Bridge project: annotated design process, evidence, CTMF mapping, and an interactive 3D viewer." />
+  <meta name="description" content="CIV102 Bridge project (Team 304): context, retroactive analysis, CTMF assessments, evidence, work photos, and an interactive 3D viewer." />
   <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="../style.css" />
 
@@ -20,6 +20,126 @@
     }
     @media (max-width: 720px){
       .bridge-viewer{ height: 420px; }
+    }
+
+    /* Safe image placeholder (prevents broken-image icons) */
+    .img-card{
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      margin-top: 12px;
+      position: relative;
+    }
+    .img-card img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+    .img-ph{
+      padding: 18px;
+      color: var(--muted);
+      font-weight: 800;
+      background:
+        radial-gradient(800px 400px at 20% 0%, rgba(122,162,255,.18), transparent 60%),
+        radial-gradient(700px 380px at 90% 20%, rgba(140,255,214,.14), transparent 60%),
+        var(--panel2);
+    }
+    .img-ph small{
+      display:block;
+      margin-top: 6px;
+      font-weight: 600;
+      opacity: .9;
+      color: var(--muted);
+    }
+
+    /* Work photos grid */
+    .photo-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .photo-card{
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--panel2);
+      cursor: zoom-in;
+      transition: transform .15s ease, border-color .15s ease;
+    }
+    .photo-card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(122,162,255,.5);
+    }
+    .photo-card img{
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-card figcaption{
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    /* Lightbox */
+    .lightbox{
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 9999;
+    }
+    .lightbox.show{ display: block; }
+    .lightbox-backdrop{
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+    }
+    .lightbox-dialog{
+      position: relative;
+      max-width: min(980px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      margin: 16px auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(15,18,28,.92);
+      overflow: hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,.55);
+    }
+    .lightbox-toolbar{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+    .lightbox-close{
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    .lightbox-close:hover{ border-color: rgba(122,162,255,.5); transform: translateY(-1px); }
+    .lightbox-body{
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .lightbox-body img{
+      width: 100%;
+      height: auto;
+      max-height: calc(100vh - 160px);
+      object-fit: contain;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
     }
   </style>
 </head>
@@ -53,61 +173,63 @@
       <div class="hero-left">
         <p class="kicker">CIV102（CIV102） · Structures & Materials</p>
         <h1 class="title">Bridge <span class="title-accent">Project</span></h1>
+
         <p class="lead">
-          Team 304 designed and built a matboard box girder bridge, iterating from spreadsheet/MATLAB analysis to
-          physical prototyping. The final concept is a truss-like box girder: a rectangular box reinforced with
-          triangular internal diaphragms and targeted deck stiffening aligned with bending demand.
+          Team 304 designed and built a mat-board（mat-board） bridge using contact cement（contact cement） under strict geometric and material constraints.
+          This page presents a portfolio-style “one-page summary”: context → retroactive analysis (Praxis framing) → CTMF assessments → evidence.
         </p>
 
         <div class="chips">
           <span class="chip">Team: <strong>Team 304</strong></span>
-          <span class="chip">Members: <strong>Mina Wu · Shupei Zhang · Jingshu Zhu</strong></span>
-          <span class="chip">TA: <strong>Junyan (Steven) Xiao</strong></span>
+          <span class="chip">Members: <strong>Shupei Zhang · Jingshu Zhu · Youyang (Mina) Wu</strong></span>
+          <span class="chip">Test: <strong>700 N</strong> (mid-joint split due to uncured adhesive)</span>
         </div>
 
         <div class="hero-cta">
           <a class="btn primary" href="#toc">Read the annotation <span class="arrow">→</span></a>
-          <a class="btn ghost" href="#model3d">Jump to 3D model</a>
+          <a class="btn ghost" href="#model3d">3D model</a>
         </div>
       </div>
 
       <div class="hero-right" aria-hidden="true">
         <div class="metric-card">
           <div class="metric-top">
-            <span class="badge">Final concept</span>
-            <span class="muted">box + triangles</span>
+            <span class="badge">Outcome</span>
+            <span class="muted">test + reflection</span>
           </div>
-          <div class="metric-title">Truss box girder</div>
-          <div class="metric-sub">Diaphragms + deck reinforcement</div>
+          <div class="metric-title">Evidence-driven learning</div>
+          <div class="metric-sub">Model → Build → Test → Update beliefs</div>
 
           <div class="mini-grid">
             <div class="mini">
-              <div class="mini-k">Span (assumed)</div>
-              <div class="mini-v">1200 mm</div>
+              <div class="mini-k">Predicted</div>
+              <div class="mini-v">1200 N</div>
             </div>
             <div class="mini">
-              <div class="mini-k">Bridge length</div>
-              <div class="mini-v">1250 mm</div>
+              <div class="mini-k">Tested</div>
+              <div class="mini-v">700 N</div>
             </div>
             <div class="mini">
-              <div class="mini-k">Cross-section</div>
-              <div class="mini-v">80 × 60 mm</div>
+              <div class="mini-k">Failure</div>
+              <div class="mini-v">mid joint</div>
             </div>
             <div class="mini">
-              <div class="mini-k">Deck width</div>
-              <div class="mini-v">100 mm</div>
+              <div class="mini-k">Cause</div>
+              <div class="mini-v">uncured glue</div>
             </div>
           </div>
         </div>
 
         <div class="glass-card">
           <div class="glass-title">Quick links</div>
-          <a class="q" href="#requirements">Requirements</a>
-          <a class="q" href="#final">Final design</a>
-          <a class="q" href="#analysis">Analysis workflow</a>
-          <a class="q" href="#iterations">Iterations</a>
-          <a class="q" href="#model3d">3D model</a>
+          <a class="q" href="#context">Context</a>
+          <a class="q" href="#credits">Credits</a>
+          <a class="q" href="#retro">Retroactive analysis</a>
+          <a class="q" href="#decision">Decision evidence</a>
+          <a class="q" href="#ctmfs">CTMFs</a>
           <a class="q" href="#evidence">Evidence</a>
+          <a class="q" href="#workphotos">Work photos</a>
+          <a class="q" href="#references">References</a>
         </div>
       </div>
     </div>
@@ -118,88 +240,206 @@
     <section id="toc" class="section">
       <div class="section-head">
         <h2>Table of contents</h2>
-        <p class="muted">This page is written as a portfolio annotation: context → decisions → evidence → reflection.</p>
+        <p class="muted">This page is intentionally concise and evidence-first.</p>
       </div>
-
       <ul class="list">
-        <li><a class="link" href="#requirements">1) Requirements & scoring context →</a></li>
-        <li><a class="link" href="#final">2) Final design snapshot →</a></li>
-        <li><a class="link" href="#analysis">3) Analysis workflow →</a></li>
-        <li><a class="link" href="#iterations">4) Major iterations →</a></li>
-        <li><a class="link" href="#model3d">5) Interactive 3D model →</a></li>
-        <li><a class="link" href="#ctmfs">6) CTMF mapping + assessment →</a></li>
+        <li><a class="link" href="#context">1) Context & Overview →</a></li>
+        <li><a class="link" href="#credits">2) Teammate credits →</a></li>
+        <li><a class="link" href="#retro">3) Retroactive analysis (Praxis lens) →</a></li>
+        <li><a class="link" href="#decision">4) Decision evidence snapshot →</a></li>
+        <li><a class="link" href="#ctmfs">5) CTMF assessments →</a></li>
+        <li><a class="link" href="#model3d">6) Interactive 3D model →</a></li>
         <li><a class="link" href="#evidence">7) Evidence gallery →</a></li>
-        <li><a class="link" href="#reflection">8) Reflection →</a></li>
+        <li><a class="link" href="#workphotos">8) Work photos →</a></li>
+        <li><a class="link" href="#reflection">9) Position reflection →</a></li>
+        <li><a class="link" href="#references">10) References →</a></li>
       </ul>
     </section>
 
-    <!-- Requirements -->
-    <section id="requirements" class="section">
+    <!-- CONTEXT -->
+    <section id="context" class="section">
       <div class="section-head">
-        <h2>1) Requirements & scoring context</h2>
-        <p class="muted">Frame the problem properly before designing anything.</p>
+        <h2>1) Context & overview</h2>
+        <p class="muted">Explain the project clearly to someone who has never taken CIV102.</p>
+      </div>
+
+      <p>
+        This project is a first-year structural design challenge in CIV102（CIV102）.
+        Our team designed and built a small-scale bridge using only mat-board（mat-board） and contact cement（contact cement）,
+        then tested it under increasing load. The bridge had to span 1200 mm and satisfy geometric constraints (deck width/clearance,
+        support flats), while maximizing performance and producing a defensible prediction of failure load and governing failure mode.
+      </p>
+
+      <ul class="list">
+        <li><strong>Objectives:</strong> span 1200 mm; minimum target load 400 N; maximize strength-to-weight; justify decisions using mechanics and evidence.</li>
+        <li><strong>Constraints:</strong> restricted materials (mat-board + contact cement), strict geometry interface, and build quality/curing time as real performance variables.</li>
+        <li><strong>Stakeholders:</strong> CIV102 teaching team (constraints + grading); Team 304 (performance + credibility); future readers (clarity + evidence trail).</li>
+      </ul>
+    </section>
+
+    <!-- DELIVERABLES -->
+    <section id="deliverables" class="section">
+      <div class="section-head">
+        <h2>Deliverables</h2>
+        <p class="muted">Upload PDFs under <code>assets/docs/</code> and keep filenames consistent.</p>
       </div>
 
       <ul class="list">
-        <li><strong>Primary objectives:</strong> design/build across a 1200 mm span (assumed), and predict failure using beam theory + thin plate buckling theory.</li>
-        <li><strong>Hard constraints:</strong> length 1250–1270 mm; deck ≥ 100 mm wide and unobstructed; deck height &lt; 200 mm above supports and multiple of 20 mm; 60 mm flat support regions at both ends.</li>
-        <li><strong>Performance scoring factors:</strong> test failure load, strength-to-weight ratio, accuracy of predicted failure load, and construction quality.</li>
+        <li>
+          <a class="link" href="../assets/docs/CIV102-Project-Team-304-Design-Report.pdf" target="_blank" rel="noreferrer">
+            Team 304 Design Report (PDF) →
+          </a>
+        </li>
+        <li>
+          <a class="link" href="../assets/docs/CIV102-2025F-Praxising-the-Bridge-Project.pdf" target="_blank" rel="noreferrer">
+            CIV102–Praxis crossover (PDF) → <span class="muted">(optional)</span>
+          </a>
+        </li>
+        <li class="muted">
+          Handout will be referenced at the bottom (References).
+        </li>
+      </ul>
+    </section>
+
+    <!-- CREDITS -->
+    <section id="credits" class="section">
+      <div class="section-head">
+        <h2>2) Teammate credits</h2>
+        <p class="muted">
+          Team value: shared ownership. We intentionally worked so that everyone participated in every phase (analysis → design → build → test),
+          with one person leading each phase to keep coordination efficient.
+        </p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Shupei Zhang (me):</strong> led bridge design direction and prototype testing; coordinated iteration logic; participated in fabrication and documentation.</li>
+        <li><strong>Jingshu Zhu:</strong> led CAD and MATLAB numerical calculations; co-wrote the report; participated in build/test.</li>
+        <li><strong>Youyang (Mina) Wu:</strong> co-led report writing and documentation synthesis; participated in design discussion and fabrication/test work.</li>
       </ul>
 
       <div class="hint">
-        Framing choice: treat “governing failure mode” as the driver. We converged by eliminating designs dominated by buckling / shear transfer / joints rather than optimizing only bending yield.
+        Ethical note: “lead” indicates who hosted the work in that phase, not exclusive ownership. This matches our intent to learn the entire workflow as a team.
       </div>
     </section>
 
-    <!-- Final design -->
-    <section id="final" class="section">
+    <!-- RETROACTIVE ANALYSIS -->
+    <section id="retro" class="section">
       <div class="section-head">
-        <h2>2) Final design snapshot</h2>
-        <p class="muted">What we built, with rationale attached to each feature.</p>
+        <h2>3) Process interpretation & retroactive analysis</h2>
+        <p class="muted">Re-frame CIV102 actions using Praxis language (Frame · Diverge · Converge · Represent).</p>
+      </div>
+
+      <h3 style="margin-top:10px;">Framing</h3>
+      <p class="muted">
+        We framed the bridge as a competition between failure modes rather than a single “strength” number. Early on, we treated the minimum factor of safety（FOS）across modes
+        (compression-side yielding, local buckling, shear transfer/joint risk) as the decision driver. This framing prevented us from optimizing bending capacity in calculation while
+        ignoring what could fail first in the real build: the joint.
+      </p>
+
+      <h3 style="margin-top:10px;">Exploring (Diverge)</h3>
+      <p class="muted">
+        Our exploration combined parametric thinking (dimensions / reinforcement placement / internal support strategy) and targeted prototyping.
+        We used the prototypes to test high-risk assumptions that models do not capture reliably: alignment tolerance, glue behavior, and whether slender plates buckle early under imperfections.
+      </p>
+
+      <h3 style="margin-top:10px;">Converging</h3>
+      <p class="muted">
+        We converged on a box-girder-based concept reinforced with internal zigzag diaphragms, plus deck reinforcement aligned with bending demand.
+        The goal was not only a higher predicted number, but reduced sensitivity to imperfections and higher reliability under realistic constraints.
+      </p>
+
+      <h3 style="margin-top:10px;">Build & test results</h3>
+      <ul class="list">
+        <li><strong>Predicted:</strong> 1200 N (critical region: mid-span / mid-joint)</li>
+        <li><strong>Tested peak load:</strong> 700 N</li>
+        <li><strong>Observed failure:</strong> the middle glue joint opened because the adhesive had not fully cured, causing the bridge to split at the mid-span connection.</li>
+      </ul>
+
+      <div class="hint">
+        This result is not “math vs reality.” It is a reminder that process control (curing, joint discipline, build tolerance) is part of engineering design capacity.
+      </div>
+    </section>
+
+    <!-- DECISION EVIDENCE -->
+    <section id="decision" class="section">
+      <div class="section-head">
+        <h2>4) Decision evidence snapshot</h2>
+        <p class="muted">One compact figure that makes convergence traceable to an external reader.</p>
+      </div>
+
+      <p>
+        This figure is the decision trail in its most compact form: a summary of key design features and the mechanical reasons behind them.
+        It functions as a mini decision matrix—showing how we justified triangular infill/diaphragms, deck reinforcement, and glue-tab strategy in terms of buckling robustness,
+        strength-to-weight, and build feasibility.
+      </p>
+
+      <div class="img-card">
+        <img src="../assets/img/bridge/decision-evidence.png" alt="Decision evidence figure"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Decision evidence image placeholder
+          <small>Upload: assets/img/bridge/decision-evidence.png (crop so text is readable)</small>
+        </div>
+        <div class="img-ph">
+          Decision evidence image placeholder
+          <small>Upload: assets/img/bridge/decision-evidence.png (crop so text is readable)</small>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:8px;">
+        <strong>Figure — Decision evidence.</strong> Key design decisions + rationale (from our Team 304 report). This supports the Converge story with traceable evidence.
+      </p>
+
+      <div class="hint">
+        PNG is best for tables. Crop tightly so it remains readable on mobile.
+      </div>
+    </section>
+
+    <!-- CTMF ASSESSMENTS -->
+    <section id="ctmfs" class="section">
+      <div class="section-head">
+        <h2>5) CTMF assessments</h2>
+        <p class="muted">Not just naming tools—explain how they were used, evaluate utility/fit, and state when to use/avoid.</p>
       </div>
 
       <ul class="list">
-        <li><strong>Overall concept:</strong> box girder with a single offset splice placed ~1/3 along the length to reduce risk near maximum-moment region.</li>
-        <li><strong>Cross-section:</strong> 80 mm wide × 60 mm tall structural box; 100 mm wide deck; total bridge length 1250 mm.</li>
-        <li><strong>Internal structure:</strong> zigzag triangular infill forming 23 diaphragms at ~60°.</li>
-        <li><strong>Deck reinforcement:</strong> 3 extra layers under the deck across three centered regions (205–1045, 300–950, 385–865 mm) to match bending moment demand.</li>
+        <li>
+          <strong>CTMF 1 — Mathematical modeling（数学建模）</strong><br/>
+          <span class="muted">How used:</span> beam/section-property reasoning + failure-mode checks to predict capacity and identify the critical region (mid-span).<br/>
+          <span class="muted">Strengths:</span> fast iteration; defensible tradeoffs; guides targeted reinforcement.<br/>
+          <span class="muted">Limitations:</span> sensitive to assumptions (ideal bonds, perfect curing, simplified buckling).<br/>
+          <span class="muted">Use/avoid:</span> use early to eliminate dominated concepts; avoid treating it as final truth without joint/process validation.
+        </li>
+
+        <li>
+          <strong>CTMF 2 — Prototyping & testing（原型与测试）</strong><br/>
+          <span class="muted">How used:</span> prototypes validated high-risk assumptions (alignment, diaphragm feasibility, joint reliability).<br/>
+          <span class="muted">Strengths:</span> exposes real failure triggers (imperfections, glue behavior) models miss.<br/>
+          <span class="muted">Limitations:</span> time-costly; noisy without a clear test plan.<br/>
+          <span class="muted">Use/avoid:</span> prototype the riskiest assumption first; avoid full builds too early.
+        </li>
+
+        <li>
+          <strong>CTMF 3 — Decision matrix（决策矩阵）</strong><br/>
+          <span class="muted">How used:</span> retroactively, our selection compared predicted governing-mode FOS, weight penalty, fabrication risk, and credibility of prediction; “Decision evidence” figure is the compact artifact of this process.<br/>
+          <span class="muted">Strengths:</span> makes criteria explicit; turns debate into traceable decisions.<br/>
+          <span class="muted">Limitations:</span> arbitrary if criteria/weights are vague.<br/>
+          <span class="muted">Use/avoid:</span> use when multiple plausible directions exist; define criteria first if you cannot measure.
+        </li>
+
+        <li>
+          <strong>CTMF 4 — Toulmin model（图尔敏模型）</strong><br/>
+          <span class="muted">How used:</span> structured our engineering argument as claim → evidence → warrant → rebuttal; the test outcome strengthened the rebuttal: process control can dominate capacity.<br/>
+          <span class="muted">Strengths:</span> makes the argument legible; exposes missing evidence.<br/>
+          <span class="muted">Limitations:</span> requires discipline—no evidence means gaps become obvious.<br/>
+          <span class="muted">Use/avoid:</span> use for one-page summaries and prediction-vs-test explanations; avoid empty rhetoric without evidence.
+        </li>
       </ul>
     </section>
 
-    <!-- Analysis workflow -->
-    <section id="analysis" class="section">
-      <div class="section-head">
-        <h2>3) Analysis workflow</h2>
-        <p class="muted">Represent the engineering reasoning, not just the geometry.</p>
-      </div>
-
-      <ul class="list">
-        <li><strong>Step A:</strong> identify critical train positions and build SFD/BMD envelopes.</li>
-        <li><strong>Step B:</strong> compute stresses (σ = My/I, shear flow q = VQ/I) and check multiple failure modes.</li>
-        <li><strong>Step C:</strong> compute factor of safety (FOS) for each mode; the minimum governs and drives iteration.</li>
-      </ul>
-    </section>
-
-    <!-- Iterations -->
-    <section id="iterations" class="section">
-      <div class="section-head">
-        <h2>4) Major iterations</h2>
-        <p class="muted">Each iteration is a claim → justification → evidence → decision.</p>
-      </div>
-
-      <ul class="list">
-        <li><strong>HSS baseline:</strong> revealed centroid/compression risk and buckling vulnerability without diaphragms.</li>
-        <li><strong>Height/width sweeps:</strong> improved yield margins but showed buckling-dominant regimes.</li>
-        <li><strong>I-girder concept:</strong> strong for yield but high risk in local buckling, shear buckling, and glue-joint shear.</li>
-        <li><strong>Triangular diaphragm prototypes:</strong> orientation tests informed final zigzag internal structure.</li>
-        <li><strong>Final convergence:</strong> truss-box approach + targeted deck layers for moment-matched reinforcement.</li>
-      </ul>
-    </section>
-
-    <!-- 3D model (THIS is where that block should go) -->
+    <!-- 3D MODEL -->
     <section id="model3d" class="section">
       <div class="section-head">
-        <h2>5) Interactive 3D model</h2>
+        <h2>6) Interactive 3D model</h2>
         <p class="muted">Drag to rotate · Scroll to zoom · Right-drag / two-finger to pan.</p>
       </div>
 
@@ -207,61 +447,175 @@
 
       <div class="hint">
         Keyboard: <code>C</code> toggle cutaway · <code>R</code> reset view.
-        (The model is generated procedurally to match your PDF’s key geometry; later you can replace it with a real <code>bridge.glb</code> if you export CAD.)
+        Note: the procedural model is for communication—it preserves key dimensions/patterns but does not capture adhesive fillets or exact thickness details.
       </div>
     </section>
 
-    <!-- CTMF mapping -->
-    <section id="ctmfs" class="section">
-      <div class="section-head">
-        <h2>6) CTMF mapping + assessment</h2>
-        <p class="muted">Show evidence-of-use and evaluate utility/fit.</p>
-      </div>
-
-      <ul class="list">
-        <li><strong>Frame:</strong> requirements checklist + measurable success metrics (prevents invalid builds).</li>
-        <li><strong>Diverge:</strong> parametric sweeps + prototyping (cheap exploration, reduces fixation).</li>
-        <li><strong>Converge:</strong> governing-mode elimination + risk-based selection (defensible decisions).</li>
-        <li><strong>Represent:</strong> claim → evidence → decision writing (clear to assessors and future self).</li>
-      </ul>
-    </section>
-
-    <!-- Evidence -->
+    <!-- EVIDENCE GALLERY -->
     <section id="evidence" class="section">
       <div class="section-head">
         <h2>7) Evidence gallery</h2>
-        <p class="muted">Upload images under <code>assets/img/bridge/</code> and update filenames below.</p>
+        <p class="muted">Upload images under <code>assets/img/bridge/</code>. These are optional but strongly recommended.</p>
       </div>
 
-      <img src="../assets/img/bridge/final-overview.jpg" alt="Final bridge overview"
-           style="width:100%;border-radius:16px;border:1px solid var(--line);" />
-      <p class="muted small">Figure A — Final bridge overview (replace with your photo/render).</p>
+      <div class="img-card">
+        <img src="../assets/img/bridge/final-overview.jpg" alt="Final bridge overview"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Final bridge photo placeholder
+          <small>Upload: assets/img/bridge/final-overview.jpg</small>
+        </div>
+        <div class="img-ph">
+          Final bridge photo placeholder
+          <small>Upload: assets/img/bridge/final-overview.jpg</small>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:8px;">
+        <strong>Figure A — Final bridge overview.</strong> One-sentence claim you can add later: “This shows the final envelope and splice placement.”
+      </p>
 
-      <img src="../assets/img/bridge/section.jpg" alt="Cross-section / internal structure"
-           style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:12px;" />
-      <p class="muted small">Figure B — Cross-section / diaphragm concept (replace with your section figure).</p>
+      <div class="img-card">
+        <img src="../assets/img/bridge/section.jpg" alt="Cross-section / diaphragm concept"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Section / internal concept placeholder
+          <small>Upload: assets/img/bridge/section.jpg</small>
+        </div>
+        <div class="img-ph">
+          Section / internal concept placeholder
+          <small>Upload: assets/img/bridge/section.jpg</small>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:8px;">
+        <strong>Figure B — Section / diaphragm concept.</strong> Supports the design claim that internal subdivision improves buckling robustness.
+      </p>
+
+      <div class="img-card">
+        <img src="../assets/img/bridge/test-setup.jpg" alt="Test setup"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <div class="img-ph" style="display:none;">
+          Test setup placeholder
+          <small>Upload: assets/img/bridge/test-setup.jpg (optional)</small>
+        </div>
+        <div class="img-ph">
+          Test setup placeholder
+          <small>Upload: assets/img/bridge/test-setup.jpg (optional)</small>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:8px;">
+        <strong>Figure C — Test setup (optional).</strong> Add a short note: where load was applied and what was observed.
+      </p>
 
       <div class="hint">
-        Caption trick: for every figure, add “Claim / Evidence / So what” (one sentence each).
+        Caption trick: write 1 sentence each for Claim / Evidence / So-what (dense and professional).
       </div>
     </section>
 
-    <!-- Reflection -->
-    <section id="reflection" class="section">
+    <!-- WORK PHOTOS -->
+    <section id="workphotos" class="section">
       <div class="section-head">
-        <h2>8) Reflection</h2>
-        <p class="muted">What this project changed in my design practice.</p>
+        <h2>8) Work photos (build & test)</h2>
+        <p class="muted">
+          These photos document decisions that materially affected performance.
+          Upload photos into <code>assets/img/bridge/work/</code>.
+        </p>
       </div>
 
-      <ul class="list">
-        <li><strong>Key shift:</strong> governing failure mode thinking beats single-metric optimization.</li>
-        <li><strong>Practice upgrade:</strong> requirements → sweeps → prototype risky assumptions → converge via governing mode.</li>
-        <li><strong>Next iteration:</strong> quantify glue-joint shear earlier; tighten evidence trail for each major design claim.</li>
-      </ul>
+      <div class="photo-grid">
+        <!-- You already have these two -->
+        <figure class="photo-card"
+                data-full="../assets/img/bridge/work/build-01-cutting.jpg"
+                data-cap="Claim: Cutting accuracy is a structural variable. Evidence: cutting/prep stage sets tolerances. So-what: buckling/joint fit is sensitive to imperfections.">
+          <img src="../assets/img/bridge/work/build-01-cutting.jpg" alt="Cutting & preparation" />
+          <figcaption><strong>build-01-cutting.jpg</strong> — Cutting & preparation.</figcaption>
+        </figure>
+
+        <figure class="photo-card"
+                data-full="../assets/img/bridge/work/glue-01-shell.jpg"
+                data-cap="Claim: Joints can govern capacity when process control is weak. Evidence: shell alignment + tab bonding at the mid joint. So-what: our bridge split at the middle because the adhesive had not fully cured.">
+          <img src="../assets/img/bridge/work/glue-01-shell.jpg" alt="Gluing shell / tab alignment" />
+          <figcaption><strong>glue-01-shell.jpg</strong> — Gluing the box girder shell (tabs alignment).</figcaption>
+        </figure>
+
+        <!-- Add your diaphragm photo using this filename -->
+        <figure class="photo-card"
+                data-full="../assets/img/bridge/work/infill-01-diaphragms.jpg"
+                data-cap="Claim: Diaphragms improve reliability by controlling plate slenderness and shear paths. Evidence: installing internal zigzag diaphragms. So-what: subdividing web panels increases buckling robustness.">
+          <img src="../assets/img/bridge/work/infill-01-diaphragms.jpg" alt="Installing internal diaphragms"
+               onerror="this.style.display='none'; this.parentElement.style.borderStyle='dashed'; this.parentElement.style.cursor='default';" />
+          <figcaption><strong>infill-01-diaphragms.jpg</strong> — Installing internal diaphragms (upload this photo).</figcaption>
+        </figure>
+
+        <!-- Optional placeholders you can later fill -->
+        <figure class="photo-card"
+                data-full="../assets/img/bridge/work/test-01-setup.jpg"
+                data-cap="Test setup and loading documentation."
+                style="opacity:.65;">
+          <img src="../assets/img/bridge/work/test-01-setup.jpg" alt="Test setup (optional)"
+               onerror="this.style.display='none';" />
+          <figcaption><strong>test-01-setup.jpg</strong> — Optional (upload if you have it).</figcaption>
+        </figure>
+
+        <figure class="photo-card"
+                data-full="../assets/img/bridge/work/team-01-session.jpg"
+                data-cap="Build session snapshot (team coordination)."
+                style="opacity:.65;">
+          <img src="../assets/img/bridge/work/team-01-session.jpg" alt="Team photo (optional)"
+               onerror="this.style.display='none';" />
+          <figcaption><strong>team-01-session.jpg</strong> — Optional (upload if you have it).</figcaption>
+        </figure>
+      </div>
+
+      <div class="hint">
+        For each photo, the caption is written in Claim / Evidence / So-what format to keep it dense and grading-friendly.
+      </div>
+    </section>
+
+    <!-- POSITION REFLECTION -->
+    <section id="reflection" class="section">
+      <div class="section-head">
+        <h2>9) Position reflection annotation</h2>
+        <p class="muted">Connect this project to your design position: values, decisions, and what changed.</p>
+      </div>
+
+      <p>
+        My design position is that engineering reasoning is only trustworthy when it stays inside a feedback loop with reality:
+        evidence should not be an afterthought, but the mechanism that keeps models honest. CIV102 made this concrete.
+        We predicted 1200 N and identified the mid-span/joint region as critical, but the bridge failed at 700 N because the adhesive had not fully cured.
+        The location matched our concern, but the mechanism was a process variable—curing discipline—dominating real capacity.
+      </p>
+
+      <p class="muted">
+        This reshaped how I define “design.” A strong equation cannot compensate for a joint that is not ready; therefore scheduling, communication, and build discipline are part of the design system.
+        This page is written to make that process legible: model → decision → build evidence → test outcome → updated beliefs.
+      </p>
 
       <p style="margin-top:14px;">
         <a class="link" href="./">← Back to Projects</a>
       </p>
+    </section>
+
+    <!-- REFERENCES -->
+    <section id="references" class="section">
+      <div class="section-head">
+        <h2>10) References</h2>
+        <p class="muted">Course documents and project records used to support claims on this page.</p>
+      </div>
+
+      <ul class="list">
+        <li>
+          CIV102 Matboard Bridge Design Project Handout:
+          <a class="link" href="../assets/docs/CIV102-2025F-BDP-Handout-v2.pdf" target="_blank" rel="noreferrer">
+            CIV102-2025F-BDP-Handout-v2.pdf →
+          </a>
+        </li>
+        <li>
+          Team 304 Design Report:
+          <a class="link" href="../assets/docs/CIV102-Project-Team-304-Design-Report.pdf" target="_blank" rel="noreferrer">
+            CIV102-Project-Team-304-Design-Report.pdf →
+          </a>
+        </li>
+      </ul>
     </section>
 
     <footer class="footer">
@@ -270,7 +624,67 @@
     </footer>
   </main>
 
-  <!-- IMPORTANT: the 3D viewer script must be loaded on this page -->
+  <!-- Lightbox modal (for work photos) -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop" data-close="1"></div>
+    <div class="lightbox-dialog" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <div class="lightbox-toolbar">
+        <div class="muted" id="lightbox-cap">Photo</div>
+        <button class="lightbox-close" id="lightbox-close" type="button">Close</button>
+      </div>
+      <div class="lightbox-body">
+        <img id="lightbox-img" alt="Expanded photo" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 3D viewer script -->
   <script type="module" src="../assets/js/bridge-viewer.js"></script>
+
+  <!-- Lightbox script -->
+  <script>
+    (function(){
+      const cards = document.querySelectorAll(".photo-card");
+      const lb = document.getElementById("lightbox");
+      const img = document.getElementById("lightbox-img");
+      const cap = document.getElementById("lightbox-cap");
+      const closeBtn = document.getElementById("lightbox-close");
+
+      function openLightbox(src, text){
+        img.src = src;
+        cap.textContent = text || "";
+        lb.classList.add("show");
+        lb.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox(){
+        lb.classList.remove("show");
+        lb.setAttribute("aria-hidden", "true");
+        img.src = "";
+        document.body.style.overflow = "";
+      }
+
+      cards.forEach(c => {
+        c.addEventListener("click", () => {
+          const src = c.getAttribute("data-full") || c.querySelector("img")?.src;
+          const text = c.getAttribute("data-cap") || c.querySelector("figcaption")?.innerText || "";
+          // if image is missing (hidden), do nothing
+          const imgEl = c.querySelector("img");
+          if (imgEl && imgEl.style.display === "none") return;
+          if (src) openLightbox(src, text);
+        });
+      });
+
+      closeBtn.addEventListener("click", closeLightbox);
+      lb.addEventListener("click", (e) => {
+        if (e.target && e.target.getAttribute("data-close") === "1") closeLightbox();
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && lb.classList.contains("show")) closeLightbox();
+      });
+    })();
+  </script>
 </body>
 </html>
