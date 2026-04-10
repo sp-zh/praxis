@@ -1,1 +1,976 @@
 
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WRC FILM — Wheelchair-Mounted RC Filming Gimbal | Praxis II</title>
+  <meta name="description" content="WRC FILM — an accessible wheelchair-mounted filming gimbal concept enabling a participant with CVI to record more independently." />
+  <meta name="theme-color" content="#0b0f19" />
+
+  <!-- Your repo uses a root-level style.css (projects/ pages should go up one level) -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* ===== Praxis II page-only styles (namespaced to avoid conflicts) ===== */
+    :root{
+      --p2-bg: rgba(255,255,255,0.04);
+      --p2-card: rgba(255,255,255,0.06);
+      --p2-card2: rgba(255,255,255,0.08);
+      --p2-border: rgba(255,255,255,0.10);
+      --p2-text: rgba(255,255,255,0.88);
+      --p2-muted: rgba(255,255,255,0.68);
+      --p2-soft: rgba(255,255,255,0.50);
+      --p2-accent: #4db2ff;
+      --p2-accent2: #7c5cff;
+      --p2-good: #41d19a;
+      --p2-warn: #ffcc66;
+      --p2-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      --p2-radius: 18px;
+      --p2-radius2: 26px;
+      --p2-max: 1120px;
+    }
+
+    /* If your global CSS already provides background, this will blend nicely. */
+    .p2-wrap{
+      max-width: var(--p2-max);
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+      color: var(--p2-text);
+    }
+
+    .p2-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin: 8px auto 18px;
+      max-width: var(--p2-max);
+      padding: 0 18px;
+    }
+    .p2-brand{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none;
+      color: var(--p2-text);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+    .p2-dot{
+      width:10px;height:10px;border-radius:999px;
+      background: linear-gradient(135deg, var(--p2-accent), var(--p2-accent2));
+      box-shadow: 0 0 0 6px rgba(77,178,255,0.12);
+    }
+    .p2-nav{
+      display:flex; align-items:center; gap:14px;
+      flex-wrap:wrap;
+      color: var(--p2-muted);
+      font-size: 14px;
+    }
+    .p2-nav a{
+      color: var(--p2-muted);
+      text-decoration:none;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .p2-nav a:hover{
+      color: var(--p2-text);
+      border-color: var(--p2-border);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .p2-actions{
+      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    }
+    .p2-btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--p2-text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-size: 14px;
+      line-height: 1;
+      cursor:pointer;
+      user-select:none;
+    }
+    .p2-btn:hover{ background: rgba(255,255,255,0.07); }
+    .p2-btn.primary{
+      border-color: rgba(77,178,255,0.35);
+      background: linear-gradient(135deg, rgba(77,178,255,0.22), rgba(124,92,255,0.18));
+    }
+    .p2-btn.ghost{
+      background: transparent;
+    }
+    .p2-ico{
+      width:16px;height:16px; display:inline-block;
+      opacity: 0.9;
+    }
+
+    .p2-hero{
+      border: 1px solid var(--p2-border);
+      background:
+        radial-gradient(1200px 420px at 10% 10%, rgba(77,178,255,0.22), transparent 60%),
+        radial-gradient(980px 420px at 80% 20%, rgba(124,92,255,0.16), transparent 60%),
+        rgba(255,255,255,0.03);
+      border-radius: var(--p2-radius2);
+      box-shadow: var(--p2-shadow);
+      padding: 24px;
+      overflow:hidden;
+      position:relative;
+    }
+    .p2-hero-grid{
+      display:grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 18px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .p2-hero-grid{ grid-template-columns: 1fr; }
+    }
+
+    .p2-kicker{
+      font-size: 14px;
+      color: var(--p2-muted);
+      margin-bottom: 10px;
+    }
+    .p2-title{
+      font-size: clamp(30px, 4.4vw, 52px);
+      line-height: 1.05;
+      margin: 0 0 12px;
+      letter-spacing: -0.6px;
+    }
+    .p2-title .accent{
+      background: linear-gradient(135deg, var(--p2-accent), var(--p2-accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .p2-sub{
+      margin: 0 0 14px;
+      color: var(--p2-muted);
+      max-width: 62ch;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .p2-chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin: 14px 0 0;
+    }
+    .p2-chip{
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--p2-muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+    }
+    .p2-chip strong{ color: var(--p2-text); font-weight:600; }
+    .p2-side{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .p2-panel{
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--p2-radius);
+      padding: 14px;
+    }
+    .p2-panel h3{
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      color: var(--p2-soft);
+      text-transform: uppercase;
+    }
+    .p2-panel .p2-strong{
+      font-size: 16px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--p2-text);
+    }
+    .p2-panel .p2-small{
+      margin: 0;
+      color: var(--p2-muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .p2-toc{
+      display:flex;
+      flex-direction:column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .p2-toc a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.03);
+      text-decoration:none;
+      color: var(--p2-text);
+      font-size: 14px;
+    }
+    .p2-toc a:hover{ background: rgba(255,255,255,0.06); }
+
+    .p2-section{
+      margin-top: 22px;
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--p2-radius2);
+      padding: 18px;
+    }
+    .p2-section h2{
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: -0.2px;
+    }
+    .p2-lead{
+      margin: 0 0 10px;
+      color: var(--p2-muted);
+      line-height: 1.65;
+      max-width: 90ch;
+    }
+
+    .p2-grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .p2-card{
+      grid-column: span 6;
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--p2-radius);
+      padding: 14px;
+      overflow:hidden;
+    }
+    .p2-card.full{ grid-column: span 12; }
+    .p2-card.third{ grid-column: span 4; }
+    @media (max-width: 920px){
+      .p2-card, .p2-card.third{ grid-column: span 12; }
+    }
+
+    .p2-card h3{
+      margin: 0 0 6px;
+      font-size: 16px;
+      letter-spacing: -0.1px;
+    }
+    .p2-card p{
+      margin: 0;
+      color: var(--p2-muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .p2-media{
+      margin-top: 10px;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid var(--p2-border);
+      background: rgba(0,0,0,0.18);
+      position:relative;
+    }
+    .p2-media img{
+      width:100%;
+      display:block;
+      object-fit:cover;
+      aspect-ratio: 16/9;
+    }
+    .p2-media.missing{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      aspect-ratio: 16/9;
+      color: var(--p2-muted);
+      font-size: 13px;
+      padding: 16px;
+      text-align:center;
+    }
+    .p2-caption{
+      margin-top: 8px;
+      color: var(--p2-soft);
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+
+    .p2-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding: 8px 10px;
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--p2-muted);
+      font-size: 13px;
+    }
+    .p2-dot2{ width:10px;height:10px;border-radius:999px;background: var(--p2-good); box-shadow: 0 0 0 6px rgba(65,209,154,0.12); }
+    .p2-dot3{ width:10px;height:10px;border-radius:999px;background: var(--p2-warn); box-shadow: 0 0 0 6px rgba(255,204,102,0.12); }
+
+    .p2-kv{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 920px){ .p2-kv{ grid-template-columns: 1fr; } }
+    .p2-kv .row{
+      border: 1px solid var(--p2-border);
+      background: rgba(255,255,255,0.03);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: var(--p2-muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .p2-kv .row strong{
+      color: var(--p2-text);
+      font-weight: 650;
+    }
+
+    .p2-callout{
+      border: 1px solid rgba(77,178,255,0.28);
+      background: linear-gradient(135deg, rgba(77,178,255,0.12), rgba(124,92,255,0.08));
+      border-radius: var(--p2-radius);
+      padding: 14px;
+      margin-top: 12px;
+    }
+    .p2-callout h3{ margin:0 0 6px; font-size: 16px; }
+    .p2-callout p{ margin:0; color: var(--p2-muted); line-height:1.6; }
+
+    .p2-list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--p2-muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+    .p2-list li{ margin: 6px 0; }
+
+    .p2-links{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top: 10px;
+    }
+
+    .p2-embed{
+      width:100%;
+      height: 520px;
+      border: 1px solid var(--p2-border);
+      border-radius: 16px;
+      overflow:hidden;
+      background: rgba(0,0,0,0.18);
+    }
+    @media (max-width: 920px){
+      .p2-embed{ height: 420px; }
+    }
+
+    .p2-footer{
+      margin-top: 18px;
+      color: var(--p2-soft);
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+    .p2-footer a{ color: var(--p2-text); }
+
+    /* small helper */
+    .p2-split{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px; flex-wrap:wrap;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar -->
+  <header class="p2-topbar">
+    <a class="p2-brand" href="../index.html" aria-label="Back to home">
+      <span class="p2-dot" aria-hidden="true"></span>
+      <span>praxis</span>
+    </a>
+
+    <nav class="p2-nav" aria-label="Primary">
+      <a href="../index.html#deliverables">Deliverables</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#process">Process</a>
+      <a href="../index.html#about">About</a>
+      <a href="./index.html" title="Projects directory index">Projects Index</a>
+    </nav>
+
+    <div class="p2-actions">
+      <button id="p2ThemeBtn" class="p2-btn ghost" type="button" aria-label="Toggle theme">
+        <span class="p2-ico" aria-hidden="true">🌙</span>
+        Theme
+      </button>
+      <a class="p2-btn" href="https://github.com/sp-zh/praxis" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main class="p2-wrap">
+    <!-- HERO -->
+    <section class="p2-hero" id="top">
+      <div class="p2-hero-grid">
+        <div>
+          <div class="p2-kicker">Praxis II · Student Engineer Design Portfolio</div>
+          <h1 class="p2-title">
+            <span class="accent">WRC FILM</span><br/>
+            Wheelchair-Mounted RC Filming Gimbal
+          </h1>
+          <p class="p2-sub">
+            An accessible filming concept that helps a community participant with CVI operate a camera more
+            independently—without sacrificing stability, safety, or recording quality.
+          </p>
+
+          <div class="p2-chips" aria-label="Project metadata">
+            <span class="p2-chip"><strong>Community:</strong> Pegasus Toronto (Matty Eckler Community Centre)</span>
+            <span class="p2-chip"><strong>Primary stakeholder:</strong> Jonathan (CVI)</span>
+            <span class="p2-chip"><strong>Chosen direction:</strong> Gimbal</span>
+            <span class="p2-chip"><strong>Status:</strong> Recommended for next phase</span>
+          </div>
+
+          <div class="p2-links">
+            <a class="p2-btn primary" href="#summary">Read One-Page Summary</a>
+            <a class="p2-btn" href="#concepts">See Concepts</a>
+            <a class="p2-btn" href="#ctmfs">CTMF Evaluations</a>
+            <a class="p2-btn" href="#credits">Team Credits</a>
+          </div>
+        </div>
+
+        <aside class="p2-side">
+          <div class="p2-panel">
+            <h3>Featured media</h3>
+
+            <!-- Cover image placeholder -->
+            <figure class="p2-media" id="p2CoverWrap">
+              <img
+                src="../assets/img/praxis2/cover.jpg"
+                alt="Project cover image for WRC FILM (replace with your own cover)"
+                onerror="this.remove();document.getElementById('p2CoverWrap').classList.add('missing');document.getElementById('p2CoverWrap').textContent='Cover image placeholder: put your image at assets/img/praxis2/cover.jpg';"
+              />
+            </figure>
+            <figcaption class="p2-caption">
+              Cover placeholder. Put your chosen cover image at:
+              <code>assets/img/praxis2/cover.jpg</code>
+            </figcaption>
+          </div>
+
+          <div class="p2-panel">
+            <h3>Quick links</h3>
+            <div class="p2-toc">
+              <a href="#summary"><span>One-Page Summary (Brochure)</span><span>→</span></a>
+              <a href="#position"><span>Annotation (Position Statement)</span><span>→</span></a>
+              <a href="#concepts"><span>Concepts (Handlebar / Gimbal / Slider)</span><span>→</span></a>
+              <a href="#recommended"><span>Recommended Direction: Gimbal</span><span>→</span></a>
+              <a href="#ctmfs"><span>CTMF Evaluations (≥3)</span><span>→</span></a>
+              <a href="#gallery"><span>Visuals + Captions</span><span>→</span></a>
+              <a href="#credits"><span>Team Credits</span><span>→</span></a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="p2-section" id="summary">
+      <div class="p2-split">
+        <h2>1) One-Page Summary (Engineering Handbook style)</h2>
+        <span class="p2-badge"><span class="p2-dot2" aria-hidden="true"></span>Audience: someone who knows nothing about this project</span>
+      </div>
+
+      <p class="p2-lead">
+        Pegasus Toronto is a day support program in the GTA for adults with developmental disabilities (“participants”).
+        At the Matty Eckler Community Centre (MEC), participants create short films for the annual Pegasus Incredible Film Festival (PIFF).
+        Jonathan enjoys filming with a GoPro HERO10 Black, but his limited arm strength and Cortical Visual Impairment (CVI) make it difficult
+        to hold the camera at eye level and operate its low-contrast controls independently.
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card">
+          <h3>Community + opportunity framing</h3>
+          <p>
+            Instead of treating Pegasus as a “client” that tells us what to build, we approached the work as collaboration with
+            community stakeholders (Jonathan, primary counsellors at MEC, and the film director Jerome). Our goal was to identify
+            a verified, sustainable opportunity that improves lived experience: increasing Jonathan’s agency to record footage
+            with greater control and independence, without compromising safety or recording quality.
+          </p>
+        </div>
+
+        <div class="p2-card">
+          <h3>Solution (what we are building toward)</h3>
+          <p>
+            <strong>WRC FILM</strong> is a wheelchair-mounted filming concept centered on a <strong>gimbal-based mechanism</strong> plus a monitor
+            and simplified, high-contrast controls. The design aims to keep the viewing interface in Jonathan’s most usable field of vision,
+            reduce physical strain, and enable controlled pan/tilt camera movement with minimal effort.
+          </p>
+        </div>
+
+        <div class="p2-card full p2-callout">
+          <h3>Why “Gimbal” is the recommended direction</h3>
+          <p>
+            After presenting three concepts (Handlebar / Gimbal / Slider) and performing an in-person verification session with Pegasus
+            (Jonathan + Jerome + staff), the team explicitly recommended the <strong>Gimbal</strong> direction as the most feasible and lowest-strain
+            option, while still preserving degrees of freedom for filming.
+          </p>
+        </div>
+
+        <div class="p2-card">
+          <h3>Deliverables for this portfolio page</h3>
+          <p>
+            This page is designed to work as a “personal engineering handbook”: it connects claims to evidence,
+            includes annotated visuals with captions, and contains deep evaluations of Praxis II CTMFs.
+          </p>
+
+          <div class="p2-links">
+            <a class="p2-btn" href="../assets/docs/praxis2/one-page-brochure.pdf" target="_blank" rel="noreferrer">
+              One-page brochure (PDF)
+            </a>
+            <a class="p2-btn" href="../assets/docs/praxis2/showcase-poster.pdf" target="_blank" rel="noreferrer">
+              Showcase poster (PDF)
+            </a>
+            <a class="p2-btn" href="../assets/docs/praxis2/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">
+              Final RFP (PDF)
+            </a>
+          </div>
+
+          <p class="p2-caption">
+            The first two PDFs are your own (brochure + poster). Put them at the paths shown above to enable the buttons.
+          </p>
+        </div>
+
+        <div class="p2-card">
+          <h3>Team credits (required)</h3>
+          <p>
+            This project was completed by a four-person design team. We intentionally kept roles flexible and shared work,
+            but each member led at least one major stream.
+          </p>
+          <ul class="p2-list">
+            <li><strong>Jingshu</strong> — prototyping (lead), CAD modelling</li>
+            <li><strong>Shupei Zhang</strong> — research, testing, prototyping</li>
+            <li><strong>Rishana Senthan</strong> — writing, prototyping</li>
+            <li><strong>Sayali</strong> — writing, prototyping</li>
+          </ul>
+          <p class="p2-caption">
+            If you want “full names” for all teammates: replace the names above with the exact spelling from your official documents.
+          </p>
+        </div>
+      </div>
+
+      <h3 style="margin-top:18px;">Embed: brochure + poster (optional)</h3>
+      <p class="p2-lead">
+        If you upload your brochure/poster PDFs to the suggested paths, they will display here automatically.
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card">
+          <h3>Brochure (one-page summary)</h3>
+          <iframe class="p2-embed" src="../assets/docs/praxis2/one-page-brochure.pdf" title="One-page brochure PDF">
+          </iframe>
+          <div class="p2-caption">Place your brochure at <code>assets/docs/praxis2/one-page-brochure.pdf</code></div>
+        </div>
+
+        <div class="p2-card">
+          <h3>Showcase poster</h3>
+          <iframe class="p2-embed" src="../assets/docs/praxis2/showcase-poster.pdf" title="Showcase poster PDF">
+          </iframe>
+          <div class="p2-caption">Place your poster at <code>assets/docs/praxis2/showcase-poster.pdf</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POSITION -->
+    <section class="p2-section" id="position">
+      <div class="p2-split">
+        <h2>2) Annotation: Connecting Project to Position Statement</h2>
+        <span class="p2-badge"><span class="p2-dot3" aria-hidden="true"></span>High-impact grading section</span>
+      </div>
+
+      <p class="p2-lead">
+        This section explicitly links the project to your position as an engineering designer. The key is to show how your values,
+        skills, and biases shaped decisions—especially how you framed “what counts as success” for Jonathan and Pegasus.
+      </p>
+
+      <div class="p2-card full">
+        <h3>My position in this project (draft you can keep or edit)</h3>
+        <p>
+          In WRC FILM, I treated engineering as a way to expand agency for people who are routinely excluded by “default” product assumptions.
+          Instead of optimizing for novelty or maximum features, I prioritized a design path that is learnable, low-strain, and resilient in real
+          community contexts. This emphasis shaped how I interpreted “good engineering”: not just technical feasibility, but whether the system
+          can be operated independently by the person it is meant to empower.
+        </p>
+        <p style="margin-top:10px;">
+          This project also forced me to confront a bias: at the start, I assumed a broader solution that benefits more participants is always better.
+          Stakeholder engagement challenged that assumption—participants’ needs, goals, and capabilities vary dramatically, so “one-size-fits-all”
+          can become a superficial form of inclusion. Focusing on Jonathan was not narrowing impact; it was choosing depth, dignity, and verified fit.
+        </p>
+
+        <p class="p2-caption">
+          Tip: If you already have a Position Statement video/page, link it here (example path shown below).
+        </p>
+
+        <div class="p2-links">
+          <a class="p2-btn" href="../assets/video/position-statement.mp4" target="_blank" rel="noreferrer">
+            Position Statement (video placeholder)
+          </a>
+        </div>
+        <p class="p2-caption">
+          Put your video at <code>assets/video/position-statement.mp4</code> (or change this link to your real path).
+        </p>
+      </div>
+    </section>
+
+    <!-- CONCEPTS -->
+    <section class="p2-section" id="concepts">
+      <h2>3) Concepts: Handlebar / Gimbal / Slider</h2>
+      <p class="p2-lead">
+        We explored three concept families to reduce accessibility barriers for independent filming. The purpose of showing all three
+        is to document the design space—not just the final answer.
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card third">
+          <h3>Handlebar</h3>
+          <p>
+            A handle-driven interface intended to provide intuitive control through grasping and rotation/tilt gestures.
+            Strength: strong “direct manipulation” feel. Risk: stability and safety if mounted overhead or outside the wheelchair footprint.
+          </p>
+          <figure class="p2-media" id="p2HandlebarImg">
+            <img
+              src="../assets/img/praxis2/concepts/handlebar.jpg"
+              alt="Handlebar concept photo placeholder"
+              onerror="this.remove();document.getElementById('p2HandlebarImg').classList.add('missing');document.getElementById('p2HandlebarImg').textContent='Add image: assets/img/praxis2/concepts/handlebar.jpg';"
+            />
+          </figure>
+          <div class="p2-caption">Caption: show the control idea + where instability risk comes from.</div>
+        </div>
+
+        <div class="p2-card third">
+          <h3>Gimbal <span class="p2-badge" style="margin-left:8px;"><span class="p2-dot2" aria-hidden="true"></span>Recommended</span></h3>
+          <p>
+            A gimbal-based mount + monitor that maintains stability while allowing pan/tilt control with minimal strain.
+            This was judged the most feasible, low-strain direction after stakeholder verification.
+          </p>
+          <figure class="p2-media" id="p2GimbalImg">
+            <img
+              src="../assets/img/praxis2/concepts/gimbal.jpg"
+              alt="Gimbal concept photo placeholder"
+              onerror="this.remove();document.getElementById('p2GimbalImg').classList.add('missing');document.getElementById('p2GimbalImg').textContent='Add image: assets/img/praxis2/concepts/gimbal.jpg';"
+            />
+          </figure>
+          <div class="p2-caption">Caption: highlight monitor distance + degrees of freedom + stability.</div>
+        </div>
+
+        <div class="p2-card third">
+          <h3>Slider</h3>
+          <p>
+            A table slider mechanism to translate the camera position. Risk: friction and sustained force requirements can cause visible strain;
+            extended use may be tiring even if smoothed.
+          </p>
+          <figure class="p2-media" id="p2SliderImg">
+            <img
+              src="../assets/img/praxis2/concepts/slider.jpg"
+              alt="Slider concept photo placeholder"
+              onerror="this.remove();document.getElementById('p2SliderImg').classList.add('missing');document.getElementById('p2SliderImg').textContent='Add image: assets/img/praxis2/concepts/slider.jpg';"
+            />
+          </figure>
+          <div class="p2-caption">Caption: show the mechanism + explain the force/strain observation.</div>
+        </div>
+      </div>
+
+      <div class="p2-callout" style="margin-top:14px;">
+        <h3>Chosen direction (explicit)</h3>
+        <p>
+          The concept recommended to move into the next phase is <strong>Gimbal</strong>.
+          This page keeps the other concepts to document tradeoffs and evidence-based convergence.
+        </p>
+      </div>
+    </section>
+
+    <!-- RECOMMENDED -->
+    <section class="p2-section" id="recommended">
+      <h2>Recommended Direction: WRC Gimbal (what it is + why it fits)</h2>
+      <p class="p2-lead">
+        WRC FILM is the project umbrella; the gimbal is the core mechanism we recommend to carry forward.
+        The design intent is to maximize independence while keeping the system safe, stable, and learnable within the real filming workflow at MEC.
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card">
+          <h3>What the system does</h3>
+          <ul class="p2-list">
+            <li>Keeps the viewing interface (monitor/visualizer) at a verified comfortable distance (e.g., ~35 cm observed in verification).</li>
+            <li>Provides pan/tilt degrees of freedom while minimizing vibration and physical strain.</li>
+            <li>Uses simplified, high-contrast, tactile controls to reduce reliance on low-contrast GoPro buttons.</li>
+            <li>Allows primary counsellors to set up quickly, then enables Jonathan to operate during filming.</li>
+          </ul>
+        </div>
+
+        <div class="p2-card">
+          <h3>Key constraints we designed around</h3>
+          <div class="p2-kv">
+            <div class="row"><strong>Comfort:</strong> reduce sustained holding and awkward posture; prioritize learnability.</div>
+            <div class="row"><strong>Quality:</strong> avoid visible camera shake; preserve usable footage.</div>
+            <div class="row"><strong>Safety:</strong> avoid overhead failure modes; avoid blocking vision while driving.</div>
+            <div class="row"><strong>Deployment:</strong> quick setup/disassembly; durable across repeated sessions.</div>
+          </div>
+        </div>
+
+        <div class="p2-card full">
+          <h3>Evidence links (your uploaded documents)</h3>
+          <p>
+            These are the documents you uploaded that contain detailed evidence, requirements, and meeting notes.
+            Put them into your repo using the suggested filenames below so links work reliably (no spaces).
+          </p>
+          <div class="p2-links">
+            <a class="p2-btn" href="../assets/docs/praxis2/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Final RFP Master Doc (PDF)</a>
+            <a class="p2-btn" href="../assets/docs/praxis2/praxis2-meeting-minutes.pdf" target="_blank" rel="noreferrer">Praxis II Meeting Minutes (PDF)</a>
+            <a class="p2-btn" href="../assets/docs/praxis2/to-print.pdf" target="_blank" rel="noreferrer">To Print (PDF)</a>
+          </div>
+          <p class="p2-caption">
+            Suggested folder: <code>assets/docs/praxis2/</code>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTMFS -->
+    <section class="p2-section" id="ctmfs">
+      <h2>4) CTMF Evaluations (Praxis II-specific, ≥3)</h2>
+      <p class="p2-lead">
+        Each CTMF below is written as: (a) evidence of use, (b) utility & fit (critical evaluation), and (c) what I would change next time.
+        Add screenshots/photos right inside each CTMF block to make “claim → evidence” obvious.
+      </p>
+
+      <div class="p2-grid">
+        <!-- CTMF #1: RFP -->
+        <div class="p2-card full">
+          <h3>CTMF 1 — Request for Proposal (RFP): framing the opportunity</h3>
+          <p>
+            <strong>Evidence of use:</strong> We created a full RFP that defines the community context (Pegasus Toronto),
+            primary stakeholder (Jonathan), stakeholder values, and a structured Need–Goals–Objectives (NGO) tree.
+            This forced us to define measurable targets for comfort, safety, recording quality, deployment, and reliability.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Utility & fit:</strong> The RFP was extremely effective at preventing “solution-first” thinking. It made our assumptions
+            explicit and gave us a shared definition of success. However, writing an RFP early can create a false sense of certainty:
+            in our case, stakeholder verification later changed key numeric assumptions (e.g., monitor distance preference), which means the RFP
+            must be treated as a living document rather than a final contract.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Next time:</strong> I would build an explicit “assumptions log” into the RFP and label which objectives are
+            <em>verified</em> vs <em>unverified</em> to reduce overconfidence.
+          </p>
+
+          <div class="p2-links">
+            <a class="p2-btn" href="../assets/docs/praxis2/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Open Final RFP</a>
+            <a class="p2-btn" href="../assets/img/praxis2/evidence/ngo-tree.png" target="_blank" rel="noreferrer">NGO tree (image placeholder)</a>
+          </div>
+          <p class="p2-caption">
+            Add a screenshot of the NGO tree diagram here:
+            <code>assets/img/praxis2/evidence/ngo-tree.png</code>
+          </p>
+        </div>
+
+        <!-- CTMF #2: Functional Decomposition -->
+        <div class="p2-card full">
+          <h3>CTMF 2 — Functional Decomposition: turning “independent filming” into designable functions</h3>
+          <p>
+            <strong>Evidence of use:</strong> We decomposed the filming activity into smaller functions (e.g., stabilize camera, control pan/tilt,
+            present a usable view, start/stop recording, mount safely, deploy quickly). This enabled modular ideation and mix-and-match concept building.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Utility & fit:</strong> Functional decomposition prevented us from locking onto a single physical form too early.
+            It also made it easier to evaluate concepts fairly: a concept may “feel” elegant, but if it fails the “deploy safely” or “learn quickly” functions,
+            it is not a good fit for the stakeholder context.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Limitations:</strong> Decomposition can hide interaction complexity. For accessibility work, “functions” are not independent—visual load,
+            physical effort, and confidence/learnability interact. A purely modular view can underestimate cognitive and physical coupling.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Next time:</strong> I would pair decomposition with an explicit “interaction cost” layer (physical + visual + cognitive load).
+          </p>
+
+          <div class="p2-links">
+            <a class="p2-btn" href="../assets/img/praxis2/evidence/functional-decomposition.png" target="_blank" rel="noreferrer">Functional decomposition (image placeholder)</a>
+            <a class="p2-btn" href="../assets/img/praxis2/evidence/morph-chart.png" target="_blank" rel="noreferrer">Morph chart (image placeholder)</a>
+          </div>
+
+          <p class="p2-caption">
+            Put your decomposition/morph chart visuals at:
+            <code>assets/img/praxis2/evidence/functional-decomposition.png</code> and <code>assets/img/praxis2/evidence/morph-chart.png</code>
+          </p>
+        </div>
+
+        <!-- CTMF #3: Proxy Tests & Verification -->
+        <div class="p2-card full">
+          <h3>CTMF 3 — Proxy Tests & Verification: learning faster than “full build”</h3>
+          <p>
+            <strong>Evidence of use:</strong> We brought physical proxies (cardboard handlebar sizing, a 3D-printed gimbal mockup, a working slider prototype)
+            into an in-person verification meeting with Jonathan, Jerome, and Pegasus staff (March 30, 2026). This surfaced usability and strain signals
+            that would not appear in CAD alone (e.g., slider strain; stability/safety concerns for handlebar; gimbal feasibility and ease-of-use feedback).
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Utility & fit:</strong> Proxy testing was the single most decision-shaping step in convergence. It converted debates into measurable observations
+            (distance preferences, degrees of freedom, stability). It also protected the stakeholder from being “tested on” by unfinished systems:
+            prototypes were designed as questions, not as commitments.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Limitations:</strong> A single session risks overfitting to momentary conditions (fatigue, context, novelty effects). Proxy tests also need careful
+            facilitation to avoid leading the stakeholder to say what we want to hear.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Next time:</strong> I would pre-register success criteria for each proxy test (what observation would make us stop / pivot / proceed), then repeat
+            at least one key test across multiple sessions to confirm consistency.
+          </p>
+
+          <div class="p2-links">
+            <a class="p2-btn" href="../assets/docs/praxis2/to-print.pdf" target="_blank" rel="noreferrer">Open “To Print” evidence</a>
+            <a class="p2-btn" href="../assets/img/praxis2/evidence/verification-session.jpg" target="_blank" rel="noreferrer">Verification photos (placeholder)</a>
+          </div>
+
+          <p class="p2-caption">
+            Add 1–3 verification photos here:
+            <code>assets/img/praxis2/evidence/verification-session.jpg</code> (or multiple files).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="p2-section" id="gallery">
+      <h2>5) Visual integration (captions + annotated evidence)</h2>
+      <p class="p2-lead">
+        The rule for this portfolio: every visual must earn its place. Each caption should tell the reader what to look for,
+        and how it supports a specific claim (comfort, stability, learnability, etc.).
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card">
+          <h3>Team photo</h3>
+          <figure class="p2-media" id="p2TeamImg">
+            <img
+              src="../assets/img/praxis2/team-photo.jpg"
+              alt="Team photo placeholder"
+              onerror="this.remove();document.getElementById('p2TeamImg').classList.add('missing');document.getElementById('p2TeamImg').textContent='Add image: assets/img/praxis2/team-photo.jpg';"
+            />
+          </figure>
+          <div class="p2-caption">
+            Caption idea: identify the team + context (MEC visit / verification day).
+          </div>
+        </div>
+
+        <div class="p2-card">
+          <h3>Three-concept photo (Handlebar / Gimbal / Slider)</h3>
+          <figure class="p2-media" id="p2ThreeConceptsImg">
+            <img
+              src="../assets/img/praxis2/three-concepts.jpg"
+              alt="Three concepts photo placeholder"
+              onerror="this.remove();document.getElementById('p2ThreeConceptsImg').classList.add('missing');document.getElementById('p2ThreeConceptsImg').textContent='Add image: assets/img/praxis2/three-concepts.jpg';"
+            />
+          </figure>
+          <div class="p2-caption">
+            Caption idea: explain what each prototype is trying to test (not just what it looks like).
+          </div>
+        </div>
+
+        <div class="p2-card full">
+          <h3>Annotated figure (placeholder)</h3>
+          <p>
+            Add a single annotated diagram that ties the gimbal concept to specific objectives (e.g., monitor distance, pan/tilt, stability, button contrast).
+            This is the fastest way for graders to see “claim → evidence → decision”.
+          </p>
+
+          <figure class="p2-media" id="p2AnnotatedImg">
+            <img
+              src="../assets/img/praxis2/evidence/annotated-gimbal.png"
+              alt="Annotated gimbal figure placeholder"
+              onerror="this.remove();document.getElementById('p2AnnotatedImg').classList.add('missing');document.getElementById('p2AnnotatedImg').textContent='Add image: assets/img/praxis2/evidence/annotated-gimbal.png';"
+            />
+          </figure>
+          <div class="p2-caption">
+            Put your annotated figure at <code>assets/img/praxis2/evidence/annotated-gimbal.png</code>.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDITS -->
+    <section class="p2-section" id="credits">
+      <h2>Team credits (required)</h2>
+      <p class="p2-lead">
+        Explicitly credit teammates and describe contributions. This is required for academic integrity and professional ethics.
+      </p>
+
+      <div class="p2-grid">
+        <div class="p2-card full">
+          <h3>Design team</h3>
+          <ul class="p2-list">
+            <li><strong>Jingshu</strong> — prototyping (lead), CAD modelling</li>
+            <li><strong>Shupei Zhang</strong> — research, testing, prototyping</li>
+            <li><strong>Rishana Senthan</strong> — writing, prototyping</li>
+            <li><strong>Sayali</strong> — writing, prototyping</li>
+          </ul>
+
+          <p style="margin-top:10px;">
+            In addition to the primary roles above, all team members contributed to stakeholder engagement,
+            concept development, and convergence decisions. Work was shared intentionally to ensure the team
+            could interface smoothly between research, prototyping, and communication tasks.
+          </p>
+
+          <p class="p2-caption">
+            If you later want to list full legal names for every teammate, edit only this block.
+          </p>
+        </div>
+      </div>
+
+      <div class="p2-footer">
+        <p>
+          <a href="#top">Back to top</a> · <a href="./index.html">Back to Projects Index</a> · <a href="../index.html#projects">Back to Home Projects</a>
+        </p>
+        <p>
+          Note: This page is designed to support “handbook-style” grading: clear structure, internal navigation, and strong claim–evidence links.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle (simple, self-contained)
+    (function(){
+      const key = "praxis_theme";
+      const root = document.documentElement;
+      const btn = document.getElementById("p2ThemeBtn");
+
+      function setTheme(t){
+        root.setAttribute("data-theme", t);
+        try{ localStorage.setItem(key, t); }catch(e){}
+        if(btn){
+          btn.querySelector(".p2-ico").textContent = (t === "dark") ? "🌙" : "☀️";
+        }
+      }
+
+      let saved = "dark";
+      try{
+        saved = localStorage.getItem(key) || root.getAttribute("data-theme") || "dark";
+      }catch(e){
+        saved = root.getAttribute("data-theme") || "dark";
+      }
+      setTheme(saved);
+
+      if(btn){
+        btn.addEventListener("click", function(){
+          const cur = root.getAttribute("data-theme") || "dark";
+          setTheme(cur === "dark" ? "light" : "dark");
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
