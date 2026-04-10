@@ -4,8 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CIV102 Bridge | Praxis</title>
-  <meta name="description" content="CIV102 Bridge project (Team 304): annotated design process, evidence, and CTMF mapping." />
+  <meta name="description" content="CIV102 Bridge project: annotated design process, evidence, CTMF mapping, and an interactive 3D viewer." />
+  <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="../style.css" />
+
+  <style>
+    /* 3D viewer container */
+    .bridge-viewer{
+      width: 100%;
+      height: 520px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      overflow: hidden;
+    }
+    @media (max-width: 720px){
+      .bridge-viewer{ height: 420px; }
+    }
+  </style>
 </head>
 
 <body>
@@ -38,9 +54,9 @@
         <p class="kicker">CIV102（CIV102） · Structures & Materials</p>
         <h1 class="title">Bridge <span class="title-accent">Project</span></h1>
         <p class="lead">
-          Team 304 designed and built a matboard box girder bridge and iterated from spreadsheet/MATLAB analysis to
-          physical prototypes. We converged on a “truss box girder” concept: a rectangular box girder reinforced with
-          triangulated internal diaphragms and targeted deck stiffening aligned with the bending moment demand.
+          Team 304 designed and built a matboard box girder bridge, iterating from spreadsheet/MATLAB analysis to
+          physical prototyping. The final concept is a truss-like box girder: a rectangular box reinforced with
+          triangular internal diaphragms and targeted deck stiffening aligned with bending demand.
         </p>
 
         <div class="chips">
@@ -50,10 +66,8 @@
         </div>
 
         <div class="hero-cta">
-          <a class="btn primary" href="../assets/docs/CIV102-Project-Team-304-Design-Report.pdf" target="_blank" rel="noreferrer">
-            Design Report (PDF) <span class="arrow">→</span>
-          </a>
-          <a class="btn ghost" href="#toc">Read the annotation</a>
+          <a class="btn primary" href="#toc">Read the annotation <span class="arrow">→</span></a>
+          <a class="btn ghost" href="#model3d">Jump to 3D model</a>
         </div>
       </div>
 
@@ -92,7 +106,7 @@
           <a class="q" href="#final">Final design</a>
           <a class="q" href="#analysis">Analysis workflow</a>
           <a class="q" href="#iterations">Iterations</a>
-          <a class="q" href="#ctmfs">CTMFs</a>
+          <a class="q" href="#model3d">3D model</a>
           <a class="q" href="#evidence">Evidence</a>
         </div>
       </div>
@@ -104,18 +118,18 @@
     <section id="toc" class="section">
       <div class="section-head">
         <h2>Table of contents</h2>
-        <p class="muted">This page is written as an ESC102-style annotation: context → decisions → evidence → reflection.</p>
+        <p class="muted">This page is written as a portfolio annotation: context → decisions → evidence → reflection.</p>
       </div>
 
       <ul class="list">
         <li><a class="link" href="#requirements">1) Requirements & scoring context →</a></li>
         <li><a class="link" href="#final">2) Final design snapshot →</a></li>
-        <li><a class="link" href="#analysis">3) Analysis workflow (how we predicted failure) →</a></li>
-        <li><a class="link" href="#iterations">4) Major iterations (what changed and why) →</a></li>
-        <li><a class="link" href="#ctmfs">5) CTMF mapping + assessment →</a></li>
-        <li><a class="link" href="#evidence">6) Evidence gallery + captions →</a></li>
-        <li><a class="link" href="#reflection">7) Reflection →</a></li>
-        <li><a class="link" href="#credits">8) Credits →</a></li>
+        <li><a class="link" href="#analysis">3) Analysis workflow →</a></li>
+        <li><a class="link" href="#iterations">4) Major iterations →</a></li>
+        <li><a class="link" href="#model3d">5) Interactive 3D model →</a></li>
+        <li><a class="link" href="#ctmfs">6) CTMF mapping + assessment →</a></li>
+        <li><a class="link" href="#evidence">7) Evidence gallery →</a></li>
+        <li><a class="link" href="#reflection">8) Reflection →</a></li>
       </ul>
     </section>
 
@@ -127,243 +141,122 @@
       </div>
 
       <ul class="list">
-        <li><strong>Assignment structure:</strong> The CIV102 bridge project includes structural calculations, writing components, and physical build/performance.</li>
-        <li><strong>Primary objectives:</strong> design and build across a 1200 mm span (assumed), and predict failure using beam theory + thin plate buckling theory.</li>
-        <li><strong>Hard constraints (examples):</strong>
-          total length must be within 1250–1270 mm; deck must be ≥ 100 mm wide, horizontal, and allow unobstructed train passage;
-          deck height must be &lt; 200 mm above supports and be a multiple of 20 mm; bridge must have 60 mm flat bottom portions at both ends for supports.
-        </li>
-        <li><strong>Performance scoring factors:</strong> test failure load, strength-to-weight ratio, and accuracy of predicted failure weight; construction quality also matters.</li>
+        <li><strong>Primary objectives:</strong> design/build across a 1200 mm span (assumed), and predict failure using beam theory + thin plate buckling theory.</li>
+        <li><strong>Hard constraints:</strong> length 1250–1270 mm; deck ≥ 100 mm wide and unobstructed; deck height &lt; 200 mm above supports and multiple of 20 mm; 60 mm flat support regions at both ends.</li>
+        <li><strong>Performance scoring factors:</strong> test failure load, strength-to-weight ratio, accuracy of predicted failure load, and construction quality.</li>
       </ul>
 
       <div class="hint">
-        My framing choice: treat “governing failure mode” as the core design driver. I optimized for a design that is hard to fail via
-        compression-side yielding or local buckling under realistic load paths, rather than optimizing one metric in isolation.
+        Framing choice: treat “governing failure mode” as the driver. We converged by eliminating designs dominated by buckling / shear transfer / joints rather than optimizing only bending yield.
       </div>
-    </section>
-
-    <!-- Deliverables -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Deliverables (for portfolio navigation)</h2>
-        <p class="muted">Direct links so the assessor can find evidence in seconds.</p>
-      </div>
-
-      <ul class="list">
-        <li><a class="link" href="../assets/docs/CIV102-Project-Team-304-Design-Report.pdf" target="_blank" rel="noreferrer">Team 304 Design Report (PDF) →</a></li>
-        <li><a class="link" href="../assets/docs/CIV102-2025F-Praxising-the-Bridge-Project.pdf" target="_blank" rel="noreferrer">CIV102–Praxis crossover (PDF) →</a></li>
-        <li class="muted">Optional: add your “Engineering drawings / Construction log” PDF later and link it here.</li>
-      </ul>
     </section>
 
     <!-- Final design -->
     <section id="final" class="section">
       <div class="section-head">
         <h2>2) Final design snapshot</h2>
-        <p class="muted">What we built, with the “why” attached to each feature.</p>
+        <p class="muted">What we built, with rationale attached to each feature.</p>
       </div>
 
       <ul class="list">
-        <li><strong>Overall concept:</strong> A box girder with a single offset splice placed ~1/3 of the span to reduce risk near the maximum moment region.</li>
-        <li><strong>Cross-section:</strong> 80 mm wide × 60 mm tall structural box; 100 mm wide deck; total bridge length 1250 mm; both ends capped with diaphragms.</li>
-        <li><strong>Internal structure:</strong> a continuous zigzag triangular infill built from 5 matboard pieces forms 23 evenly spaced diaphragms at 60°.</li>
-        <li><strong>Deck reinforcement (moment-matched):</strong> 3 extra layers adhered under the deck over three centered regions:
-          205–1045 mm, 300–950 mm, and 385–865 mm (full-width).
-        </li>
-        <li><strong>Glue strategy:</strong> full-width glue tabs to increase bonding area, simplify geometry, and improve constructibility (folds to flat surfaces).</li>
-        <li><strong>Why 60 mm height:</strong> height is a tradeoff: higher improves compressive-yield FOS but reduces web local buckling FOS; analysis indicated staying below 80 mm is necessary for the 1000 N target without consuming excessive material.</li>
-        <li><strong>Why 80 mm structural width with a wider deck:</strong> reducing width increases yield FOS while web buckling stays similar; the deck can overhang because train width is 75 mm (10 mm margin per side).</li>
+        <li><strong>Overall concept:</strong> box girder with a single offset splice placed ~1/3 along the length to reduce risk near maximum-moment region.</li>
+        <li><strong>Cross-section:</strong> 80 mm wide × 60 mm tall structural box; 100 mm wide deck; total bridge length 1250 mm.</li>
+        <li><strong>Internal structure:</strong> zigzag triangular infill forming 23 diaphragms at ~60°.</li>
+        <li><strong>Deck reinforcement:</strong> 3 extra layers under the deck across three centered regions (205–1045, 300–950, 385–865 mm) to match bending moment demand.</li>
       </ul>
-
-      <div class="hint">
-        One-line design intent: “Move material into flanges + shorten/slenderness-control the compression panels + keep shear paths stable.”
-      </div>
     </section>
 
     <!-- Analysis workflow -->
     <section id="analysis" class="section">
       <div class="section-head">
-        <h2>3) Analysis workflow (how we predicted failure)</h2>
-        <p class="muted">Represent the engineering reasoning, not just the final geometry.</p>
+        <h2>3) Analysis workflow</h2>
+        <p class="muted">Represent the engineering reasoning, not just the geometry.</p>
       </div>
 
       <ul class="list">
-        <li><strong>Step A — Identify critical train positions:</strong> find train locations that maximize shear and bending moment for the specified load case(s).</li>
-        <li><strong>Step B — Build SFD/BMD envelopes:</strong> compute V<sub>env</sub>(x), M<sub>env</sub>(x), then extract V<sub>max</sub> and M<sub>max</sub>.</li>
-        <li><strong>Step C — Convert internal forces to stresses:</strong> use σ = My/I to estimate normal stress distribution; compute shear stress and glue-joint shear flow using q = VQ/I where appropriate.</li>
-        <li><strong>Step D — Check multiple failure modes:</strong>
-          tension yield, compression yield, local buckling (including “case 2” flange local buckling and “case 3” web local buckling), shear buckling, and glue-joint shear risk.
-        </li>
-        <li><strong>Step E — Factor of safety:</strong> compute FOS for each failure mode; the minimum FOS governs. Use the governing mode to drive the next iteration.</li>
+        <li><strong>Step A:</strong> identify critical train positions and build SFD/BMD envelopes.</li>
+        <li><strong>Step B:</strong> compute stresses (σ = My/I, shear flow q = VQ/I) and check multiple failure modes.</li>
+        <li><strong>Step C:</strong> compute factor of safety (FOS) for each mode; the minimum governs and drives iteration.</li>
       </ul>
-
-      <div class="hint">
-        Two engineering insights that guided the final design:
-        <ul class="list">
-          <li><strong>Neutral axis target:</strong> since tension strength is ~5× compression strength, a symmetric HSS is suboptimal; raising ȳ reduces compression risk first.</li>
-          <li><strong>Buckling dominance:</strong> thin plate buckling scales roughly with (t/b)<sup>2</sup>; long continuous compression panels have low buckling capacity unless subdivided or thickened.</li>
-        </ul>
-      </div>
     </section>
 
     <!-- Iterations -->
     <section id="iterations" class="section">
       <div class="section-head">
-        <h2>4) Major iterations (design story)</h2>
+        <h2>4) Major iterations</h2>
         <p class="muted">Each iteration is a claim → justification → evidence → decision.</p>
       </div>
 
       <ul class="list">
-        <li>
-          <strong>Iteration 1 — Square HSS (Excel):</strong>
-          baseline cross-section. Learning: ȳ at mid-height is inefficient given tension/compression asymmetry; no diaphragms → high susceptibility to web buckling.
-        </li>
-        <li>
-          <strong>Iteration 2 — Add layers (Excel):</strong>
-          raising ȳ helps but shows diminishing returns; many layers become material-inefficient.
-        </li>
-        <li>
-          <strong>Iteration 3 — Height sweep (MATLAB):</strong>
-          increasing height improves compression-yield FOS but reduces web local buckling FOS; for 1000 N goal, height should be &lt; 80 mm unless thickness increases heavily.
-        </li>
-        <li>
-          <strong>Iteration 4 — Width sweep (MATLAB):</strong>
-          narrower width increases yield FOS while web buckling is largely unaffected; deck can overhang the structural box.
-        </li>
-        <li>
-          <strong>Iteration 5 — I-girder (Excel):</strong>
-          attractive for yield efficiency, but high risk of case 2 local buckling, shear buckling, and glue-joint shear due to shear flow transfer demands.
-        </li>
-        <li>
-          <strong>Iteration 6 — Variable height (prototype + calculations):</strong>
-          “match the BMD” concept; but behaves like a simply supported beam (little horizontal thrust), so forces remain bending-dominated; compression strength is much lower than tension strength, and long compression panels are buckling-governed with limited reserve capacity.
-        </li>
-        <li>
-          <strong>Iteration 7 — Discrete square frames:</strong>
-          behaves like a ladder/open truss; weak continuous shear transfer → lower effective stiffness than a continuous box.
-        </li>
-        <li>
-          <strong>Iteration 8 — Triangular diaphragms (prototyping):</strong>
-          upright orientation buckled easily; rotating the concept improved stability and informed the final infill orientation (triangles visible from the top).
-        </li>
-        <li>
-          <strong>Final — Truss box girder:</strong>
-          redistribute plate area into triangular members below deck; concentrate material on upper/lower flanges; subdivide web panels to improve buckling capacity; convert much shear into axial forces in diagonals.
-        </li>
+        <li><strong>HSS baseline:</strong> revealed centroid/compression risk and buckling vulnerability without diaphragms.</li>
+        <li><strong>Height/width sweeps:</strong> improved yield margins but showed buckling-dominant regimes.</li>
+        <li><strong>I-girder concept:</strong> strong for yield but high risk in local buckling, shear buckling, and glue-joint shear.</li>
+        <li><strong>Triangular diaphragm prototypes:</strong> orientation tests informed final zigzag internal structure.</li>
+        <li><strong>Final convergence:</strong> truss-box approach + targeted deck layers for moment-matched reinforcement.</li>
       </ul>
+    </section>
+
+    <!-- 3D model (THIS is where that block should go) -->
+    <section id="model3d" class="section">
+      <div class="section-head">
+        <h2>5) Interactive 3D model</h2>
+        <p class="muted">Drag to rotate · Scroll to zoom · Right-drag / two-finger to pan.</p>
+      </div>
+
+      <div id="bridge-3d" class="bridge-viewer"></div>
 
       <div class="hint">
-        “Converge” moment: the final design was selected because it increased the minimum safety factor across failure modes
-        while remaining buildable under time/material constraints.
+        Keyboard: <code>C</code> toggle cutaway · <code>R</code> reset view.
+        (The model is generated procedurally to match your PDF’s key geometry; later you can replace it with a real <code>bridge.glb</code> if you export CAD.)
       </div>
     </section>
 
-    <!-- CTMFs -->
+    <!-- CTMF mapping -->
     <section id="ctmfs" class="section">
       <div class="section-head">
-        <h2>5) CTMFs used + assessment (Frame · Diverge · Converge · Represent)</h2>
-        <p class="muted">Not just naming tools: show evidence-of-use and evaluate utility/fit.</p>
+        <h2>6) CTMF mapping + assessment</h2>
+        <p class="muted">Show evidence-of-use and evaluate utility/fit.</p>
       </div>
 
       <ul class="list">
-        <li>
-          <strong>Frame — Requirements table + success metrics:</strong>
-          I treated the project manual constraints as a “requirements spec” and wrote them as checkable statements (length, deck width, deck height multiple-of-20, unobstructed train passage, support flats).
-          <br/><span class="muted">Utility:</span> prevents late-stage “invalid build” failure; enables fast review before committing glue.
-          <br/><span class="muted">Fit:</span> extremely high for constrained physical builds.
-        </li>
-
-        <li>
-          <strong>Diverge — Parametric sweeps + rapid prototyping:</strong>
-          Excel/MATLAB sweeps (height, width, layers) + paper prototypes for variable height and internal webs.
-          <br/><span class="muted">Utility:</span> cheap exploration; gives directional evidence before fabrication.
-          <br/><span class="muted">Fit:</span> high when failure mode is unclear early; reduces overconfidence in “intuitive” geometry.
-        </li>
-
-        <li>
-          <strong>Converge — Governing-mode elimination + risk-based selection:</strong>
-          Concepts were rejected when dominated by buckling, glue shear, shear-path discontinuity, or constructibility risk (e.g., I-girder).
-          <br/><span class="muted">Utility:</span> keeps the team from optimizing the wrong metric.
-          <br/><span class="muted">Fit:</span> high in safety-critical-ish structures where “how it fails” matters more than “how strong it looks.”
-        </li>
-
-        <li>
-          <strong>Represent — Claim → justification → evidence writing:</strong>
-          This page uses the pattern explicitly: each design decision is a claim, justified by mechanics reasoning and supported by iteration results / figures.
-          <br/><span class="muted">Utility:</span> makes grading fast and makes the design defensible.
-          <br/><span class="muted">Fit:</span> high whenever the audience includes assessors or future teammates.
-        </li>
+        <li><strong>Frame:</strong> requirements checklist + measurable success metrics (prevents invalid builds).</li>
+        <li><strong>Diverge:</strong> parametric sweeps + prototyping (cheap exploration, reduces fixation).</li>
+        <li><strong>Converge:</strong> governing-mode elimination + risk-based selection (defensible decisions).</li>
+        <li><strong>Represent:</strong> claim → evidence → decision writing (clear to assessors and future self).</li>
       </ul>
-
-      <div class="hint">
-        If you want this section to score even higher, add 1 screenshot of your “height/width sweep results” and link it under Evidence.
-      </div>
     </section>
 
-    <section id="model3d" class="section">
-  <div class="section-head">
-    <h2>Interactive 3D model</h2>
-    <p class="muted">
-      Drag to rotate · Scroll/trackpad to zoom · Right-drag (or two-finger) to pan.
-    </p>
-  </div>
-
-  <div id="bridge-3d" class="bridge-viewer"></div>
-
-  <div class="hint">
-    If you later export a real model, upload it as <code>assets/models/bridge.glb</code> and it will load automatically.
-  </div>
-</section>
-
-<style>
-  /* Minimal viewer styling (keeps it responsive) */
-  .bridge-viewer{
-    width: 100%;
-    height: 520px;
-    border-radius: 18px;
-    border: 1px solid var(--line);
-    background: var(--panel2);
-    overflow: hidden;
-  }
-  @media (max-width: 720px){
-    .bridge-viewer{ height: 420px; }
-  }
-</style>
     <!-- Evidence -->
     <section id="evidence" class="section">
       <div class="section-head">
-        <h2>6) Evidence gallery</h2>
-        <p class="muted">Upload images to <code>assets/img/bridge/</code> and update filenames below.</p>
+        <h2>7) Evidence gallery</h2>
+        <p class="muted">Upload images under <code>assets/img/bridge/</code> and update filenames below.</p>
       </div>
 
-      <img src="../assets/img/bridge/final-overview.jpg" alt="Final bridge overview" style="width:100%;border-radius:16px;border:1px solid var(--line);" />
-      <p class="muted small">Figure A — Final bridge overview. (Add a one-sentence claim: what this proves.)</p>
+      <img src="../assets/img/bridge/final-overview.jpg" alt="Final bridge overview"
+           style="width:100%;border-radius:16px;border:1px solid var(--line);" />
+      <p class="muted small">Figure A — Final bridge overview (replace with your photo/render).</p>
 
-      <img src="../assets/img/bridge/cross-section.jpg" alt="Cross-section / dimensions" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:12px;" />
-      <p class="muted small">Figure B — Cross-section and key dimensions (80×60 mm box; 100 mm deck; splice location).</p>
-
-      <img src="../assets/img/bridge/triangular-infill.jpg" alt="Triangular infill prototype / inside view" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:12px;" />
-      <p class="muted small">Figure C — Triangular infill / prototype orientation evidence (why the final orientation was chosen).</p>
-
-      <img src="../assets/img/bridge/test-setup.jpg" alt="Test setup" style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:12px;" />
-      <p class="muted small">Figure D — Testing setup and loading. (Add: where the load was applied and what was observed.)</p>
+      <img src="../assets/img/bridge/section.jpg" alt="Cross-section / internal structure"
+           style="width:100%;border-radius:16px;border:1px solid var(--line);margin-top:12px;" />
+      <p class="muted small">Figure B — Cross-section / diaphragm concept (replace with your section figure).</p>
 
       <div class="hint">
-        Caption trick: for every image, add “Claim: … / Evidence: … / So what: …”.
+        Caption trick: for every figure, add “Claim / Evidence / So what” (one sentence each).
       </div>
     </section>
 
     <!-- Reflection -->
     <section id="reflection" class="section">
       <div class="section-head">
-        <h2>7) Reflection</h2>
+        <h2>8) Reflection</h2>
         <p class="muted">What this project changed in my design practice.</p>
       </div>
 
       <ul class="list">
-        <li><strong>Key shift:</strong> I learned to treat failure modes as design constraints, not as after-the-fact explanations.</li>
-        <li><strong>Practice upgrade:</strong> I now default to (1) requirements checklist, (2) fast parametric sweeps, (3) prototype a risky assumption, then (4) converge via governing-mode elimination.</li>
-        <li><strong>Next iteration (if repeated):</strong> quantify glue-joint shear margins earlier; add an explicit decision matrix with criteria weights; and produce a compact evidence pack for each major design claim.</li>
+        <li><strong>Key shift:</strong> governing failure mode thinking beats single-metric optimization.</li>
+        <li><strong>Practice upgrade:</strong> requirements → sweeps → prototype risky assumptions → converge via governing mode.</li>
+        <li><strong>Next iteration:</strong> quantify glue-joint shear earlier; tighten evidence trail for each major design claim.</li>
       </ul>
 
       <p style="margin-top:14px;">
@@ -371,24 +264,13 @@
       </p>
     </section>
 
-    <!-- Credits -->
-    <section id="credits" class="section">
-      <div class="section-head">
-        <h2>8) Credits</h2>
-        <p class="muted">Academic integrity: clearly credit team work.</p>
-      </div>
-
-      <ul class="list">
-        <li><strong>Team members:</strong> Mina (Youyang) Wu · Shupei Zhang · Jingshu Zhu</li>
-        <li><strong>TA:</strong> Junyan (Steven) Xiao</li>
-        <li><strong>Source documents:</strong> Team 304 Design Report + CIV102–Praxis crossover (linked above).</li>
-      </ul>
-    </section>
-
     <footer class="footer">
       <div><a class="link" href="../">← Home</a></div>
       <div class="muted">CIV102（CIV102） Bridge page</div>
     </footer>
   </main>
+
+  <!-- IMPORTANT: the 3D viewer script must be loaded on this page -->
+  <script type="module" src="../assets/js/bridge-viewer.js"></script>
 </body>
 </html>
