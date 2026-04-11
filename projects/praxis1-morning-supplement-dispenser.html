@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Praxis I Morning Supplement Dispenser | Praxis</title>
+  <meta name="description" content="Praxis I Morning Supplement Dispenser — evidence-first concept selection using proxy tests and CTMF mapping." />
+  <meta name="theme-color" content="#0b0f19" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Lightweight local styling for cover + evidence figures (no need to touch style.css) -->
+  <style>
+    .proj-cover{
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      position: relative;
+    }
+    .proj-cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .cover-ph{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding: 14px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .2px;
+      background:
+        radial-gradient(800px 400px at 20% 0%, rgba(122,162,255,.18), transparent 60%),
+        radial-gradient(700px 380px at 90% 20%, rgba(140,255,214,.14), transparent 60%),
+        var(--panel2);
+    }
+    .cover-ph small{
+      display:block;
+      margin-top: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      opacity: .9;
+    }
+
+    .fig{
+      width:100%;
+      border-radius:16px;
+      border:1px solid var(--line);
+    }
+    .cap{ margin-top: 8px; }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 920px){
+      .grid2{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .embed{
+      position:relative;
+      padding-top:56.25%;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background: var(--panel2);
+    }
+    .embed iframe{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      border:0;
+    }
+
+    .ctmf-card{
+      border:1px solid var(--line);
+      background: var(--panel2);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .ctmf-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .ctmf-top h3{ margin:0; }
+    .ctmf-tag{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="../" aria-label="Home">
+        <span class="brand-dot"></span><span>praxis</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="./">Projects</a>
+        <a href="../#deliverables">Deliverables</a>
+        <a href="../#process">Process</a>
+        <a href="../#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="pill-btn" href="./">Back to Index</a>
+      </div>
+    </div>
+
+    <div class="container hero" style="padding-bottom: 10px;">
+      <div class="hero-left">
+        <p class="kicker">Praxis I（Praxis I） · Product concept + evidence</p>
+        <h1 class="title">Morning Supplement <span class="title-accent">Dispenser</span></h1>
+
+        <p class="lead">
+          A user-centered redesign to reduce morning friction: fewer steps, faster dispensing, easier cleaning,
+          and less clutter in shared dorm spaces.
+        </p>
+
+        <div class="chips">
+          <span class="chip">Recommended concept: <strong>Rotating Cylinder Dispenser</strong></span>
+          <span class="chip">Evidence: <strong>proxy tests + comparison tables</strong></span>
+          <span class="chip">CTMFs: <strong>Frame · Diverge · Converge · Represent</strong></span>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn primary" href="#annotation">
+            Read annotation <span class="arrow">→</span>
+          </a>
+          <a class="btn ghost" href="#evidence">Jump to evidence</a>
+        </div>
+
+        <div class="proj-actions" style="margin-top:12px;">
+          <a class="link" href="../assets/docs/praxis1-design-report.pdf" target="_blank" rel="noreferrer">Design Report (PDF) →</a>
+          <a class="link" href="#video">Proxy test video →</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="badge">Now</span>
+            <span class="muted">What changed</span>
+          </div>
+          <div class="metric-title">Reduce “morning friction”</div>
+          <div class="metric-sub">Time + steps + cleaning + clutter</div>
+
+          <div class="mini-grid">
+            <div class="mini">
+              <div class="mini-k">Baseline</div>
+              <div class="mini-v">206 s total</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Cleaning</div>
+              <div class="mini-v">78 s</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Target</div>
+              <div class="mini-v">~40 s tasks</div>
+            </div>
+            <div class="mini">
+              <div class="mini-k">Approach</div>
+              <div class="mini-v">evidence-first</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="glass-title">Quick links</div>
+          <a class="q" href="#requirements">Requirements</a>
+          <a class="q" href="#concepts">Concepts</a>
+          <a class="q" href="#converge">Decision</a>
+          <a class="q" href="#ctmfs">CTMFs</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container main">
+    <!-- Cover -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Cover</h2>
+        <p class="muted">Replace the cover image anytime — the page works even without it.</p>
+      </div>
+
+      <div class="proj-cover">
+        <img src="../assets/img/covers/praxis1.jpg" alt="Praxis I cover" onerror="this.style.display='none';" />
+        <div class="cover-ph">
+          Praxis I cover image
+          <small>Put your image at: assets/img/covers/praxis1.jpg</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- Annotation -->
+    <section id="annotation" class="section">
+      <div class="section-head">
+        <h2>Annotation</h2>
+        <p class="muted">Context → evidence → decision → outcome → reflection (portfolio style).</p>
+      </div>
+
+      <p>
+        Many students take daily supplements (e.g., pills + protein). Yet the routine is surprisingly time-consuming:
+        a timed baseline morning routine totalled <strong>206 seconds</strong>, with <strong>78 seconds</strong> spent just cleaning the cup. This is a strong signal that usability barriers are dominated by
+        “maintenance friction,” not only dispensing speed.
+      </p>
+
+      <p class="muted">
+        We framed the opportunity as: reduce time, steps, and clutter while keeping dosing flexibility and reliability.
+        We then used low-fidelity prototypes + proxy tests to make the decision evidence-based rather than preference-based.
+      </p>
+
+      <div class="hint">
+        My contribution: <strong>research</strong> on reference designs and constraints, <strong>reference design exploration</strong> to anchor feasibility,
+        and <strong>prototype making</strong> to support proxy testing and comparison.
+      </div>
+    </section>
+
+    <!-- Stakeholders -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Stakeholders</h2>
+        <p class="muted">Who benefits, who is affected, and what “success” means for them.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Primary users:</strong> Engineering Science students with rushed mornings and limited dorm space.</li>
+        <li><strong>Secondary stakeholders:</strong> roommates impacted by clutter and shared cleaning areas.</li>
+        <li><strong>Future constraints owners:</strong> manufacturers / retailers (cost, part count, robustness, ease of cleaning).</li>
+      </ul>
+    </section>
+
+    <!-- Requirements -->
+    <section id="requirements" class="section">
+      <div class="section-head">
+        <h2>Requirements & criteria</h2>
+        <p class="muted">From vague complaints → testable requirements.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Speed:</strong> aim for a ~40 s threshold for “simple tasks” as a usability target.</li>
+        <li><strong>Refill frequency:</strong> at least 1 week between refills.</li>
+        <li><strong>Powder dosage flexibility:</strong> support a wide usable range.</li>
+        <li><strong>Steps:</strong> cap steps required to begin dispensing (effort minimization / usability).</li>
+        <li><strong>Horizontal width:</strong> ≤ 40 cm to fit a dorm shelf footprint.</li>
+        <li><strong>Pill dispensing:</strong> handle ~3 common pill types reliably.</li>
+        <li><strong>Cleaning:</strong> target ≤ 40 seconds to clean all parts.</li>
+      </ul>
+
+      <div class="grid2" style="margin-top:12px;">
+        <div>
+          <img class="fig" src="../assets/img/praxis1/appxA-baseline-timing.png" alt="Appendix A baseline timing"
+               onerror="this.style.display='none';" />
+          <p class="muted small cap">Evidence placeholder: Appendix A baseline timing (206 s total; cleaning 78 s).</p>
+        </div>
+        <div>
+          <img class="fig" src="../assets/img/praxis1/table1-requirements.png" alt="Table 1 requirements"
+               onerror="this.style.display='none';" />
+          <p class="muted small cap">Evidence placeholder: Table 1 requirements & evaluation criteria.</p>
+        </div>
+      </div>
+
+      <div class="hint">
+        Screenshot checklist: <strong>Appendix A</strong> + <strong>Table 1</strong>.
+      </div>
+    </section>
+
+    <!-- Concepts -->
+    <section id="concepts" class="section">
+      <div class="section-head">
+        <h2>Concepts (Diverge)</h2>
+        <p class="muted">We diverged across distinct mechanisms, not just minor variants.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Recommended:</strong> Rotating Cylinder Dispenser — 24 compartments (12 pills + 12 powders), two-piece rotating dropper, up to 11 days, 5 g measurement intervals.</li>
+        <li><strong>Disk:</strong> 16 compartments with scoopers; strong storage but large footprint and cleaning complexity.</li>
+        <li><strong>Pez Machine:</strong> lever + spring mechanism; qualitative reliability concerns and cleaning difficulty.</li>
+        <li><strong>Slider with Slit:</strong> gravity-driven pill drop + powder hole; low steps but limited dosage control.</li>
+      </ul>
+
+      <div class="hint">
+        Note: the “shaker bottle” idea was explicitly removed during rescoping because it would be unfeasibly large to drink from.
+      </div>
+
+      <img class="fig" src="../assets/img/praxis1/fig-concepts-grid.png" alt="Concept figures grid"
+           onerror="this.style.display='none'; margin-top:12px;" />
+      <p class="muted small cap">Evidence placeholder: Figures 1–4 (concept visuals) compiled into one image.</p>
+
+      <div class="hint">
+        Screenshot checklist: <strong>Figure 1</strong> + (Figure 2/3/4) OR one combined “concept grid” image.
+      </div>
+    </section>
+
+    <!-- Testing -->
+    <section id="testing" class="section">
+      <div class="section-head">
+        <h2>Proxy tests</h2>
+        <p class="muted">Low-fidelity prototypes, tested on the criteria that matter most.</p>
+      </div>
+
+      <ul class="list">
+        <li>Proxy tests measured dispensing speed, powder dosage accuracy (when applicable), step count, and cleaning time.</li>
+        <li>For most concepts, pills + powder were dispensed into a cup simultaneously to represent the fastest realistic routine.</li>
+        <li>The rotating cylinder prototype was 3D printed at small scale due to geometry difficulty in hand-making rotating parts.</li>
+      </ul>
+
+      <div class="hint">
+        Evidence: proxy test video + your Table 2 “measurement matrix”.
+      </div>
+    </section>
+
+    <!-- Video -->
+    <section id="video" class="section">
+      <div class="section-head">
+        <h2>Proxy test video</h2>
+        <p class="muted">Embedded from your YouTube Shorts link.</p>
+      </div>
+
+      <div class="embed">
+        <iframe
+          src="https://www.youtube.com/embed/EL7ZYODpgFg"
+          title="Proxy test video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+
+      <p class="muted small cap">
+        Source: https://www.youtube.com/shorts/EL7ZYODpgFg
+      </p>
+    </section>
+
+    <!-- Converge -->
+    <section id="converge" class="section">
+      <div class="section-head">
+        <h2>Decision (Converge)</h2>
+        <p class="muted">Measurement matrix + PUGH chart + pairwise comparison.</p>
+      </div>
+
+      <p>
+        The decision used multiple lenses. In the measurement matrix, the rotating cylinder is consistently strong across key criteria and has a small footprint and fast cleaning.
+        Pairwise comparison was especially useful when comparing rotating cylinder vs disk: both are similarly fast, but the disk has a much larger width and a more complex cleaning process
+        (17 parts vs 2 parts).
+      </p>
+
+      <div class="grid2" style="margin-top:12px;">
+        <div>
+          <img class="fig" src="../assets/img/praxis1/table2-measurement-matrix.png" alt="Table 2 measurement matrix"
+               onerror="this.style.display='none';" />
+          <p class="muted small cap">Evidence placeholder: Table 2 measurement matrix (speed/steps/cleaning/etc.).</p>
+        </div>
+        <div>
+          <img class="fig" src="../assets/img/praxis1/table3-pugh.png" alt="Table 3 PUGH chart"
+               onerror="this.style.display='none';" />
+          <p class="muted small cap">Evidence placeholder: Table 3 PUGH chart (rotating cylinder as reference).</p>
+        </div>
+      </div>
+
+      <img class="fig" src="../assets/img/praxis1/table4-pairwise.png" alt="Table 4 pairwise comparison"
+           onerror="this.style.display='none'; margin-top:12px;" />
+      <p class="muted small cap">Evidence placeholder: Table 4 pairwise comparison (optional but great for rigor).</p>
+
+      <div class="hint">
+        Screenshot checklist: <strong>Table 2</strong> + <strong>Table 3</strong> (recommended) + <strong>Table 4</strong> (optional add-on).
+      </div>
+    </section>
+
+    <!-- Final design -->
+    <section id="final" class="section">
+      <div class="section-head">
+        <h2>Final concept</h2>
+        <p class="muted">Rotating Cylinder Dispenser — what it is and why it works.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Architecture:</strong> two-piece rotating dropper system → low part count and easy cleaning.</li>
+        <li><strong>Storage:</strong> 24 compartments (12 pills + 12 powders) → up to ~11 days before refilling.</li>
+        <li><strong>Usability:</strong> 5 g measurement lines for adjustable dosing; user can cover pill dropper to separate pills from powders if desired.</li>
+      </ul>
+
+      <img class="fig" src="../assets/img/praxis1/fig1-rotating-cylinder.png" alt="Figure 1 rotating cylinder"
+           onerror="this.style.display='none'; margin-top:12px;" />
+      <p class="muted small cap">Evidence placeholder: Figure 1 (how the rotating cylinder works + prototype view).</p>
+    </section>
+
+    <!-- CTMFs -->
+    <section id="ctmfs" class="section">
+      <div class="section-head">
+        <h2>CTMFs (4)</h2>
+        <p class="muted">Each CTMF includes: tool → how used → evidence → assessment.</p>
+      </div>
+
+      <div class="grid2">
+        <!-- Frame -->
+        <div class="ctmf-card">
+          <div class="ctmf-top">
+            <h3>Frame</h3>
+            <span class="ctmf-tag">requirements + metrics</span>
+          </div>
+          <p class="muted">
+            <strong>Tool:</strong> Requirements ranking + time-based success metrics.
+          </p>
+          <ul class="list">
+            <li><strong>How used:</strong> translated “annoying routine” into measurable criteria (speed, steps, cleaning, footprint, refill frequency).</li>
+            <li><strong>Evidence:</strong> Appendix A baseline timing + Table 1 requirements.</li>
+            <li><strong>Assessment:</strong> high utility; prevents feature creep and makes “tradeoffs” explicit early.</li>
+          </ul>
+        </div>
+
+        <!-- Diverge -->
+        <div class="ctmf-card">
+          <div class="ctmf-top">
+            <h3>Diverge</h3>
+            <span class="ctmf-tag">mechanism-level options</span>
+          </div>
+          <p class="muted">
+            <strong>Tool:</strong> Concept set + reference-driven ideation.
+          </p>
+          <ul class="list">
+            <li><strong>How used:</strong> explored distinct dispensing mechanisms (rotating, disk, Pez, slider) rather than minor tweaks.</li>
+            <li><strong>Evidence:</strong> concept figures (Figures 1–4) + optional reference design screenshot.</li>
+            <li><strong>Assessment:</strong> high fit; helped avoid early fixation and exposed constraints (size/cleaning/footprint).</li>
+          </ul>
+        </div>
+
+        <!-- Converge -->
+        <div class="ctmf-card">
+          <div class="ctmf-top">
+            <h3>Converge</h3>
+            <span class="ctmf-tag">evidence-based selection</span>
+          </div>
+          <p class="muted">
+            <strong>Tool:</strong> Measurement matrix + PUGH chart (+ pairwise as tie-break).
+          </p>
+          <ul class="list">
+            <li><strong>How used:</strong> used proxy tests to populate comparable metrics, then converged with structured comparison.</li>
+            <li><strong>Evidence:</strong> Table 2 + Table 3 (and Table 4 optional).</li>
+            <li><strong>Assessment:</strong> strongest turning point; converts “preferences” into defensible rationale.</li>
+          </ul>
+        </div>
+
+        <!-- Represent -->
+        <div class="ctmf-card">
+          <div class="ctmf-top">
+            <h3>Represent</h3>
+            <span class="ctmf-tag">evidence trail</span>
+          </div>
+          <p class="muted">
+            <strong>Tool:</strong> Claim → evidence → decision narrative, supported by annotated visuals.
+          </p>
+          <ul class="list">
+            <li><strong>How used:</strong> baseline friction → ranked requirements → concept set → test results → selection rationale → recommended concept.</li>
+            <li><strong>Evidence:</strong> Appendix A + Table 1 + concept grid + Table 2/3 + embedded video.</li>
+            <li><strong>Assessment:</strong> high utility for portfolio grading and future handoff; improves navigation and trust.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hint">
+        If you want to strengthen “Represent”: add one sentence under each figure caption: “This proves ___, therefore we decided ___.”
+      </div>
+    </section>
+
+    <!-- Reflection -->
+    <section id="reflection" class="section">
+      <div class="section-head">
+        <h2>Reflection</h2>
+        <p class="muted">What this changed in my design practice.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>Key lesson:</strong> cleaning complexity (time + part count) is a dominant driver of real adoption, not a “secondary detail.”</li>
+        <li><strong>Practice shift:</strong> I now default to requirements ranking + proxy tests early, then converge using explicit tradeoffs.</li>
+        <li><strong>Next step:</strong> build a higher-fidelity prototype with real powder volumes and run longer-term “refill + cleaning” trials.</li>
+      </ul>
+    </section>
+
+    <!-- Credits -->
+    <section id="credits" class="section">
+      <div class="section-head">
+        <h2>Credits</h2>
+        <p class="muted">Academic integrity: credit teammates and sources.</p>
+      </div>
+
+      <ul class="list">
+        <li><strong>My contribution:</strong> research, reference design exploration, prototype making.</li>
+        <li><strong>Evidence:</strong> measurement matrix / PUGH chart / pairwise comparison + proxy test video.</li>
+        <li><strong>References:</strong> see Design Report (PDF) for bibliography and source extracts.</li>
+      </ul>
+
+      <p style="margin-top:14px;">
+        <a class="link" href="./">← Back to Projects</a>
+      </p>
+    </section>
+
+    <footer class="footer">
+      <div><a class="link" href="../">← Home</a></div>
+      <div class="muted">Praxis I — Morning Supplement Dispenser</div>
+    </footer>
+  </main>
+</body>
+</html>
