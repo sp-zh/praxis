@@ -6,45 +6,40 @@
   <title>WRC FILM — Wheelchair-Mounted RC Filming Gimbal | Praxis II</title>
   <meta name="description" content="WRC FILM — a wheelchair-mounted RC filming gimbal concept enabling a participant with CVI to record more independently." />
   <meta name="theme-color" content="#0b0f19" />
+
+  <!-- IMPORTANT:
+       This page is in /projects/, but your global CSS is at repo root. -->
   <link rel="stylesheet" href="../style.css" />
 
   <style>
-    /* ===== Praxis II page-only styles ===== */
     :root{
       --p2-bg: rgba(255,255,255,0.04);
       --p2-card: rgba(255,255,255,0.06);
-      --p2-card2: rgba(255,255,255,0.08);
       --p2-border: rgba(255,255,255,0.10);
       --p2-text: rgba(255,255,255,0.90);
       --p2-muted: rgba(255,255,255,0.70);
       --p2-soft: rgba(255,255,255,0.55);
+
       --p2-accent: #4db2ff;
       --p2-accent2: #7c5cff;
+
       --p2-good: #41d19a;
-      --p2-warn: #ffcc66;
       --p2-shadow: 0 18px 60px rgba(0,0,0,0.35);
+
       --p2-radius: 18px;
       --p2-radius2: 26px;
       --p2-max: 1120px;
     }
 
-    /* Light theme fix: avoid washed-out + low-contrast look */
+    /* Light theme: make it NOT washed out */
     html[data-theme="light"]{
       --p2-bg: rgba(10,16,30,0.03);
-      --p2-card: rgba(10,16,30,0.04);
-      --p2-card2: rgba(10,16,30,0.06);
-      --p2-border: rgba(10,16,30,0.12);
-      --p2-text: rgba(10,16,30,0.90);
-      --p2-muted: rgba(10,16,30,0.68);
-      --p2-soft: rgba(10,16,30,0.55);
+      --p2-card: rgba(10,16,30,0.045);
+      --p2-border: rgba(10,16,30,0.14);
+      --p2-text: rgba(10,16,30,0.92);
+      --p2-muted: rgba(10,16,30,0.70);
+      --p2-soft: rgba(10,16,30,0.56);
       --p2-shadow: 0 18px 60px rgba(10,16,30,0.12);
-    }
-
-    .p2-wrap{
-      max-width: var(--p2-max);
-      margin: 0 auto;
-      padding: 28px 18px 64px;
-      color: var(--p2-text);
     }
 
     .p2-topbar{
@@ -56,7 +51,6 @@
       max-width: var(--p2-max);
       padding: 0 18px;
     }
-
     .p2-brand{
       display:flex; align-items:center; gap:10px;
       text-decoration:none;
@@ -69,7 +63,6 @@
       background: linear-gradient(135deg, var(--p2-accent), var(--p2-accent2));
       box-shadow: 0 0 0 6px rgba(77,178,255,0.12);
     }
-
     .p2-nav{
       display:flex; align-items:center; gap:14px;
       flex-wrap:wrap;
@@ -88,9 +81,7 @@
       background: var(--p2-bg);
     }
 
-    .p2-actions{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    }
+    .p2-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .p2-btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:8px;
@@ -114,8 +105,14 @@
       background: linear-gradient(135deg, rgba(77,178,255,0.12), rgba(124,92,255,0.10));
     }
     .p2-btn.ghost{ background: transparent; }
-
     .p2-ico{ width:16px;height:16px; display:inline-block; opacity: 0.9; }
+
+    .p2-wrap{
+      max-width: var(--p2-max);
+      margin: 0 auto;
+      padding: 28px 18px 64px;
+      color: var(--p2-text);
+    }
 
     .p2-hero{
       border: 1px solid var(--p2-border);
@@ -126,31 +123,22 @@
       border-radius: var(--p2-radius2);
       box-shadow: var(--p2-shadow);
       padding: 24px;
-      overflow:hidden;
-      position:relative;
     }
     html[data-theme="light"] .p2-hero{
       background:
         radial-gradient(1200px 420px at 10% 10%, rgba(77,178,255,0.10), transparent 62%),
         radial-gradient(980px 420px at 80% 20%, rgba(124,92,255,0.08), transparent 62%),
-        rgba(255,255,255,0.55);
+        rgba(255,255,255,0.56);
     }
-
     .p2-hero-grid{
       display:grid;
       grid-template-columns: 1.35fr 0.65fr;
       gap: 18px;
       align-items:start;
     }
-    @media (max-width: 920px){
-      .p2-hero-grid{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 920px){ .p2-hero-grid{ grid-template-columns: 1fr; } }
 
-    .p2-kicker{
-      font-size: 14px;
-      color: var(--p2-muted);
-      margin-bottom: 10px;
-    }
+    .p2-kicker{ font-size: 14px; color: var(--p2-muted); margin-bottom: 10px; }
     .p2-title{
       font-size: clamp(30px, 4.4vw, 52px);
       line-height: 1.05;
@@ -159,22 +147,17 @@
     }
     .p2-title .accent{
       background: linear-gradient(135deg, var(--p2-accent), var(--p2-accent2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      -webkit-background-clip:text; background-clip:text; color: transparent;
     }
     .p2-sub{
       margin: 0 0 14px;
       color: var(--p2-muted);
-      max-width: 62ch;
+      max-width: 70ch;
       font-size: 16px;
       line-height: 1.55;
     }
 
-    .p2-chips{
-      display:flex; flex-wrap:wrap; gap:8px;
-      margin: 14px 0 0;
-    }
+    .p2-chips{ display:flex; flex-wrap:wrap; gap:8px; margin: 14px 0 0; }
     .p2-chip{
       border: 1px solid var(--p2-border);
       background: var(--p2-bg);
@@ -186,7 +169,6 @@
     .p2-chip strong{ color: var(--p2-text); font-weight:600; }
 
     .p2-side{ display:flex; flex-direction:column; gap: 12px; }
-
     .p2-panel{
       border: 1px solid var(--p2-border);
       background: var(--p2-bg);
@@ -200,12 +182,9 @@
       color: var(--p2-soft);
       text-transform: uppercase;
     }
-
-    .p2-toc{ display:flex; flex-direction:column; gap: 8px; margin-top: 10px; }
+    .p2-toc{ display:flex; flex-direction:column; gap:8px; margin-top: 10px; }
     .p2-toc a{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+      display:flex; align-items:center; justify-content:space-between;
       padding: 10px 12px;
       border-radius: 14px;
       border: 1px solid var(--p2-border);
@@ -232,7 +211,7 @@
       margin: 0 0 10px;
       color: var(--p2-muted);
       line-height: 1.65;
-      max-width: 90ch;
+      max-width: 95ch;
     }
 
     .p2-grid{
@@ -247,25 +226,13 @@
       background: var(--p2-card);
       border-radius: var(--p2-radius);
       padding: 14px;
-      overflow:hidden;
     }
     .p2-card.full{ grid-column: span 12; }
     .p2-card.third{ grid-column: span 4; }
-    @media (max-width: 920px){
-      .p2-card, .p2-card.third{ grid-column: span 12; }
-    }
+    @media (max-width: 920px){ .p2-card, .p2-card.third{ grid-column: span 12; } }
 
-    .p2-card h3{
-      margin: 0 0 6px;
-      font-size: 16px;
-      letter-spacing: -0.1px;
-    }
-    .p2-card p{
-      margin: 0;
-      color: var(--p2-muted);
-      line-height: 1.6;
-      font-size: 14px;
-    }
+    .p2-card h3{ margin: 0 0 6px; font-size: 16px; letter-spacing: -0.1px; }
+    .p2-card p{ margin: 0; color: var(--p2-muted); line-height: 1.6; font-size: 14px; }
 
     .p2-media{
       margin-top: 10px;
@@ -273,37 +240,22 @@
       overflow:hidden;
       border: 1px solid var(--p2-border);
       background: rgba(0,0,0,0.10);
-      position:relative;
     }
     html[data-theme="light"] .p2-media{ background: rgba(10,16,30,0.06); }
-
-    .p2-media img{
-      width:100%;
-      display:block;
-      object-fit:cover;
-      aspect-ratio: 16/9;
-    }
+    .p2-media img{ width:100%; display:block; object-fit:cover; aspect-ratio: 16/9; }
     .p2-media.missing{
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      display:flex; align-items:center; justify-content:center;
       aspect-ratio: 16/9;
       color: var(--p2-muted);
       font-size: 13px;
       padding: 16px;
       text-align:center;
     }
-    .p2-caption{
-      margin-top: 8px;
-      color: var(--p2-soft);
-      font-size: 12.5px;
-      line-height: 1.5;
-    }
+
+    .p2-caption{ margin-top: 8px; color: var(--p2-soft); font-size: 12.5px; line-height: 1.5; }
 
     .p2-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
+      display:inline-flex; align-items:center; gap:8px;
       border-radius:999px;
       padding: 8px 10px;
       border: 1px solid var(--p2-border);
@@ -312,27 +264,6 @@
       font-size: 13px;
     }
     .p2-dot2{ width:10px;height:10px;border-radius:999px;background: var(--p2-good); box-shadow: 0 0 0 6px rgba(65,209,154,0.12); }
-
-    .p2-kv{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    @media (max-width: 920px){ .p2-kv{ grid-template-columns: 1fr; } }
-    .p2-kv .row{
-      border: 1px solid var(--p2-border);
-      background: var(--p2-bg);
-      border-radius: 14px;
-      padding: 10px 12px;
-      color: var(--p2-muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-    .p2-kv .row strong{
-      color: var(--p2-text);
-      font-weight: 650;
-    }
 
     .p2-callout{
       border: 1px solid rgba(77,178,255,0.28);
@@ -347,13 +278,7 @@
     .p2-callout h3{ margin:0 0 6px; font-size: 16px; }
     .p2-callout p{ margin:0; color: var(--p2-muted); line-height:1.6; }
 
-    .p2-list{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--p2-muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
+    .p2-list{ margin: 10px 0 0; padding-left: 18px; color: var(--p2-muted); line-height: 1.7; font-size: 14px; }
     .p2-list li{ margin: 6px 0; }
 
     .p2-links{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px; }
@@ -369,15 +294,8 @@
     html[data-theme="light"] .p2-embed{ background: rgba(10,16,30,0.06); }
     @media (max-width: 920px){ .p2-embed{ height: 420px; } }
 
-    .p2-footer{
-      margin-top: 18px;
-      color: var(--p2-soft);
-      font-size: 12.5px;
-      line-height: 1.6;
-    }
+    .p2-footer{ margin-top: 18px; color: var(--p2-soft); font-size: 12.5px; line-height: 1.6; }
     .p2-footer a{ color: var(--p2-text); }
-
-    .p2-split{ display:flex; align-items:center; justify-content:space-between; gap: 10px; flex-wrap:wrap; }
   </style>
 </head>
 
@@ -406,6 +324,7 @@
   </header>
 
   <main class="p2-wrap">
+    <!-- HERO -->
     <section class="p2-hero" id="top">
       <div class="p2-hero-grid">
         <div>
@@ -436,16 +355,15 @@
         <aside class="p2-side">
           <div class="p2-panel">
             <h3>Featured media</h3>
-
             <figure class="p2-media" id="p2CoverWrap">
               <img
-                src="../assets/img/praxis2-cover.jpg"
-                alt="Project cover image for WRC FILM (replace with your own cover)"
-                onerror="this.remove();document.getElementById('p2CoverWrap').classList.add('missing');document.getElementById('p2CoverWrap').textContent='Cover placeholder: put your image at assets/img/praxis2-cover.jpg';"
+                src="assets/img/praxis2-cover.jpg"
+                alt="Project cover image for WRC FILM"
+                onerror="this.remove();document.getElementById('p2CoverWrap').classList.add('missing');document.getElementById('p2CoverWrap').textContent='Cover placeholder: put image at projects/assets/img/praxis2-cover.jpg';"
               />
             </figure>
             <figcaption class="p2-caption">
-              Cover placeholder. Put your image at: <code>assets/img/praxis2-cover.jpg</code>
+              Put your cover at: <code>projects/assets/img/praxis2-cover.jpg</code>
             </figcaption>
           </div>
 
@@ -468,6 +386,11 @@
     <!-- SUMMARY -->
     <section class="p2-section" id="summary">
       <h2>1) Summary</h2>
+
+      <p class="p2-lead">
+        This project page is organized to function as a personal engineering handbook: it is meant to be navigable,
+        evidence-forward, and useful to future-me when planning and validating designs in new contexts.
+      </p>
 
       <p class="p2-lead">
         Pegasus Toronto is a day support program in the GTA for adults with developmental disabilities (“participants”).
@@ -506,18 +429,15 @@
 
         <div class="p2-card">
           <h3>Deliverables</h3>
-          <p>
-            This page is written to support fast assessment: clear navigation, direct evidence links, and captions that connect claims to visuals.
-          </p>
-
+          <p>PDFs are stored at <code>projects/assets/docs/</code>.</p>
           <div class="p2-links">
-            <a class="p2-btn" href="../assets/docs/one-page-brochure.pdf" target="_blank" rel="noreferrer">Brochure (PDF)</a>
-            <a class="p2-btn" href="../assets/docs/poster.pdf" target="_blank" rel="noreferrer">Poster (PDF)</a>
-            <a class="p2-btn" href="../assets/docs/final-rfp.pdf" target="_blank" rel="noreferrer">RFP (PDF)</a>
+            <a class="p2-btn" href="assets/docs/one-page-brochure.pdf" target="_blank" rel="noreferrer">Brochure (PDF)</a>
+            <a class="p2-btn" href="assets/docs/showcase-poster.pdf" target="_blank" rel="noreferrer">Poster (PDF)</a>
+            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Final RFP (PDF)</a>
+            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">To Print (PDF)</a>
           </div>
-
           <p class="p2-caption">
-            Put PDFs in <code>assets/docs/</code> using the filenames above.
+            Note: the link to <code>To Print.pdf</code> uses URL encoding because the filename contains a space.
           </p>
         </div>
 
@@ -533,21 +453,14 @@
       </div>
 
       <h3 style="margin-top:18px;">Embedded PDFs (optional)</h3>
-      <p class="p2-lead">
-        If you upload the PDFs to the paths below, they will render inline here.
-      </p>
-
       <div class="p2-grid">
         <div class="p2-card">
           <h3>Brochure</h3>
-          <iframe class="p2-embed" src="../assets/docs/one-page-brochure.pdf" title="Brochure PDF"></iframe>
-          <div class="p2-caption">Path: <code>assets/docs/one-page-brochure.pdf</code></div>
+          <iframe class="p2-embed" src="assets/docs/one-page-brochure.pdf" title="Brochure PDF"></iframe>
         </div>
-
         <div class="p2-card">
           <h3>Poster</h3>
-          <iframe class="p2-embed" src="../assets/docs/poster.pdf" title="Poster PDF"></iframe>
-          <div class="p2-caption">Path: <code>assets/docs/poster.pdf</code></div>
+          <iframe class="p2-embed" src="assets/docs/showcase-poster.pdf" title="Poster PDF"></iframe>
         </div>
       </div>
     </section>
@@ -567,7 +480,7 @@
         <ul class="p2-list">
           <li><strong>Agency over assumptions:</strong> Independence was a design outcome, not a bonus feature.</li>
           <li><strong>Collaboration over extraction:</strong> Stakeholders shaped requirements and what we tested first.</li>
-          <li><strong>Verification over intentions:</strong> Requirements were treated as testable claims; if evidence contradicted an assumption, we revised it.</li>
+          <li><strong>Verification over intentions:</strong> If evidence contradicted an assumption, we revised it.</li>
         </ul>
       </div>
     </section>
@@ -576,8 +489,8 @@
     <section class="p2-section" id="concepts">
       <h2>3) Concepts</h2>
       <p class="p2-lead">
-        We explored three concept families to reduce accessibility barriers for independent filming. Showing all three documents
-        the design space and the evidence-based convergence.
+        We explored three concept families to reduce accessibility barriers for independent filming.
+        Showing all three documents the design space and the evidence-based convergence.
       </p>
 
       <div class="p2-grid">
@@ -588,8 +501,8 @@
             Risk: stability and safety depending on mounting position and motion range.
           </p>
           <figure class="p2-media" id="p2HandlebarImg">
-            <img src="../assets/img/praxis2-handlebar.jpg" alt="Handlebar concept"
-              onerror="this.remove();document.getElementById('p2HandlebarImg').classList.add('missing');document.getElementById('p2HandlebarImg').textContent='Add image: assets/img/praxis2-handlebar.jpg';" />
+            <img src="assets/img/praxis2-handlebar.jpg" alt="Handlebar concept"
+              onerror="this.remove();document.getElementById('p2HandlebarImg').classList.add('missing');document.getElementById('p2HandlebarImg').textContent='Add image: projects/assets/img/praxis2-handlebar.jpg';" />
           </figure>
           <div class="p2-caption">Caption: what it tests + key risk observed.</div>
         </div>
@@ -601,8 +514,8 @@
             Chosen to advance based on verification feedback.
           </p>
           <figure class="p2-media" id="p2GimbalImg">
-            <img src="../assets/img/praxis2-gimbal.jpg" alt="Gimbal concept"
-              onerror="this.remove();document.getElementById('p2GimbalImg').classList.add('missing');document.getElementById('p2GimbalImg').textContent='Add image: assets/img/praxis2-gimbal.jpg';" />
+            <img src="assets/img/praxis2-gimbal.jpg" alt="Gimbal concept"
+              onerror="this.remove();document.getElementById('p2GimbalImg').classList.add('missing');document.getElementById('p2GimbalImg').textContent='Add image: projects/assets/img/praxis2-gimbal.jpg';" />
           </figure>
           <div class="p2-caption">Caption: show monitor placement + DOF + stability.</div>
         </div>
@@ -613,8 +526,8 @@
             Translational camera movement via slider. Risk: friction / sustained force can cause strain over time.
           </p>
           <figure class="p2-media" id="p2SliderImg">
-            <img src="../assets/img/praxis2-slider.jpg" alt="Slider concept"
-              onerror="this.remove();document.getElementById('p2SliderImg').classList.add('missing');document.getElementById('p2SliderImg').textContent='Add image: assets/img/praxis2-slider.jpg';" />
+            <img src="assets/img/praxis2-slider.jpg" alt="Slider concept"
+              onerror="this.remove();document.getElementById('p2SliderImg').classList.add('missing');document.getElementById('p2SliderImg').textContent='Add image: projects/assets/img/praxis2-slider.jpg';" />
           </figure>
           <div class="p2-caption">Caption: what it enables + why it may fatigue the user.</div>
         </div>
@@ -622,9 +535,7 @@
 
       <div class="p2-callout" style="margin-top:14px;">
         <h3>Chosen direction (explicit)</h3>
-        <p>
-          The concept recommended to move into the next phase is <strong>Gimbal</strong>.
-        </p>
+        <p>The concept recommended to move into the next phase is <strong>Gimbal</strong>.</p>
       </div>
     </section>
 
@@ -642,94 +553,77 @@
           <ul class="p2-list">
             <li>Keeps the viewing interface in a comfortable field of vision.</li>
             <li>Provides pan/tilt degrees of freedom while minimizing vibration.</li>
-            <li>Uses simplified, high-contrast, tactile controls to reduce reliance on low-contrast GoPro buttons.</li>
+            <li>Uses simplified, high-contrast, tactile controls (less reliance on low-contrast camera buttons).</li>
             <li>Supports quick setup so staff can deploy it reliably in real sessions.</li>
           </ul>
         </div>
 
         <div class="p2-card">
-          <h3>Constraints we designed around</h3>
-          <div class="p2-kv">
-            <div class="row"><strong>Comfort:</strong> reduce sustained holding and awkward posture.</div>
-            <div class="row"><strong>Quality:</strong> avoid visible camera shake.</div>
-            <div class="row"><strong>Safety:</strong> stable mounting and predictable motion.</div>
-            <div class="row"><strong>Deployment:</strong> quick setup/removal and durability.</div>
-          </div>
-        </div>
-
-        <div class="p2-card full">
           <h3>Evidence links</h3>
-          <p>
-            These documents contain detailed requirements, verification notes, and decision evidence.
-          </p>
           <div class="p2-links">
-            <a class="p2-btn" href="../assets/docs/final-rfp.pdf" target="_blank" rel="noreferrer">RFP (PDF)</a>
-            <a class="p2-btn" href="../assets/docs/meeting-minutes.pdf" target="_blank" rel="noreferrer">Meeting minutes (PDF)</a>
-            <a class="p2-btn" href="../assets/docs/to-print.pdf" target="_blank" rel="noreferrer">To Print (PDF)</a>
+            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Final RFP</a>
+            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">To Print</a>
           </div>
-          <p class="p2-caption">
-            Keep files in <code>assets/docs/</code> (no extra subfolders).
-          </p>
+          <p class="p2-caption">All files are under <code>projects/assets/docs/</code>.</p>
         </div>
       </div>
     </section>
 
     <!-- CTMFS -->
     <section class="p2-section" id="ctmfs">
-      <h2>4) CTMF evaluations (≥3)</h2>
+      <h2>4) CTMF evaluations (≥4)</h2>
       <p class="p2-lead">
-        Each CTMF below includes: evidence of use, utility & fit (critical evaluation), and what I would change next time.
+        Each CTMF below is written as: evidence of use, utility & fit (critical evaluation), and what I would change next time.
+        (This structure is intentional: it makes the page usable as a personal handbook.)
       </p>
 
       <div class="p2-grid">
+        <!-- CTMF 1 -->
         <div class="p2-card full">
           <h3>CTMF 1 — Request for Proposal (RFP)</h3>
           <p>
-            <strong>Evidence of use:</strong> We <strong>revised and refined</strong> our RFP to clearly define the community context,
-            primary stakeholder, stakeholder values, and a structured Need–Goals–Objectives (NGO) tree. This helped us keep
-            requirements measurable and traceable to verification plans.
+            <strong>Evidence of use:</strong> We revised and refined the RFP to define community context, primary stakeholder constraints,
+            and a structured Needs–Goals–Objectives framing that guided what we tested first.
           </p>
           <p style="margin-top:10px;">
-            <strong>Utility & fit:</strong> The RFP was effective at preventing “solution-first” thinking and aligning the team on what
-            success means. Its main risk is false certainty: early objectives can embed assumptions.
+            <strong>Utility & fit:</strong> The RFP prevented “solution-first” thinking and aligned the team on what success means.
+            The main risk is false certainty: early objectives can embed assumptions.
           </p>
           <p style="margin-top:10px;">
             <strong>Next time:</strong> I would label which objectives are verified vs unverified and attach a short verification plan to each.
           </p>
-
           <div class="p2-links">
-            <a class="p2-btn" href="../assets/docs/final-rfp.pdf" target="_blank" rel="noreferrer">Open RFP</a>
-            <a class="p2-btn" href="../assets/img/praxis2-ngo-tree.png" target="_blank" rel="noreferrer">NGO tree (image)</a>
+            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Open Final RFP</a>
+            <a class="p2-btn" href="assets/img/praxis2-ngo-tree.png" target="_blank" rel="noreferrer">NGO tree (image)</a>
           </div>
-          <p class="p2-caption">
-            Put the NGO tree screenshot at <code>assets/img/praxis2-ngo-tree.png</code>.
-          </p>
         </div>
 
+        <!-- CTMF 2 -->
         <div class="p2-card full">
           <h3>CTMF 2 — Functional decomposition</h3>
           <p>
             <strong>Evidence of use:</strong> We decomposed “independent filming” into designable functions (stabilize, control pan/tilt,
-            provide usable view, start/stop recording, mount safely, deploy quickly). This enabled modular ideation.
+            provide usable view, start/stop recording, mount safely, deploy quickly).
           </p>
           <p style="margin-top:10px;">
             <strong>Utility & fit:</strong> It helped us evaluate concepts fairly: a concept may look elegant but fail “deploy safely” or “learn quickly.”
           </p>
           <p style="margin-top:10px;">
-            <strong>Next time:</strong> I would pair decomposition with an explicit interaction-cost layer (physical + visual + cognitive load).
+            <strong>Next time:</strong> Pair decomposition with an explicit interaction-cost layer (physical + visual + cognitive load).
           </p>
-
           <div class="p2-links">
-            <a class="p2-btn" href="../assets/img/praxis2-functional-decomp.png" target="_blank" rel="noreferrer">Functional decomposition (image)</a>
-            <a class="p2-btn" href="../assets/img/praxis2-morph-chart.png" target="_blank" rel="noreferrer">Morph chart (image)</a>
+            <a class="p2-btn" href="assets/img/praxis2-functional-decomp.png" target="_blank" rel="noreferrer">Functional decomposition</a>
+            <a class="p2-btn" href="assets/img/praxis2-morph-chart.png" target="_blank" rel="noreferrer">Morph chart</a>
           </div>
         </div>
 
+        <!-- CTMF 3 -->
         <div class="p2-card full">
           <h3>CTMF 3 — Proxy tests & verification</h3>
           <p>
-            <strong>Evidence of use:</strong> We compared Handlebar / Gimbal / Slider using proxies and verification notes to identify low-strain,
-            stable, learnable interaction patterns. This directly supported convergence on the gimbal direction.
+            <strong>Evidence of use:</strong> We compared Handlebar / Gimbal / Slider using proxy verification.
+            We set measurable requirements (e.g., viewing distance rule, 2 axes of freedom, max operating force, weight, and vibration) and used
+            stakeholder validation + our own verification to converge on the gimbal direction.
           </p>
           <p style="margin-top:10px;">
             <strong>Utility & fit:</strong> Proxy testing converted debates into observable evidence and reduced the risk of building the wrong thing.
@@ -737,12 +631,32 @@
           <p style="margin-top:10px;">
             <strong>Next time:</strong> Repeat the key test across multiple sessions and pre-register success criteria for each proxy.
           </p>
-
           <div class="p2-links">
-            <a class="p2-btn" href="../assets/docs/to-print.pdf" target="_blank" rel="noreferrer">Open “To Print”</a>
-            <a class="p2-btn" href="../assets/img/praxis2-verification.jpg" target="_blank" rel="noreferrer">Verification photo</a>
+            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">Open “To Print”</a>
+            <a class="p2-btn" href="assets/img/praxis2-verification.jpg" target="_blank" rel="noreferrer">Verification photo</a>
           </div>
         </div>
+
+        <!-- CTMF 4 (NEW) -->
+        <div class="p2-card full">
+          <h3>CTMF 4 — Reference design analysis</h3>
+          <p>
+            <strong>Evidence of use:</strong> We analyzed reference designs (existing mounts, pan/tilt systems, clamps) to identify consistent strengths and failure modes
+            relevant to Jonathan: stable structural support reduces sustained holding and vibration, while remote control interfaces can fail if they lack tactile/visual contrast.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Utility & fit:</strong> Reference analysis prevented reinvention and helped us justify why the gimbal concept needs:
+            (1) a stable mount/clamp strategy, and (2) a control interface designed for low-vision/tactile clarity.
+          </p>
+          <p style="margin-top:10px;">
+            <strong>Next time:</strong> I would formalize reference insights into a “requirements stress test” checklist:
+            for each objective, list which reference design fails it and why—so tradeoffs stay explicit during prototyping.
+          </p>
+          <div class="p2-links">
+            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Reference designs in RFP</a>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -750,7 +664,7 @@
     <section class="p2-section" id="gallery">
       <h2>5) Visuals</h2>
       <p class="p2-lead">
-        Add captions that connect each visual to a claim (comfort, stability, learnability, deployment).
+        Captions should connect each visual to a claim (comfort, stability, learnability, deployment).
         A good caption is: Claim → Evidence → So-what.
       </p>
 
@@ -758,8 +672,8 @@
         <div class="p2-card">
           <h3>Team photo</h3>
           <figure class="p2-media" id="p2TeamImg">
-            <img src="../assets/img/praxis2-team.jpg" alt="Team photo"
-              onerror="this.remove();document.getElementById('p2TeamImg').classList.add('missing');document.getElementById('p2TeamImg').textContent='Add image: assets/img/praxis2-team.jpg';" />
+            <img src="assets/img/praxis2-team.jpg" alt="Team photo"
+              onerror="this.remove();document.getElementById('p2TeamImg').classList.add('missing');document.getElementById('p2TeamImg').textContent='Add image: projects/assets/img/praxis2-team.jpg';" />
           </figure>
           <div class="p2-caption">Caption: who is in the photo + what part of the work this moment represents.</div>
         </div>
@@ -767,8 +681,8 @@
         <div class="p2-card">
           <h3>Three concepts</h3>
           <figure class="p2-media" id="p2ThreeConceptsImg">
-            <img src="../assets/img/praxis2-three-concepts.jpg" alt="Three concepts"
-              onerror="this.remove();document.getElementById('p2ThreeConceptsImg').classList.add('missing');document.getElementById('p2ThreeConceptsImg').textContent='Add image: assets/img/praxis2-three-concepts.jpg';" />
+            <img src="assets/img/praxis2-three-concepts.jpg" alt="Three concepts"
+              onerror="this.remove();document.getElementById('p2ThreeConceptsImg').classList.add('missing');document.getElementById('p2ThreeConceptsImg').textContent='Add image: projects/assets/img/praxis2-three-concepts.jpg';" />
           </figure>
           <div class="p2-caption">Caption: what each prototype tests + why gimbal converged.</div>
         </div>
@@ -780,10 +694,9 @@
             and tie each label to a requirement.
           </p>
           <figure class="p2-media" id="p2AnnotatedImg">
-            <img src="../assets/img/praxis2-annotated-gimbal.png" alt="Annotated gimbal"
-              onerror="this.remove();document.getElementById('p2AnnotatedImg').classList.add('missing');document.getElementById('p2AnnotatedImg').textContent='Add image: assets/img/praxis2-annotated-gimbal.png';" />
+            <img src="assets/img/praxis2-annotated-gimbal.png" alt="Annotated gimbal"
+              onerror="this.remove();document.getElementById('p2AnnotatedImg').classList.add('missing');document.getElementById('p2AnnotatedImg').textContent='Add image: projects/assets/img/praxis2-annotated-gimbal.png';" />
           </figure>
-          <div class="p2-caption">Path: <code>assets/img/praxis2-annotated-gimbal.png</code></div>
         </div>
       </div>
     </section>
@@ -791,9 +704,7 @@
     <!-- CREDITS -->
     <section class="p2-section" id="credits">
       <h2>Credits</h2>
-      <p class="p2-lead">
-        Explicitly credit teammates and describe contributions.
-      </p>
+      <p class="p2-lead">Explicitly credit teammates and describe contributions.</p>
 
       <div class="p2-grid">
         <div class="p2-card full">
@@ -816,7 +727,6 @@
   </main>
 
   <script>
-    // Theme toggle (simple, self-contained)
     (function(){
       const key = "praxis_theme";
       const root = document.documentElement;
