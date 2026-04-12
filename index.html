@@ -4,13 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Praxis | Project Showcase</title>
-  <meta name="description" content="A clean, evidence-first hub for deliverables, design decisions, and reflections." />
+  <meta name="description" content="A clean, evidence-first hub for deliverables, Praxis concepts, and project pages." />
   <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Cover placeholders (so you don't need to edit style.css) -->
+  <!-- Cover placeholders (no need to edit style.css) -->
   <style>
     .proj-link { display:block; }
+
     .proj-cover{
       aspect-ratio: 16 / 9;
       border-radius: 16px;
@@ -49,6 +50,39 @@
       color: var(--muted);
       opacity: .9;
     }
+
+    /* Praxis concept cards */
+    .concept-grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 920px){
+      .concept-grid{ grid-template-columns: 1fr 1fr; }
+    }
+    .concept-card{
+      border: 1px solid var(--line);
+      background: var(--panel2);
+      border-radius: 18px;
+      padding: 14px;
+    }
+    .concept-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .concept-top h3{ margin:0; }
+    .concept-tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      white-space: nowrap;
+    }
   </style>
 </head>
 
@@ -68,6 +102,7 @@
       </a>
 
       <nav class="nav-links" aria-label="Primary">
+        <a href="#praxis">Praxis concepts</a>
         <a href="#deliverables">Deliverables</a>
         <a href="#projects">Projects</a>
         <a href="#process">Process</a>
@@ -97,7 +132,7 @@
         </h1>
 
         <p class="lead">
-          A clean, evidence-first hub for deliverables, design decisions, and reflections.
+          Evidence-first documentation of design work, guided by reusable Praxis concepts and tools.
         </p>
 
         <div class="chips">
@@ -111,13 +146,13 @@
             View Projects
             <span class="arrow">→</span>
           </a>
-          <a class="btn ghost" href="#deliverables">Jump to Deliverables</a>
+          <a class="btn ghost" href="#praxis">Praxis concepts</a>
         </div>
 
-        <!-- Direct jump links (optional but useful) -->
+        <!-- Direct jump links -->
         <div class="proj-actions" style="margin-top:12px;">
           <a class="link" href="projects/civ102-bridge.html">CIV102 Bridge →</a>
-          <a class="link" href="projects/praxis1-shakerbottle.html">Praxis I Shaker Bottle →</a>
+          <a class="link" href="projects/praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser →</a>
           <a class="link" href="projects/praxis2-filming.html">Praxis II Filming →</a>
         </div>
       </div>
@@ -126,10 +161,10 @@
         <div class="metric-card">
           <div class="metric-top">
             <span class="badge">Now</span>
-            <span class="muted">Status</span>
+            <span class="muted">Mode</span>
           </div>
-          <div class="metric-title">Building & documenting</div>
-          <div class="metric-sub">Process → Evidence → Outcome</div>
+          <div class="metric-title">Process → Evidence → Outcome</div>
+          <div class="metric-sub">Write so future-me can reuse it.</div>
 
           <div class="mini-grid">
             <div class="mini">
@@ -145,24 +180,101 @@
               <div class="mini-v">Tradeoffs</div>
             </div>
             <div class="mini">
-              <div class="mini-k">Represent</div>
-              <div class="mini-v">Clarity</div>
+              <div class="mini-k">Test</div>
+              <div class="mini-v">Evidence</div>
             </div>
           </div>
         </div>
 
         <div class="glass-card">
           <div class="glass-title">Quick links</div>
+          <a class="q" href="#praxis">Praxis concepts</a>
           <a class="q" href="#deliverables">Deliverables</a>
           <a class="q" href="#projects">Projects</a>
           <a class="q" href="#process">Process</a>
-          <a class="q" href="#about">About</a>
         </div>
       </div>
     </div>
   </header>
 
   <main class="container main">
+    <!-- Praxis Concepts -->
+    <section id="praxis" class="section">
+      <div class="section-head">
+        <h2>Praxis concepts</h2>
+        <p class="muted">
+          A small “legend” so a reader can understand how my pages are structured (and how to navigate the evidence).
+        </p>
+      </div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>CTMF（Concepts, Tools, Models, Frameworks）</h3>
+            <span class="concept-tag">portfolio building blocks</span>
+          </div>
+          <p class="muted">
+            A CTMF is something I reuse across projects: a <strong>Concept（概念）</strong>, <strong>Tool（工具）</strong>,
+            <strong>Model（模型）</strong>, or <strong>Framework（框架）</strong>. Each CTMF on this site is linked to:
+            (1) evidence of use, and (2) a short assessment of utility/fit.
+          </p>
+          <ul class="list">
+            <li><strong>Example tools:</strong> requirements table, measurement matrix, PUGH chart, pairwise comparison</li>
+            <li><strong>Example frameworks:</strong> FDCT loop, stakeholder mapping</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>FDCT（Frame, Diverge, Converge, Test）</h3>
+            <span class="concept-tag">process loop</span>
+          </div>
+          <p class="muted">
+            A practical iteration loop I use to keep work evidence-first:
+            <strong>Frame（定义）</strong> the problem and success metrics → <strong>Diverge（发散）</strong> options →
+            <strong>Converge（收敛）</strong> with explicit tradeoffs → <strong>Test（测试）</strong> to validate claims.
+          </p>
+          <ul class="list">
+            <li><strong>Frame:</strong> constraints, stakeholders, measurable success</li>
+            <li><strong>Test:</strong> proxy tests, stakeholder feedback, verification tables</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>Tools（常用工具）</h3>
+            <span class="concept-tag">decision + evidence</span>
+          </div>
+          <ul class="list">
+            <li><strong>Requirements table（需求表）:</strong> turns complaints into testable criteria.</li>
+            <li><strong>Measurement matrix（测量矩阵）:</strong> compares concepts with numbers, not vibes.</li>
+            <li><strong>PUGH chart（PUGH 图）:</strong> structured comparison vs a reference concept.</li>
+            <li><strong>Pairwise comparison（两两比较）:</strong> resolves close calls through debate + judging.</li>
+            <li><strong>Proxy test（代理测试）:</strong> fast evidence before high-fidelity builds.</li>
+          </ul>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>Evidence trail（证据链）</h3>
+            <span class="concept-tag">navigation</span>
+          </div>
+          <p class="muted">
+            Every major claim should have a nearby link to supporting evidence (figure/table/report/video).
+            This makes grading fast and makes the work reusable for future projects.
+          </p>
+          <ul class="list">
+            <li><strong>Pattern:</strong> Claim → Evidence → So-what</li>
+            <li><strong>Rule:</strong> if a reader can’t find evidence in 10 seconds, it’s not “documented” yet.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hint">
+        This section is intentionally short: it’s just enough for a reader to interpret the rest of the site quickly.
+      </div>
+    </section>
+
     <!-- Deliverables -->
     <section id="deliverables" class="section">
       <div class="section-head">
@@ -211,7 +323,7 @@
       </div>
 
       <div class="hint">
-        <strong>Tip:</strong> upload PDFs into <code>assets/docs/</code> and keep filenames consistent with the links above.
+        Tip: keep filenames stable during grading. If a file changes, update the link here.
       </div>
     </section>
 
@@ -220,7 +332,7 @@
       <div class="section-head row">
         <div>
           <h2>Projects</h2>
-          <p class="muted">Three featured projects with cover placeholders and direct navigation.</p>
+          <p class="muted">Three featured projects with cover images and direct navigation.</p>
         </div>
         <a class="pill-btn" href="projects/">All projects</a>
       </div>
@@ -229,13 +341,13 @@
         <!-- CIV102 Bridge -->
         <a class="proj proj-link" href="projects/civ102-bridge.html" aria-label="Open CIV102 Bridge">
           <div class="proj-cover">
-            <!-- Replace image file yourself: assets/img/covers/civ102-bridge.jpg -->
-            <img src="assets/img/covers/civ102-bridge.jpg"
+            <img src="assets/img/civ102-bridge.jpg"
                  alt="CIV102 Bridge cover"
+                 onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
               CIV102 Bridge cover image
-              <small>Put your image at: assets/img/covers/civ102-bridge.jpg</small>
+              <small>Put your image at: assets/img/civ102-bridge.jpg</small>
             </div>
           </div>
 
@@ -248,52 +360,52 @@
           </p>
           <ul class="list">
             <li><strong>Focus:</strong> buckling risk, strength-to-weight, constructibility</li>
-            <li><strong>Artifacts:</strong> design report, annotated figures</li>
+            <li><strong>Artifacts:</strong> report, annotated figures</li>
           </ul>
           <div class="proj-actions">
             <span class="link">Open →</span>
           </div>
         </a>
 
-        <!-- Praxis I Shaker Bottle -->
-        <a class="proj proj-link" href="projects/praxis1-shakerbottle.html" aria-label="Open Praxis I Shaker Bottle">
+        <!-- Praxis I -->
+        <a class="proj proj-link" href="projects/praxis1-morning-supplement-dispenser.html" aria-label="Open Praxis I Morning Supplement Dispenser">
           <div class="proj-cover">
-            <!-- Replace image file yourself: assets/img/covers/praxis1-shaker.jpg -->
-            <img src="assets/img/covers/praxis1-shaker.jpg"
-                 alt="Praxis I Shaker Bottle cover"
+            <img src="assets/img/praxis1.jpg"
+                 alt="Praxis I cover"
+                 onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
-              Praxis I Shaker Bottle cover image
-              <small>Put your image at: assets/img/covers/praxis1-shaker.jpg</small>
+              Praxis I cover image
+              <small>Put your image at: assets/img/praxis1.jpg</small>
             </div>
           </div>
 
           <div class="proj-top">
-            <h3>Praxis I Shaker Bottle</h3>
+            <h3>Praxis I Morning Supplement Dispenser</h3>
             <span class="pill">product</span>
           </div>
           <p class="muted">
-            Problem framing → ideation → prototype → evaluation. Evidence-first iteration.
+            Evidence-first concept selection using proxy tests, measurement matrix, and structured convergence.
           </p>
           <ul class="list">
-            <li><strong>Focus:</strong> stakeholders, constraints, user feedback</li>
-            <li><strong>Artifacts:</strong> one-pager, evidence links</li>
+            <li><strong>Focus:</strong> usability friction (time/steps/cleaning) + dorm constraints</li>
+            <li><strong>Artifacts:</strong> final report, prototype</li>
           </ul>
           <div class="proj-actions">
             <span class="link">Open →</span>
           </div>
         </a>
 
-        <!-- Praxis II Filming -->
+        <!-- Praxis II -->
         <a class="proj proj-link" href="projects/praxis2-filming.html" aria-label="Open Praxis II Filming">
           <div class="proj-cover">
-            <!-- Replace image file yourself: assets/img/covers/praxis2-filming.jpg -->
-            <img src="assets/img/covers/praxis2-filming.jpg"
-                 alt="Praxis II Filming cover"
+            <img src="assets/img/praxis2.jpg"
+                 alt="Praxis II cover"
+                 onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
-              Praxis II Filming cover image
-              <small>Put your image at: assets/img/covers/praxis2-filming.jpg</small>
+              Praxis II cover image
+              <small>Put your image at: assets/img/praxis2.jpg</small>
             </div>
           </div>
 
@@ -305,8 +417,8 @@
             Filming workflow + narrative structure + representation choices for an audience.
           </p>
           <ul class="list">
-            <li><strong>Focus:</strong> communication, story, evidence & clarity</li>
-            <li><strong>Artifacts:</strong> video link, storyboard, reflection</li>
+            <li><strong>Focus:</strong> stakeholder</li>
+            <li><strong>Artifacts:</strong> showcase, prototype</li>
           </ul>
           <div class="proj-actions">
             <span class="link">Open →</span>
@@ -315,7 +427,8 @@
       </div>
 
       <div class="hint">
-        Covers are placeholders. Upload your images into <code>assets/img/covers/</code> and keep the filenames above.
+        Image rule (your request): all images live directly under <code>assets/img/</code> (no subfolders).
+        Keep names exact to avoid 404.
       </div>
     </section>
 
@@ -323,7 +436,7 @@
     <section id="process" class="section">
       <div class="section-head">
         <h2>Process</h2>
-        <p class="muted">A simple structure: Frame → Diverge → Converge → Represent.</p>
+        <p class="muted">A simple structure to keep work rigorous and reusable.</p>
       </div>
 
       <div class="step-grid">
@@ -344,8 +457,8 @@
         </div>
         <div class="step">
           <div class="step-n">04</div>
-          <div class="step-t">Represent</div>
-          <div class="step-d">Communicate clearly with visuals, tables, and narrative.</div>
+          <div class="step-t">Test</div>
+          <div class="step-d">Verify claims; validate with stakeholder feedback when possible.</div>
         </div>
       </div>
     </section>
