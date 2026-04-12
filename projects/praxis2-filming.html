@@ -6,9 +6,6 @@
   <title>WRC FILM — Wheelchair-Mounted RC Filming Gimbal | Praxis II</title>
   <meta name="description" content="WRC FILM — a wheelchair-mounted RC filming gimbal concept enabling a participant with CVI to record more independently." />
   <meta name="theme-color" content="#0b0f19" />
-
-  <!-- IMPORTANT:
-       This page is in /projects/, but your global CSS is at repo root. -->
   <link rel="stylesheet" href="../style.css" />
 
   <style>
@@ -19,19 +16,15 @@
       --p2-text: rgba(255,255,255,0.90);
       --p2-muted: rgba(255,255,255,0.70);
       --p2-soft: rgba(255,255,255,0.55);
-
       --p2-accent: #4db2ff;
       --p2-accent2: #7c5cff;
-
       --p2-good: #41d19a;
       --p2-shadow: 0 18px 60px rgba(0,0,0,0.35);
-
       --p2-radius: 18px;
       --p2-radius2: 26px;
       --p2-max: 1120px;
     }
 
-    /* Light theme: make it NOT washed out */
     html[data-theme="light"]{
       --p2-bg: rgba(10,16,30,0.03);
       --p2-card: rgba(10,16,30,0.045);
@@ -243,14 +236,6 @@
     }
     html[data-theme="light"] .p2-media{ background: rgba(10,16,30,0.06); }
     .p2-media img{ width:100%; display:block; object-fit:cover; aspect-ratio: 16/9; }
-    .p2-media.missing{
-      display:flex; align-items:center; justify-content:center;
-      aspect-ratio: 16/9;
-      color: var(--p2-muted);
-      font-size: 13px;
-      padding: 16px;
-      text-align:center;
-    }
 
     .p2-caption{ margin-top: 8px; color: var(--p2-soft); font-size: 12.5px; line-height: 1.5; }
 
@@ -296,6 +281,14 @@
 
     .p2-footer{ margin-top: 18px; color: var(--p2-soft); font-size: 12.5px; line-height: 1.6; }
     .p2-footer a{ color: var(--p2-text); }
+
+    .p2-grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    @media (max-width: 920px){ .p2-grid-2{ grid-template-columns: 1fr; } }
   </style>
 </head>
 
@@ -311,7 +304,7 @@
       <a href="../index.html#projects">Projects</a>
       <a href="../index.html#process">Process</a>
       <a href="../index.html#about">About</a>
-      <a href="./index.html" title="Projects directory index">Projects Index</a>
+      <a href="./index.html">Projects Index</a>
     </nav>
 
     <div class="p2-actions">
@@ -324,7 +317,6 @@
   </header>
 
   <main class="p2-wrap">
-    <!-- HERO -->
     <section class="p2-hero" id="top">
       <div class="p2-hero-grid">
         <div>
@@ -340,8 +332,8 @@
 
           <div class="p2-chips" aria-label="Project metadata">
             <span class="p2-chip"><strong>Community:</strong> Pegasus Toronto (Matty Eckler Community Centre)</span>
-            <span class="p2-chip"><strong>Primary stakeholder:</strong> Jonathan (CVI)</span>
-            <span class="p2-chip"><strong>Chosen direction:</strong> Gimbal</span>
+            <span class="p2-chip"><strong>Stakeholder:</strong> Jonathan (CVI)</span>
+            <span class="p2-chip"><strong>Direction:</strong> Gimbal</span>
           </div>
 
           <div class="p2-links">
@@ -355,16 +347,9 @@
         <aside class="p2-side">
           <div class="p2-panel">
             <h3>Featured media</h3>
-            <figure class="p2-media" id="p2CoverWrap">
-              <img
-                src="assets/img/praxis2-cover.jpg"
-                alt="Project cover image for WRC FILM"
-                onerror="this.remove();document.getElementById('p2CoverWrap').classList.add('missing');document.getElementById('p2CoverWrap').textContent='Cover placeholder: put image at projects/assets/img/praxis2-cover.jpg';"
-              />
+            <figure class="p2-media">
+              <img src="assets/img/praxis2-cover.jpg" alt="WRC FILM cover image" onerror="this.style.display='none';" />
             </figure>
-            <figcaption class="p2-caption">
-              Put your cover at: <code>projects/assets/img/praxis2-cover.jpg</code>
-            </figcaption>
           </div>
 
           <div class="p2-panel">
@@ -388,57 +373,46 @@
       <h2>1) Summary</h2>
 
       <p class="p2-lead">
-        This project page is organized to function as a personal engineering handbook: it is meant to be navigable,
-        evidence-forward, and useful to future-me when planning and validating designs in new contexts.
-      </p>
-
-      <p class="p2-lead">
-        Pegasus Toronto is a day support program in the GTA for adults with developmental disabilities (“participants”).
-        At the Matty Eckler Community Centre (MEC), participants create short films for the annual Pegasus Incredible Film Festival (PIFF).
-        Jonathan enjoys filming with a GoPro HERO10 Black, but limited arm strength and Cortical Visual Impairment (CVI) make it difficult
-        to hold a camera at eye level and operate low-contrast controls independently.
+        Pegasus Toronto is a daytime support program in the Greater Toronto Area for adults with developmental disabilities (“Participants”).
+        At the Matty Eckler Community Centre (MEC), Participants create short films for the annual Pegasus Film Festival (PIFF).
+        Jonathan is our stakeholder, who enjoys shooting with a GoPro camera, but due to limited arm strength and cortical visual impairment (CVI),
+        he struggles to hold the camera at eye level and operate the low-contrast controls independently. We designed a system to effectively help him complete independent filming.
       </p>
 
       <div class="p2-grid">
         <div class="p2-card">
           <h3>Community + opportunity framing</h3>
           <p>
-            Instead of treating Pegasus as a “client” that tells us what to build, we worked with collaborative stakeholders
-            (Jonathan, primary counsellors at MEC, and the film director Jerome). Our opportunity was framed as a verified, sustainable
-            improvement to lived experience: increasing agency to record footage with greater control and independence, without
-            compromising safety or recording quality.
+            Since Jonathan couldn't clearly articulate his ideas, we didn't treat Pegasus as a typical "client" to guide our development.
+            Instead, we collaborated with stakeholders (Jonathan, MEC staff, and the film director Jerome(his father)).
+            Our goal was to genuinely improve their life experience: enhancing their ability to independently record videos, giving them greater control and independence,
+            without compromising safety or recording quality.
           </p>
         </div>
 
         <div class="p2-card">
-          <h3>Solution (what we are building toward)</h3>
+          <h3>Solution</h3>
           <p>
-            <strong>WRC FILM</strong> is a wheelchair-mounted filming concept centered on a <strong>gimbal-based</strong> mechanism plus a monitor
-            and simplified, high-contrast controls. The design aims to keep the viewing interface in Jonathan’s most usable field of vision,
-            reduce physical strain, and enable controlled pan/tilt camera movement with minimal effort.
+            WRC FILM is a wheelchair filming system whose core components are a gimbal mechanism, a monitor, and a simplified, high-contrast control panel.
+            The design aims to ensure the viewing interface is always within Jonathan's most convenient field of vision, reducing fatigue and enabling easy pan/tilt movements.
           </p>
         </div>
 
         <div class="p2-card full p2-callout">
-          <h3>Recommendation (explicit)</h3>
+          <h3>Recommendation</h3>
           <p>
-            After comparing three concepts (Handlebar / Gimbal / Slider) and running proxy verification with stakeholders,
-            we recommend advancing the <strong>Gimbal</strong> direction into the next phase.
+            After comparing three concepts (Handlebar / Gimbal / Slider) and running proxy verification with stakeholders, we recommend advancing the <strong>Gimbal</strong> direction.
           </p>
         </div>
 
         <div class="p2-card">
           <h3>Deliverables</h3>
-          <p>PDFs are stored at <code>projects/assets/docs/</code>.</p>
           <div class="p2-links">
-            <a class="p2-btn" href="assets/docs/one-page-brochure.pdf" target="_blank" rel="noreferrer">Brochure (PDF)</a>
-            <a class="p2-btn" href="assets/docs/showcase-poster.pdf" target="_blank" rel="noreferrer">Poster (PDF)</a>
-            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Final RFP (PDF)</a>
-            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">To Print (PDF)</a>
+            <a class="p2-btn" href="assets/docs/one-page-brochure.pdf" target="_blank" rel="noreferrer">📄 Brochure</a>
+            <a class="p2-btn" href="assets/docs/showcase-poster.pdf" target="_blank" rel="noreferrer">🪧 Poster</a>
+            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">📘 RFP</a>
+            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">🧾 Evidence notes</a>
           </div>
-          <p class="p2-caption">
-            Note: the link to <code>To Print.pdf</code> uses URL encoding because the filename contains a space.
-          </p>
         </div>
 
         <div class="p2-card">
@@ -452,7 +426,7 @@
         </div>
       </div>
 
-      <h3 style="margin-top:18px;">Embedded PDFs (optional)</h3>
+      <h3 style="margin-top:18px;">Embedded PDFs</h3>
       <div class="p2-grid">
         <div class="p2-card">
           <h3>Brochure</h3>
@@ -465,59 +439,42 @@
       </div>
     </section>
 
-    <!-- POSITION -->
+    <!-- ANNOTATION -->
     <section class="p2-section" id="position">
       <h2>2) Annotation</h2>
 
       <p class="p2-lead">
-        In WRC FILM, I treated engineering as a way to expand agency for people who are routinely excluded by default product assumptions.
-        Instead of optimizing for novelty or maximum features, we prioritized a path that is learnable, low-strain, and resilient in the real
-        community filming workflow.
+        In the WRC FILM project, I viewed engineering as a way to empower those excluded due to default product assumptions.
+        They are often not in the mainstream spotlight, but they are still members of society and deserve attention.
+        Instead of pursuing innovation or maximum functionality, we prioritized a learning-friendly, low-pressure workflow that adapts to real-world community shooting.
+        This largely reflects one aspect of our team value: humanity.
       </p>
-
-      <div class="p2-card full">
-        <h3>How my position shaped decisions</h3>
-        <ul class="p2-list">
-          <li><strong>Agency over assumptions:</strong> Independence was a design outcome, not a bonus feature.</li>
-          <li><strong>Collaboration over extraction:</strong> Stakeholders shaped requirements and what we tested first.</li>
-          <li><strong>Verification over intentions:</strong> If evidence contradicted an assumption, we revised it.</li>
-        </ul>
-      </div>
     </section>
 
     <!-- CONCEPTS -->
     <section class="p2-section" id="concepts">
       <h2>3) Concepts</h2>
-      <p class="p2-lead">
-        We explored three concept families to reduce accessibility barriers for independent filming.
-        Showing all three documents the design space and the evidence-based convergence.
-      </p>
 
       <div class="p2-grid">
         <div class="p2-card third">
           <h3>Handlebar</h3>
           <p>
-            Direct manipulation through grasping/rotation. Strength: intuitive interaction.
-            Risk: stability and safety depending on mounting position and motion range.
+            Strength: intuitive direct manipulation through grasping/rotation.
+            Risk: Safety — The overhead mechanical structure spanning above the user’s head was confirmed to pose a safety hazard.
           </p>
-          <figure class="p2-media" id="p2HandlebarImg">
-            <img src="assets/img/praxis2-handlebar.jpg" alt="Handlebar concept"
-              onerror="this.remove();document.getElementById('p2HandlebarImg').classList.add('missing');document.getElementById('p2HandlebarImg').textContent='Add image: projects/assets/img/praxis2-handlebar.jpg';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-handlebar.jpg" alt="Handlebar concept" onerror="this.style.display='none';" />
           </figure>
-          <div class="p2-caption">Caption: what it tests + key risk observed.</div>
         </div>
 
         <div class="p2-card third">
           <h3>Gimbal <span class="p2-badge" style="margin-left:8px;"><span class="p2-dot2" aria-hidden="true"></span>Recommended</span></h3>
           <p>
-            Gimbal + monitor + simplified controls. Strength: stability + DOF with low strain.
-            Chosen to advance based on verification feedback.
+            Gimbal + monitor + simplified controls. Strength: stability and degrees of freedom with low strain.
           </p>
-          <figure class="p2-media" id="p2GimbalImg">
-            <img src="assets/img/praxis2-gimbal.jpg" alt="Gimbal concept"
-              onerror="this.remove();document.getElementById('p2GimbalImg').classList.add('missing');document.getElementById('p2GimbalImg').textContent='Add image: projects/assets/img/praxis2-gimbal.jpg';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-gimbal.jpg" alt="Gimbal concept" onerror="this.style.display='none';" />
           </figure>
-          <div class="p2-caption">Caption: show monitor placement + DOF + stability.</div>
         </div>
 
         <div class="p2-card third">
@@ -525,177 +482,158 @@
           <p>
             Translational camera movement via slider. Risk: friction / sustained force can cause strain over time.
           </p>
-          <figure class="p2-media" id="p2SliderImg">
-            <img src="assets/img/praxis2-slider.jpg" alt="Slider concept"
-              onerror="this.remove();document.getElementById('p2SliderImg').classList.add('missing');document.getElementById('p2SliderImg').textContent='Add image: projects/assets/img/praxis2-slider.jpg';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-slider.jpg" alt="Slider concept" onerror="this.style.display='none';" />
           </figure>
-          <div class="p2-caption">Caption: what it enables + why it may fatigue the user.</div>
         </div>
-      </div>
-
-      <div class="p2-callout" style="margin-top:14px;">
-        <h3>Chosen direction (explicit)</h3>
-        <p>The concept recommended to move into the next phase is <strong>Gimbal</strong>.</p>
       </div>
     </section>
 
     <!-- RECOMMENDED -->
     <section class="p2-section" id="recommended">
-      <h2>Recommended direction</h2>
+      <h2>4) Recommended direction</h2>
       <p class="p2-lead">
-        WRC FILM is the umbrella project; the gimbal is the core mechanism we recommend carrying forward.
-        The design intent is to maximize independence while keeping the system safe, stable, and learnable.
+        The concept recommended to move into the next phase is <strong>Gimbal</strong>.
       </p>
-
-      <div class="p2-grid">
-        <div class="p2-card">
-          <h3>What the system does</h3>
-          <ul class="p2-list">
-            <li>Keeps the viewing interface in a comfortable field of vision.</li>
-            <li>Provides pan/tilt degrees of freedom while minimizing vibration.</li>
-            <li>Uses simplified, high-contrast, tactile controls (less reliance on low-contrast camera buttons).</li>
-            <li>Supports quick setup so staff can deploy it reliably in real sessions.</li>
-          </ul>
-        </div>
-
-        <div class="p2-card">
-          <h3>Evidence links</h3>
-          <div class="p2-links">
-            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Final RFP</a>
-            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">To Print</a>
-          </div>
-          <p class="p2-caption">All files are under <code>projects/assets/docs/</code>.</p>
-        </div>
+      <div class="p2-links">
+        <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">📘 Open RFP</a>
+        <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">🧾 Evidence notes</a>
       </div>
     </section>
 
     <!-- CTMFS -->
     <section class="p2-section" id="ctmfs">
-      <h2>4) CTMF evaluations (≥4)</h2>
+      <h2>5) CTMF evaluations</h2>
+
       <p class="p2-lead">
-        Each CTMF below is written as: evidence of use, utility & fit (critical evaluation), and what I would change next time.
-        (This structure is intentional: it makes the page usable as a personal handbook.)
+        CTMF stands for <strong>Concepts</strong>, <strong>Tools</strong>, <strong>Models</strong>, and <strong>Frameworks</strong>.
+        The goal is to build a curated record that supports future design work: each CTMF includes evidence of use, a critical evaluation of utility & fit,
+        and what I would change next time. The set also covers the full design flow: Frame, Diverge, Converge, and Represent.
       </p>
 
-      <div class="p2-grid">
-        <!-- CTMF 1 -->
-        <div class="p2-card full">
-          <h3>CTMF 1 — Request for Proposal (RFP)</h3>
-          <p>
-            <strong>Evidence of use:</strong> We revised and refined the RFP to define community context, primary stakeholder constraints,
-            and a structured Needs–Goals–Objectives framing that guided what we tested first.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Utility & fit:</strong> The RFP prevented “solution-first” thinking and aligned the team on what success means.
-            The main risk is false certainty: early objectives can embed assumptions.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Next time:</strong> I would label which objectives are verified vs unverified and attach a short verification plan to each.
-          </p>
-          <div class="p2-links">
-            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Open Final RFP</a>
-            <a class="p2-btn" href="assets/img/praxis2-ngo-tree.png" target="_blank" rel="noreferrer">NGO tree (image)</a>
+      <!-- CTMF 1 -->
+      <article class="p2-card full" id="ctmf1">
+        <h3>CTMF 1 — Request for Proposal (RFP) <span class="p2-chip">Frame</span></h3>
+        <p>
+          <strong>Evidence of use:</strong> We revised and refined the RFP to define community context, primary stakeholder constraints,
+          and a structured Needs–Goals–Objectives framing that guided what we tested first.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Utility &amp; fit:</strong> The RFP prevented “solution-first” thinking and aligned the team on what success means.
+          The main risk is false certainty: early objectives can embed assumptions.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Next time:</strong> I would label which objectives are verified vs unverified and attach a short verification plan to each.
+        </p>
+        <div class="p2-links">
+          <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">📘 Open RFP</a>
+          <a class="p2-btn" href="assets/img/praxis2-ngo-original.png" target="_blank" rel="noreferrer">🌳 NGO tree</a>
+          <a class="p2-btn" href="assets/img/praxis2-ngo-updated.png" target="_blank" rel="noreferrer">🌱 Updated NGO</a>
+        </div>
+      </article>
+
+      <!-- CTMF 2 -->
+      <article class="p2-card full" id="ctmf2" style="margin-top:14px;">
+        <h3>CTMF 2 — Functional Decomposition / Functional Basis <span class="p2-chip">Diverge</span></h3>
+        <p>
+          <strong>Evidence of use:</strong> We decomposed “independent filming” into designable functions (stabilize, control pan/tilt,
+          provide usable view, start/stop recording, mount safely, deploy quickly). This enabled modular ideation across Handlebar / Gimbal / Slider.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Utility &amp; fit:</strong> It helped us evaluate concepts fairly and expand the solution space while staying anchored to stakeholder needs.
+          Its limitation is that function lists can hide hard integration couplings (stability vs adjustability, autonomy vs cognitive load).
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Next time:</strong> I would explicitly map the toughest function interfaces and document which couplings are most likely to break.
+        </p>
+        <div class="p2-links">
+          <a class="p2-btn" href="#concepts">🧠 Concepts</a>
+          <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">🧾 Evidence notes</a>
+        </div>
+      </article>
+
+      <!-- CTMF 3 -->
+      <article class="p2-card full" id="ctmf3" style="margin-top:14px;">
+        <h3>CTMF 3 — Proxy Tests &amp; Verification <span class="p2-chip">Converge</span></h3>
+        <p>
+          <strong>Evidence of use:</strong> We used proxy tests to evaluate “does this direction work in the real world?” before committing to high-fidelity builds.
+          We tested interaction feasibility, stability, and usability signals, and used evidence to converge on the gimbal direction.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Utility &amp; fit:</strong> Proxy testing converted debates into observable evidence and reduced the risk of building the wrong thing.
+          The key tradeoff is ecological validity: tests must document conditions and be repeatable.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Next time:</strong> I would standardize a short test protocol (setup + conditions + pass/fail thresholds) and repeat the key test across sessions.
+        </p>
+
+        <div class="p2-grid-2">
+          <div>
+            <video controls style="width:100%; border-radius:16px; border:1px solid var(--p2-border); background: rgba(0,0,0,0.08);">
+              <source src="assets/praxis2-gimbal-test.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div>
+            <a href="assets/img/praxis2-handlebar-test.jpg" target="_blank" rel="noreferrer">
+              <img src="assets/img/praxis2-handlebar-test.jpg" alt="Handlebar test" style="width:100%; border-radius:16px; border:1px solid var(--p2-border); display:block;" onerror="this.style.display='none';" />
+            </a>
           </div>
         </div>
 
-        <!-- CTMF 2 -->
-        <div class="p2-card full">
-          <h3>CTMF 2 — Functional decomposition</h3>
-          <p>
-            <strong>Evidence of use:</strong> We decomposed “independent filming” into designable functions (stabilize, control pan/tilt,
-            provide usable view, start/stop recording, mount safely, deploy quickly).
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Utility & fit:</strong> It helped us evaluate concepts fairly: a concept may look elegant but fail “deploy safely” or “learn quickly.”
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Next time:</strong> Pair decomposition with an explicit interaction-cost layer (physical + visual + cognitive load).
-          </p>
-          <div class="p2-links">
-            <a class="p2-btn" href="assets/img/praxis2-functional-decomp.png" target="_blank" rel="noreferrer">Functional decomposition</a>
-            <a class="p2-btn" href="assets/img/praxis2-morph-chart.png" target="_blank" rel="noreferrer">Morph chart</a>
-          </div>
+        <div class="p2-links" style="margin-top:12px;">
+          <a class="p2-btn" href="assets/praxis2-gimbal-test.mp4" target="_blank" rel="noreferrer">🎥 Video</a>
+          <a class="p2-btn" href="assets/img/praxis2-handlebar-test.jpg" target="_blank" rel="noreferrer">🖼️ Photo</a>
+          <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">🧾 Evidence notes</a>
         </div>
+      </article>
 
-        <!-- CTMF 3 -->
-        <div class="p2-card full">
-          <h3>CTMF 3 — Proxy tests & verification</h3>
-          <p>
-            <strong>Evidence of use:</strong> We compared Handlebar / Gimbal / Slider using proxy verification.
-            We set measurable requirements (e.g., viewing distance rule, 2 axes of freedom, max operating force, weight, and vibration) and used
-            stakeholder validation + our own verification to converge on the gimbal direction.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Utility & fit:</strong> Proxy testing converted debates into observable evidence and reduced the risk of building the wrong thing.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Next time:</strong> Repeat the key test across multiple sessions and pre-register success criteria for each proxy.
-          </p>
-          <div class="p2-links">
-            <a class="p2-btn" href="assets/docs/To%20Print.pdf" target="_blank" rel="noreferrer">Open “To Print”</a>
-            <a class="p2-btn" href="assets/img/praxis2-verification.jpg" target="_blank" rel="noreferrer">Verification photo</a>
-          </div>
+      <!-- CTMF 4 -->
+      <article class="p2-card full" id="ctmf4" style="margin-top:14px;">
+        <h3>CTMF 4 — Visual Integration (Captions &amp; Annotations) <span class="p2-chip">Represent</span></h3>
+        <p>
+          <strong>Evidence of use:</strong> We treated visuals as part of the engineering argument: concept photos, prototypes, and evidence are integrated so a reader can
+          connect claims to supporting material quickly.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Utility &amp; fit:</strong> Good visual integration makes the portfolio usable as a handbook.
+          The risk is clutter; the best approach is one clear caption + a small number of high-signal annotations.
+        </p>
+        <p style="margin-top:10px;">
+          <strong>Next time:</strong> I would standardize captions into a consistent template so the page stays scannable while preserving engineering meaning.
+        </p>
+
+        <div class="p2-links">
+          <a class="p2-btn" href="assets/img/praxis2-ref-01.jpg" target="_blank" rel="noreferrer">🖼️ Image 1</a>
+          <a class="p2-btn" href="assets/img/praxis2-ref-02.jpg" target="_blank" rel="noreferrer">🖼️ Image 2</a>
+          <a class="p2-btn" href="assets/img/praxis2-ref-03.jpg" target="_blank" rel="noreferrer">🖼️ Image 3</a>
         </div>
-
-        <!-- CTMF 4 (NEW) -->
-        <div class="p2-card full">
-          <h3>CTMF 4 — Reference design analysis</h3>
-          <p>
-            <strong>Evidence of use:</strong> We analyzed reference designs (existing mounts, pan/tilt systems, clamps) to identify consistent strengths and failure modes
-            relevant to Jonathan: stable structural support reduces sustained holding and vibration, while remote control interfaces can fail if they lack tactile/visual contrast.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Utility & fit:</strong> Reference analysis prevented reinvention and helped us justify why the gimbal concept needs:
-            (1) a stable mount/clamp strategy, and (2) a control interface designed for low-vision/tactile clarity.
-          </p>
-          <p style="margin-top:10px;">
-            <strong>Next time:</strong> I would formalize reference insights into a “requirements stress test” checklist:
-            for each objective, list which reference design fails it and why—so tradeoffs stay explicit during prototyping.
-          </p>
-          <div class="p2-links">
-            <a class="p2-btn" href="assets/docs/final-rfp-master-doc.pdf" target="_blank" rel="noreferrer">Reference designs in RFP</a>
-          </div>
-        </div>
-
-      </div>
+      </article>
     </section>
 
-    <!-- GALLERY -->
+    <!-- VISUALS -->
     <section class="p2-section" id="gallery">
-      <h2>5) Visuals</h2>
-      <p class="p2-lead">
-        Captions should connect each visual to a claim (comfort, stability, learnability, deployment).
-        A good caption is: Claim → Evidence → So-what.
-      </p>
+      <h2>6) Visuals</h2>
 
       <div class="p2-grid">
         <div class="p2-card">
           <h3>Team photo</h3>
-          <figure class="p2-media" id="p2TeamImg">
-            <img src="assets/img/praxis2-team.jpg" alt="Team photo"
-              onerror="this.remove();document.getElementById('p2TeamImg').classList.add('missing');document.getElementById('p2TeamImg').textContent='Add image: projects/assets/img/praxis2-team.jpg';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-team.jpg" alt="Team photo" onerror="this.style.display='none';" />
           </figure>
-          <div class="p2-caption">Caption: who is in the photo + what part of the work this moment represents.</div>
         </div>
 
         <div class="p2-card">
           <h3>Three concepts</h3>
-          <figure class="p2-media" id="p2ThreeConceptsImg">
-            <img src="assets/img/praxis2-three-concepts.jpg" alt="Three concepts"
-              onerror="this.remove();document.getElementById('p2ThreeConceptsImg').classList.add('missing');document.getElementById('p2ThreeConceptsImg').textContent='Add image: projects/assets/img/praxis2-three-concepts.jpg';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-three-concepts.jpg" alt="Three concepts" onerror="this.style.display='none';" />
           </figure>
-          <div class="p2-caption">Caption: what each prototype tests + why gimbal converged.</div>
         </div>
 
         <div class="p2-card full">
           <h3>Annotated gimbal figure</h3>
-          <p>
-            One annotated figure makes grading easy: label monitor placement, DOF, control interface, and mounting points,
-            and tie each label to a requirement.
-          </p>
-          <figure class="p2-media" id="p2AnnotatedImg">
-            <img src="assets/img/praxis2-annotated-gimbal.png" alt="Annotated gimbal"
-              onerror="this.remove();document.getElementById('p2AnnotatedImg').classList.add('missing');document.getElementById('p2AnnotatedImg').textContent='Add image: projects/assets/img/praxis2-annotated-gimbal.png';" />
+          <figure class="p2-media">
+            <img src="assets/img/praxis2-annotated-gimbal.png" alt="Annotated gimbal" onerror="this.style.display='none';" />
           </figure>
         </div>
       </div>
@@ -703,8 +641,7 @@
 
     <!-- CREDITS -->
     <section class="p2-section" id="credits">
-      <h2>Credits</h2>
-      <p class="p2-lead">Explicitly credit teammates and describe contributions.</p>
+      <h2>7) Credits</h2>
 
       <div class="p2-grid">
         <div class="p2-card full">
