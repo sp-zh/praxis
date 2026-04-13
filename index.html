@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Praxis | Project Showcase</title>
+  <title>Portfolio</title>
   <meta name="description" content="Evidence-first documentation of design work, guided by reusable concepts and tools." />
   <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="style.css" />
@@ -79,25 +79,20 @@
       white-space: nowrap;
     }
 
-    /* STRICT: show exactly 4 cards (2x2) in the viewport */
     :root{
       --concept-gap: 12px;
-      --concept-card-h: 140px;   /* fixed card height */
-      --concept-visible-rows: 2; /* 2 rows x 2 cols = 4 cards */
+      --concept-card-h: 140px;
+      --concept-visible-rows: 2;
     }
 
     .concept-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: var(--concept-gap);
-
-      /* exact viewport height = 2 card heights + 1 gap (between the 2 rows) */
       height: calc(var(--concept-card-h) * var(--concept-visible-rows) + var(--concept-gap) * (var(--concept-visible-rows) - 1));
       overflow-y: auto;
       padding-right: 6px;
       scroll-behavior: smooth;
-
-      /* optional: make scrolling land on row boundaries */
       scroll-snap-type: y mandatory;
     }
 
@@ -114,10 +109,8 @@
       background: rgba(255,255,255,.03);
       border-radius: 16px;
       padding: 12px;
-
       height: var(--concept-card-h);
       overflow: hidden;
-
       scroll-snap-align: start;
     }
 
@@ -149,7 +142,6 @@
       line-height: 1.45;
     }
 
-    /* Mobile: 1 column, but still show exactly 4 cards in the window */
     @media (max-width: 720px){
       :root{ --concept-visible-rows: 4; }
       .concept-grid{
@@ -171,7 +163,7 @@
     <div class="container nav">
       <a class="brand" href="./" aria-label="Home">
         <span class="brand-dot"></span>
-        <span>praxis</span>
+        <span>portfolio</span>
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -197,10 +189,7 @@
       <div class="hero-left">
         <p class="kicker">GitHub Pages · Project site</p>
 
-        <h1 class="title">
-          Praxis Project
-          <span class="title-accent">Showcase</span>
-        </h1>
+        <h1 class="title">portfolio</h1>
 
         <p class="lead">
           Evidence-first documentation of design work, guided by reusable concepts and tools.
@@ -209,7 +198,7 @@
         <div class="chips">
           <span class="chip">Author: <strong>Shupei Zhang</strong></span>
           <span class="chip">Handle: <code>sp-zh</code></span>
-          <span class="chip">Updated: <strong id="updated"></strong></span>
+          <span class="chip">5 projects</span>
         </div>
 
         <div class="hero-cta">
@@ -223,6 +212,8 @@
           <a class="link" href="projects/civ102-bridge.html">CIV102 Bridge →</a>
           <a class="link" href="projects/praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser →</a>
           <a class="link" href="projects/praxis2-filming.html">Praxis II Filming →</a>
+          <a class="link" href="projects/lorenz.html#top">Lorenz Chaotic Circuit →</a>
+          <a class="link" href="projects/pid-control-demo.html">PID Control Demo →</a>
         </div>
       </div>
 
@@ -249,8 +240,8 @@
               <div class="mini-v">Tradeoffs</div>
             </div>
             <div class="mini">
-              <div class="mini-k">Test</div>
-              <div class="mini-v">Evidence</div>
+              <div class="mini-k">Represent</div>
+              <div class="mini-v">Communication</div>
             </div>
           </div>
         </div>
@@ -281,15 +272,14 @@
         </div>
 
         <div class="concept-grid" aria-label="Praxis concepts window">
-          <!-- 12 groups -->
           <div class="concept-card">
             <div class="concept-top"><h3>CTMF</h3><span class="concept-tag">building blocks</span></div>
             <p>Reusable Concepts, Tools, Models, and Frameworks. Each CTMF links to evidence of use and a utility note.</p>
           </div>
 
           <div class="concept-card">
-            <div class="concept-top"><h3>FDCT</h3><span class="concept-tag">process loop</span></div>
-            <p>Frame → Diverge → Converge → Test. A pragmatic loop for evidence-first iteration.</p>
+            <div class="concept-top"><h3>FDCR</h3><span class="concept-tag">process loop</span></div>
+            <p>Frame → Diverge → Converge → Represent. A pragmatic loop for evidence-first iteration and clear communication.</p>
           </div>
 
           <div class="concept-card">
@@ -314,17 +304,17 @@
 
           <div class="concept-card">
             <div class="concept-top"><h3>Measurement matrix</h3><span class="concept-tag">compare</span></div>
-            <p>Compare concepts with numbers (time, steps, footprint, cleaning, reliability), not vibes.</p>
+            <p>Compare concepts with numbers such as time, steps, footprint, cleaning, and reliability.</p>
           </div>
 
           <div class="concept-card">
             <div class="concept-top"><h3>PUGH chart</h3><span class="concept-tag">converge</span></div>
-            <p>Structured comparison vs a reference concept to build a defensible selection rationale.</p>
+            <p>Structured comparison versus a reference concept to build a defensible selection rationale.</p>
           </div>
 
           <div class="concept-card">
             <div class="concept-top"><h3>Pairwise comparison</h3><span class="concept-tag">weights</span></div>
-            <p>Clarify priorities by comparing criteria pair-by-pair to derive weights and resolve close calls.</p>
+            <p>Clarify priorities by comparing criteria pair by pair to derive weights and resolve close calls.</p>
           </div>
 
           <div class="concept-card">
@@ -401,7 +391,7 @@
       <div class="section-head row">
         <div>
           <h2>Projects</h2>
-          <p class="muted">Three featured projects with cover placeholders and direct navigation.</p>
+          <p class="muted">Five featured projects with cover placeholders and direct navigation.</p>
         </div>
         <a class="pill-btn" href="projects/">All projects</a>
       </div>
@@ -431,7 +421,7 @@
             <div class="cover-ph">Praxis I cover image<small>Place image at: assets/img/praxis1.jpg</small></div>
           </div>
           <div class="proj-top"><h3>Praxis I Morning Supplement Dispenser</h3><span class="pill">product</span></div>
-          <p class="muted">Evidence-first concept selection using proxy tests, measurement matrix, and structured convergence.</p>
+          <p class="muted">Evidence-first concept selection using proxy tests, measurement matrices, and structured convergence.</p>
           <ul class="list">
             <li><strong>Focus:</strong> usability friction (time/steps/cleaning) and dorm constraints</li>
             <li><strong>Artifacts:</strong> final report, prototype</li>
@@ -454,6 +444,38 @@
           </ul>
           <div class="proj-actions"><span class="link">Open →</span></div>
         </a>
+
+        <a class="proj proj-link" href="projects/lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
+          <div class="proj-cover">
+            <img src="assets/img/lorenz.jpg" alt="Lorenz Chaotic Circuit cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
+            <div class="cover-ph">Lorenz cover image<small>Place image at: assets/img/lorenz.jpg</small></div>
+          </div>
+          <div class="proj-top"><h3>Lorenz Chaotic Circuit</h3><span class="pill">nonlinear systems</span></div>
+          <p class="muted">Interactive showcase of deterministic chaos, attractors, and analog circuit implementation.</p>
+          <ul class="list">
+            <li><strong>Focus:</strong> nonlinear dynamics, equations-to-circuits, visualization</li>
+            <li><strong>Artifacts:</strong> showcase page, visuals</li>
+          </ul>
+          <div class="proj-actions"><span class="link">Open →</span></div>
+        </a>
+
+        <a class="proj proj-link" href="projects/pid-control-demo.html" aria-label="Open PID Control Demo">
+          <div class="proj-cover">
+            <img src="assets/img/pid-control-demo.jpg" alt="PID Control Demo cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
+            <div class="cover-ph">PID cover image<small>Place image at: assets/img/pid-control-demo.jpg</small></div>
+          </div>
+          <div class="proj-top"><h3>PID Control Demo</h3><span class="pill">control systems</span></div>
+          <p class="muted">Interactive PID simulator showing how proportional, integral, and derivative gains shape response.</p>
+          <ul class="list">
+            <li><strong>Focus:</strong> control intuition, tuning, overshoot, stability</li>
+            <li><strong>Artifacts:</strong> simulator, demo page</li>
+          </ul>
+          <div class="proj-actions"><span class="link">Open →</span></div>
+        </a>
       </div>
 
       <div class="hint">
@@ -471,8 +493,8 @@
       <div class="step-grid">
         <div class="step"><div class="step-n">01</div><div class="step-t">Frame</div><div class="step-d">Define stakeholders, constraints, success metrics.</div></div>
         <div class="step"><div class="step-n">02</div><div class="step-t">Diverge</div><div class="step-d">Generate options, explore alternatives, gather evidence.</div></div>
-        <div class="step"><div class="step-n">03</div><div class="step-t">Converge</div><div class="step-d">Decide with tradeoffs, test, iterate, document rationale.</div></div>
-        <div class="step"><div class="step-n">04</div><div class="step-t">Test</div><div class="step-d">Verify claims; validate with stakeholder feedback when possible.</div></div>
+        <div class="step"><div class="step-n">03</div><div class="step-t">Converge</div><div class="step-d">Decide with tradeoffs, iterate, and document rationale.</div></div>
+        <div class="step"><div class="step-n">04</div><div class="step-t">Represent</div><div class="step-d">Communicate decisions, evidence, and outcomes clearly.</div></div>
       </div>
     </section>
 
@@ -512,7 +534,6 @@
 
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
-    document.getElementById("updated").textContent = new Date().toISOString().slice(0, 10);
 
     const root = document.documentElement;
     const key = "praxis_theme";
