@@ -487,12 +487,7 @@
       <section class="hero-card">
         <div class="eyebrow">Supplementary Project · Control Systems</div>
         <h1>PID Controller Demo</h1>
-        <p class="hero-summary">
-          This page presents a simplified interactive demonstration of how a
-          <span class="accent">PID controller</span> shapes the motion of a drone-like system.
-          The simulator is intentionally simple: it is meant to make controller behavior easy to see,
-          not to replace a full flight dynamics model.
-        </p>
+
         <p class="hero-summary">
           The three terms can be read as three different ways of reacting to error:
           <strong>P</strong> responds to the present,
@@ -500,6 +495,7 @@
           and <strong>D</strong> reacts to the trend of change.
           Together, they help reduce steady-state error, limit overshoot, and improve settling behavior.
         </p>
+
         <div class="hero-tags">
           <span class="tag">Present error → P</span>
           <span class="tag">Accumulated error → I</span>
@@ -719,15 +715,9 @@
 
     <section class="section video-card">
       <h2>Real Test Video</h2>
-      <p>
-        This section is reserved for real flight footage. Replace the placeholder source below with your own
-        test video file to connect the simulator to your actual drone experiment.
-      </p>
 
       <div class="video-wrap">
         <video controls preload="metadata" poster="">
-          <!-- Replace the path below with your actual file -->
-          <!-- Suggested path: videos/pid-drone-test.mp4 at the repo root -->
           <source src="../videos/pid-drone-test.mp4" type="video/mp4" />
           Your browser does not support embedded video playback.
         </video>
@@ -735,15 +725,11 @@
     </section>
 
     <div class="footer-note">
-      This simulator uses a simplified plant to make controller effects visible. It is best used as a conceptual
-      control demo rather than a full physical model of multirotor flight.
+      Interactive control visualization for a simplified altitude model.
     </div>
   </div>
 
   <script>
-    // ------------------------------------------------------------
-    // Helper: get elements once so the code stays readable.
-    // ------------------------------------------------------------
     const el = {
       setpoint: document.getElementById("setpoint"),
       kp: document.getElementById("kp"),
@@ -785,9 +771,6 @@
     let latestResult = null;
     let animationStart = performance.now();
 
-    // ------------------------------------------------------------
-    // Presets help compare controller behaviors quickly.
-    // ------------------------------------------------------------
     const presets = {
       balanced: {
         setpoint: 1.20, kp: 5.00, ki: 1.20, kd: 3.20,
@@ -827,18 +810,11 @@
       }
     };
 
-    // ------------------------------------------------------------
-    // Small deterministic pseudo-random helper.
-    // This keeps the noise pattern stable every time you drag sliders.
-    // ------------------------------------------------------------
     function seededNoise(step) {
       const x = Math.sin(step * 12.9898) * 43758.5453123;
       return x - Math.floor(x);
     }
 
-    // ------------------------------------------------------------
-    // Read all UI values as numbers / booleans.
-    // ------------------------------------------------------------
     function readParams() {
       return {
         setpoint: Number(el.setpoint.value),
@@ -854,9 +830,6 @@
       };
     }
 
-    // ------------------------------------------------------------
-    // Update the numeric labels beside sliders.
-    // ------------------------------------------------------------
     function updateReadouts(params) {
       el.setpointValue.textContent = `${params.setpoint.toFixed(2)} m`;
       el.kpValue.textContent = params.kp.toFixed(2);
@@ -867,15 +840,6 @@
       el.filterValue.textContent = params.filterAlpha.toFixed(2);
     }
 
-    // ------------------------------------------------------------
-    // A simple vertical-motion plant:
-    // y     = altitude
-    // v     = vertical speed
-    // a     = plantGain * u - drag * v + disturbance
-    //
-    // The target steps up after a short delay. A disturbance pulse appears later.
-    // This is intentionally simplified so that controller behavior is easy to see.
-    // ------------------------------------------------------------
     function simulate(params) {
       const dt = 0.02;
       const totalTime = 12;
@@ -899,26 +863,19 @@
 
       for (let i = 0; i < steps; i++) {
         const t = i * dt;
-
-        // Step target starts after 0.6 s so the graph is easier to read.
         const sp = t >= 0.6 ? params.setpoint : 0;
 
-        // Short disturbance pulse, like a gust.
         let gust = 0;
         if (t >= 4.2 && t <= 4.9) {
           gust = -params.disturbance;
         }
 
-        // Optional measurement noise.
         const noise = params.sensorNoise ? (seededNoise(i) - 0.5) * 0.08 : 0;
         const measuredY = y + noise;
-
         const error = sp - measuredY;
 
-        // Integral update.
         integral += error * dt;
 
-        // Derivative term.
         const rawDerivative = (error - prevError) / dt;
 
         if (params.useFilter) {
@@ -936,27 +893,22 @@
         let u = pTerm + iTerm + dTerm;
         const unclamped = u;
 
-        // Saturation.
         if (u > params.uMax) u = params.uMax;
         if (u < -params.uMax) u = -params.uMax;
 
-        // Basic anti-windup:
-        // If the controller is saturated and still trying to integrate in the same direction,
-        // roll back the latest integral addition.
         if (params.antiWindup && params.ki > 0) {
           const saturatedHigh = unclamped > params.uMax && error > 0;
           const saturatedLow = unclamped < -params.uMax && error < 0;
+
           if (saturatedHigh || saturatedLow) {
             integral -= error * dt;
           }
 
-          // Also clamp the integral to a reasonable range.
           const integralLimit = params.uMax / Math.max(params.ki, 0.001);
           if (integral > integralLimit) integral = integralLimit;
           if (integral < -integralLimit) integral = -integralLimit;
         }
 
-        // Plant update.
         const acceleration = plantGain * u - drag * v + gust;
         v += acceleration * dt;
         y += v * dt;
@@ -985,9 +937,6 @@
       };
     }
 
-    // ------------------------------------------------------------
-    // Compute a few simple response metrics.
-    // ------------------------------------------------------------
     function computeMetrics(time, target, altitude) {
       const finalTarget = target[target.length - 1];
       const finalAltitude = altitude[altitude.length - 1];
@@ -1006,6 +955,7 @@
 
       let t10 = null;
       let t90 = null;
+
       for (let i = 0; i < altitude.length; i++) {
         if (time[i] >= 0.6 && t10 === null && altitude[i] >= tenPct) t10 = time[i];
         if (time[i] >= 0.6 && t90 === null && altitude[i] >= ninetyPct) {
@@ -1046,9 +996,6 @@
       };
     }
 
-    // ------------------------------------------------------------
-    // Draw helper functions.
-    // ------------------------------------------------------------
     function drawGrid(ctx, width, height, cols, rows) {
       ctx.save();
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
@@ -1069,6 +1016,7 @@
         ctx.lineTo(width, y);
         ctx.stroke();
       }
+
       ctx.restore();
     }
 
@@ -1102,9 +1050,6 @@
       ctx.restore();
     }
 
-    // ------------------------------------------------------------
-    // Draw the main response chart.
-    // ------------------------------------------------------------
     function drawResponseChart(result) {
       const ctx = rctx;
       const w = responseCanvas.width;
@@ -1154,7 +1099,6 @@
         ctx.fillText(`${yVal.toFixed(1)}`, 6, y + 4);
       }
 
-      // Legend
       ctx.fillStyle = "#7dd3fc";
       ctx.fillRect(w - 180, 16, 14, 4);
       ctx.fillStyle = "rgba(255,255,255,0.8)";
@@ -1167,9 +1111,6 @@
       ctx.restore();
     }
 
-    // ------------------------------------------------------------
-    // Draw the control effort chart.
-    // ------------------------------------------------------------
     function drawControlChart(result) {
       const ctx = cctx;
       const w = controlCanvas.width;
@@ -1201,7 +1142,6 @@
         lineWidth: 2.5
       });
 
-      // Saturation bounds
       ctx.save();
       ctx.strokeStyle = "rgba(251,191,36,0.8)";
       ctx.lineWidth = 1.2;
@@ -1240,9 +1180,6 @@
       ctx.restore();
     }
 
-    // ------------------------------------------------------------
-    // Draw the animated drone window.
-    // ------------------------------------------------------------
     function drawFlightWindow(result, nowMs) {
       const ctx = fctx;
       const w = flightCanvas.width;
@@ -1250,19 +1187,17 @@
 
       ctx.clearRect(0, 0, w, h);
 
-      // Background
       const grad = ctx.createLinearGradient(0, 0, 0, h);
       grad.addColorStop(0, "#0c1c35");
       grad.addColorStop(1, "#07101d");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, w, h);
 
-      // Ground
       ctx.fillStyle = "#0f1f13";
       ctx.fillRect(0, h - 42, w, 42);
 
-      // Replay the response on a loop.
-      const elapsedSec = ((nowMs - animationStart) / 1000) % result.totalTime;
+      const elapsedSec = Math.min((nowMs - animationStart) / 1000, result.totalTime);
+
       let index = Math.floor(elapsedSec / result.dt);
       if (index < 0) index = 0;
       if (index >= result.altitude.length) index = result.altitude.length - 1;
@@ -1279,7 +1214,6 @@
         return bottom - ((a - displayMin) / (displayMax - displayMin)) * (bottom - top);
       }
 
-      // Grid lines
       ctx.strokeStyle = "rgba(255,255,255,0.08)";
       ctx.lineWidth = 1;
       for (let i = 0; i <= 5; i++) {
@@ -1290,7 +1224,6 @@
         ctx.stroke();
       }
 
-      // Target line
       const targetY = altitudeToY(currentTarget);
       ctx.strokeStyle = "#a78bfa";
       ctx.lineWidth = 2;
@@ -1301,11 +1234,9 @@
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Drone position
       const droneY = altitudeToY(currentAltitude);
       const droneX = w / 2;
 
-      // Motion trail
       ctx.strokeStyle = "rgba(125,211,252,0.25)";
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -1317,7 +1248,6 @@
       }
       ctx.stroke();
 
-      // Drone body
       ctx.save();
       ctx.translate(droneX, droneY);
 
@@ -1325,7 +1255,6 @@
       ctx.strokeStyle = "#7dd3fc";
       ctx.lineWidth = 2;
 
-      // arms
       ctx.beginPath();
       ctx.moveTo(-32, 0);
       ctx.lineTo(32, 0);
@@ -1335,25 +1264,22 @@
       ctx.lineTo(22, -12);
       ctx.stroke();
 
-      // prop circles
       const props = [
         [-36, -6], [36, -6], [-36, 6], [36, 6]
       ];
+
       props.forEach(([x, y]) => {
         ctx.beginPath();
         ctx.arc(x, y, 7, 0, Math.PI * 2);
         ctx.stroke();
       });
 
-      // center body
       ctx.fillStyle = "#93c5fd";
-      ctx.beginPath();
-      ctx.roundRect(-16, -10, 32, 20, 8);
+      drawRoundedRect(ctx, -16, -10, 32, 20, 8);
       ctx.fill();
 
       ctx.restore();
 
-      // Labels
       ctx.fillStyle = "rgba(255,255,255,0.82)";
       ctx.font = "12px Inter, sans-serif";
       ctx.fillText(`t = ${elapsedSec.toFixed(2)} s`, 14, 20);
@@ -1361,9 +1287,20 @@
       ctx.fillText(`output: ${currentAltitude.toFixed(2)} m`, w - 104, h - 18);
     }
 
-    // ------------------------------------------------------------
-    // Update metrics text on the page.
-    // ------------------------------------------------------------
+    function drawRoundedRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
     function updateMetrics(result) {
       const { riseTime, overshootPct, steadyStateError, verdict } = result.metrics;
 
@@ -1374,9 +1311,6 @@
       el.behaviorChip.textContent = verdict;
     }
 
-    // ------------------------------------------------------------
-    // Full refresh when any setting changes.
-    // ------------------------------------------------------------
     function refresh() {
       const params = readParams();
       updateReadouts(params);
@@ -1384,12 +1318,8 @@
       updateMetrics(latestResult);
       drawResponseChart(latestResult);
       drawControlChart(latestResult);
-      animationStart = performance.now();
     }
 
-    // ------------------------------------------------------------
-    // Apply a preset to all controls.
-    // ------------------------------------------------------------
     function applyPreset(name) {
       const p = presets[name];
       if (!p) return;
@@ -1412,9 +1342,6 @@
       refresh();
     }
 
-    // ------------------------------------------------------------
-    // Animation loop for the flight window.
-    // ------------------------------------------------------------
     function animate(now) {
       if (latestResult) {
         drawFlightWindow(latestResult, now);
@@ -1422,9 +1349,6 @@
       requestAnimationFrame(animate);
     }
 
-    // ------------------------------------------------------------
-    // Event listeners.
-    // ------------------------------------------------------------
     [
       el.setpoint, el.kp, el.ki, el.kd, el.uMax,
       el.disturbance, el.filterAlpha,
@@ -1442,9 +1366,6 @@
       animationStart = performance.now();
     });
 
-    // ------------------------------------------------------------
-    // Initial page load.
-    // ------------------------------------------------------------
     applyPreset("balanced");
     requestAnimationFrame(animate);
   </script>
