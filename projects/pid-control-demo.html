@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PID Controller Demo</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121935;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-strong: rgba(255, 255, 255, 0.1);
+      --text: #e8edf7;
+      --muted: #a9b4cc;
+      --accent: #7dd3fc;
+      --accent-2: #a78bfa;
+      --line: rgba(255, 255, 255, 0.12);
+      --good: #86efac;
+      --warn: #fbbf24;
+      --bad: #f87171;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+      --radius: 18px;
+      --maxw: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(125, 211, 252, 0.12), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(167, 139, 250, 0.10), transparent 30%),
+        linear-gradient(180deg, #09101c 0%, #0b1020 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(100% - 32px, var(--maxw));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 22px 0 8px;
+    }
+
+    .topbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .topbar a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 18px 0 28px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .hero-card,
+    .info-panel,
+    .sim-card,
+    .section-card,
+    .video-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      padding: 28px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(125, 211, 252, 0.12);
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .hero-summary {
+      max-width: 68ch;
+      font-size: 1rem;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--line);
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+
+    .info-panel {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .metric-boxes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .metric-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .metric-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .pill-note {
+      font-size: 0.9rem;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: rgba(167, 139, 250, 0.12);
+      border: 1px solid rgba(167, 139, 250, 0.18);
+      color: #ddd7ff;
+    }
+
+    .section {
+      margin: 22px 0 0;
+    }
+
+    .sim-card {
+      padding: 22px;
+    }
+
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .preset-btn,
+    .action-btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .preset-btn:hover,
+    .action-btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(125, 211, 252, 0.5);
+    }
+
+    .preset-btn.active {
+      background: rgba(125, 211, 252, 0.14);
+      border-color: rgba(125, 211, 252, 0.55);
+      color: #dff7ff;
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+    }
+
+    .controls {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .controls h3 {
+      margin-bottom: 14px;
+    }
+
+    .control-group {
+      margin-bottom: 16px;
+    }
+
+    .control-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.94rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .control-value {
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #7dd3fc;
+    }
+
+    .check-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .check-item input {
+      accent-color: #7dd3fc;
+    }
+
+    .small-note {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .visuals {
+      display: grid;
+      gap: 16px;
+    }
+
+    .window-row {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 16px;
+    }
+
+    .canvas-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .canvas-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .status-chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+    }
+
+    canvas {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+      background: #091120;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    #flightCanvas {
+      height: 320px;
+    }
+
+    #responseCanvas {
+      height: 250px;
+    }
+
+    #controlCanvas {
+      height: 170px;
+    }
+
+    .metrics-panel {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .metrics-panel .metric-box {
+      min-height: 92px;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .section-card {
+      padding: 20px;
+    }
+
+    .section-card strong {
+      color: var(--text);
+    }
+
+    .bullet-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .bullet-list li + li {
+      margin-top: 8px;
+    }
+
+    .video-card {
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .video-wrap {
+      margin-top: 14px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      background: #000;
+      min-height: 280px;
+    }
+
+    .footer-note {
+      padding: 30px 0 44px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .good {
+      color: var(--good);
+    }
+
+    .warn {
+      color: var(--warn);
+    }
+
+    .bad {
+      color: var(--bad);
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .sim-grid,
+      .window-row,
+      .section-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metrics-panel {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .metric-boxes {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(100% - 20px, var(--maxw));
+      }
+
+      .hero-card,
+      .info-panel,
+      .sim-card,
+      .section-card,
+      .video-card {
+        padding: 18px;
+      }
+
+      .metrics-panel,
+      .metric-boxes {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <a href="../index.html">← Back to Showcase</a>
+    </div>
+
+    <header class="hero">
+      <section class="hero-card">
+        <div class="eyebrow">Supplementary Project · Control Systems</div>
+        <h1>PID Controller Demo</h1>
+        <p class="hero-summary">
+          This page presents a simplified interactive demonstration of how a
+          <span class="accent">PID controller</span> shapes the motion of a drone-like system.
+          The simulator is intentionally simple: it is meant to make controller behavior easy to see,
+          not to replace a full flight dynamics model.
+        </p>
+        <p class="hero-summary">
+          The three terms can be read as three different ways of reacting to error:
+          <strong>P</strong> responds to the present,
+          <strong>I</strong> accumulates the past,
+          and <strong>D</strong> reacts to the trend of change.
+          Together, they help reduce steady-state error, limit overshoot, and improve settling behavior.
+        </p>
+        <div class="hero-tags">
+          <span class="tag">Present error → P</span>
+          <span class="tag">Accumulated error → I</span>
+          <span class="tag">Error trend → D</span>
+          <span class="tag">Saturation</span>
+          <span class="tag">Anti-windup</span>
+          <span class="tag">Derivative filtering</span>
+        </div>
+      </section>
+
+      <aside class="info-panel">
+        <h2>Why this matters in practice</h2>
+        <div class="metric-boxes">
+          <div class="metric-box">
+            <div class="metric-label">Too little control</div>
+            <div class="metric-value">Slow response</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Too much P or I</div>
+            <div class="metric-value">Overshoot</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Too much D</div>
+            <div class="metric-value">Noise sensitive</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Actuator saturation</div>
+            <div class="metric-value">Windup risk</div>
+          </div>
+        </div>
+        <div class="pill-note">
+          In a real drone, tuning is never just about one nice curve. It is about balancing
+          responsiveness, stability, actuator limits, noise, and robustness under disturbance.
+        </div>
+      </aside>
+    </header>
+
+    <section class="section sim-card">
+      <div class="sim-header">
+        <div>
+          <h2>Interactive Simulator</h2>
+          <p>
+            Use the presets for quick comparisons, then move the sliders to see how each gain changes
+            rise time, overshoot, steady-state error, and control effort.
+          </p>
+        </div>
+        <button class="action-btn" id="replayBtn" type="button">Replay Animation</button>
+      </div>
+
+      <div class="preset-row" id="presetRow">
+        <button class="preset-btn active" data-preset="balanced" type="button">Balanced PID</button>
+        <button class="preset-btn" data-preset="pOnly" type="button">P Only</button>
+        <button class="preset-btn" data-preset="pi" type="button">PI</button>
+        <button class="preset-btn" data-preset="pd" type="button">PD</button>
+        <button class="preset-btn" data-preset="windup" type="button">Windup Demo</button>
+        <button class="preset-btn" data-preset="noise" type="button">Noise + Filter</button>
+      </div>
+
+      <div class="sim-grid">
+        <div class="controls">
+          <h3>Controller and plant settings</h3>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Target altitude step</span>
+              <span class="control-value" id="setpointValue">1.20 m</span>
+            </div>
+            <input id="setpoint" type="range" min="0.4" max="2.2" step="0.01" value="1.20" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Kp</span>
+              <span class="control-value" id="kpValue">5.00</span>
+            </div>
+            <input id="kp" type="range" min="0" max="14" step="0.05" value="5.00" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Ki</span>
+              <span class="control-value" id="kiValue">1.20</span>
+            </div>
+            <input id="ki" type="range" min="0" max="6" step="0.05" value="1.20" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Kd</span>
+              <span class="control-value" id="kdValue">3.20</span>
+            </div>
+            <input id="kd" type="range" min="0" max="8" step="0.05" value="3.20" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Actuator limit</span>
+              <span class="control-value" id="uMaxValue">2.20</span>
+            </div>
+            <input id="uMax" type="range" min="0.5" max="4.0" step="0.05" value="2.20" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Disturbance strength</span>
+              <span class="control-value" id="disturbanceValue">0.60</span>
+            </div>
+            <input id="disturbance" type="range" min="0" max="2.0" step="0.05" value="0.60" />
+          </div>
+
+          <div class="control-group">
+            <div class="control-label">
+              <span>Derivative filter strength</span>
+              <span class="control-value" id="filterValue">0.22</span>
+            </div>
+            <input id="filterAlpha" type="range" min="0" max="0.95" step="0.01" value="0.22" />
+          </div>
+
+          <div class="check-grid">
+            <label class="check-item">
+              <input id="antiWindup" type="checkbox" checked />
+              <span>Enable anti-windup clamp</span>
+            </label>
+            <label class="check-item">
+              <input id="sensorNoise" type="checkbox" />
+              <span>Add sensor noise</span>
+            </label>
+            <label class="check-item">
+              <input id="useFilter" type="checkbox" checked />
+              <span>Apply derivative low-pass filter</span>
+            </label>
+          </div>
+
+          <p class="small-note">
+            The model is a simplified vertical motion system with damping, saturation, and a short disturbance pulse.
+          </p>
+        </div>
+
+        <div class="visuals">
+          <div class="window-row">
+            <div class="canvas-card">
+              <div class="canvas-title">
+                <span>Flight Window</span>
+                <span class="status-chip" id="behaviorChip">Balanced</span>
+              </div>
+              <canvas id="flightCanvas" width="300" height="320"></canvas>
+            </div>
+
+            <div class="canvas-card">
+              <div class="canvas-title">
+                <span>Altitude Response</span>
+                <span class="status-chip">Target vs output</span>
+              </div>
+              <canvas id="responseCanvas" width="800" height="250"></canvas>
+            </div>
+          </div>
+
+          <div class="canvas-card">
+            <div class="canvas-title">
+              <span>Control Effort</span>
+              <span class="status-chip">Saturation visible</span>
+            </div>
+            <canvas id="controlCanvas" width="800" height="170"></canvas>
+          </div>
+
+          <div class="metrics-panel">
+            <div class="metric-box">
+              <div class="metric-label">Rise time</div>
+              <div class="metric-value" id="riseMetric">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Overshoot</div>
+              <div class="metric-value" id="overshootMetric">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Steady-state error</div>
+              <div class="metric-value" id="sseMetric">—</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Interpretation</div>
+              <div class="metric-value" id="verdictMetric" style="font-size: 1rem; line-height: 1.35;">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-grid">
+      <article class="section-card">
+        <h2>What each term does</h2>
+        <p><strong>P — Proportional:</strong> pushes harder when the current error is larger. It usually makes the system faster, but too much can create oscillation and overshoot.</p>
+        <p><strong>I — Integral:</strong> adds up past error. This helps remove steady-state error, but if the actuator saturates, the integral term can keep accumulating and create windup.</p>
+        <p><strong>D — Derivative:</strong> reacts to the rate of error change. It can reduce overshoot and improve damping, but it is sensitive to measurement noise.</p>
+      </article>
+
+      <article class="section-card">
+        <h2>Common tuning patterns</h2>
+        <ul class="bullet-list">
+          <li>Increase <strong>Kp</strong> for a quicker initial response.</li>
+          <li>Increase <strong>Ki</strong> to remove residual offset.</li>
+          <li>Increase <strong>Kd</strong> to damp oscillation and reduce overshoot.</li>
+          <li>Reduce gains if the response becomes unstable or too noisy.</li>
+          <li>Always check the effect of actuator saturation, not just the ideal response.</li>
+        </ul>
+      </article>
+
+      <article class="section-card">
+        <h2>Engineering notes</h2>
+        <ul class="bullet-list">
+          <li><strong>Integral windup</strong> appears when the controller keeps integrating error even though the actuator is already saturated.</li>
+          <li><strong>Anti-windup</strong> limits that accumulation so recovery after saturation is smoother.</li>
+          <li><strong>Derivative filtering</strong> is often necessary because raw derivative action amplifies noise.</li>
+          <li>A good design is not the most complicated design. It is the simplest design that still meets requirements robustly.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="section video-card">
+      <h2>Real Test Video</h2>
+      <p>
+        This section is reserved for real flight footage. Replace the placeholder source below with your own
+        test video file to connect the simulator to your actual drone experiment.
+      </p>
+
+      <div class="video-wrap">
+        <video controls preload="metadata" poster="">
+          <!-- Replace the path below with your actual file -->
+          <!-- Suggested path: videos/pid-drone-test.mp4 at the repo root -->
+          <source src="../videos/pid-drone-test.mp4" type="video/mp4" />
+          Your browser does not support embedded video playback.
+        </video>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      This simulator uses a simplified plant to make controller effects visible. It is best used as a conceptual
+      control demo rather than a full physical model of multirotor flight.
+    </div>
+  </div>
+
+  <script>
+    // ------------------------------------------------------------
+    // Helper: get elements once so the code stays readable.
+    // ------------------------------------------------------------
+    const el = {
+      setpoint: document.getElementById("setpoint"),
+      kp: document.getElementById("kp"),
+      ki: document.getElementById("ki"),
+      kd: document.getElementById("kd"),
+      uMax: document.getElementById("uMax"),
+      disturbance: document.getElementById("disturbance"),
+      filterAlpha: document.getElementById("filterAlpha"),
+      antiWindup: document.getElementById("antiWindup"),
+      sensorNoise: document.getElementById("sensorNoise"),
+      useFilter: document.getElementById("useFilter"),
+
+      setpointValue: document.getElementById("setpointValue"),
+      kpValue: document.getElementById("kpValue"),
+      kiValue: document.getElementById("kiValue"),
+      kdValue: document.getElementById("kdValue"),
+      uMaxValue: document.getElementById("uMaxValue"),
+      disturbanceValue: document.getElementById("disturbanceValue"),
+      filterValue: document.getElementById("filterValue"),
+
+      riseMetric: document.getElementById("riseMetric"),
+      overshootMetric: document.getElementById("overshootMetric"),
+      sseMetric: document.getElementById("sseMetric"),
+      verdictMetric: document.getElementById("verdictMetric"),
+      behaviorChip: document.getElementById("behaviorChip"),
+
+      replayBtn: document.getElementById("replayBtn"),
+      presetButtons: [...document.querySelectorAll(".preset-btn")]
+    };
+
+    const flightCanvas = document.getElementById("flightCanvas");
+    const responseCanvas = document.getElementById("responseCanvas");
+    const controlCanvas = document.getElementById("controlCanvas");
+
+    const fctx = flightCanvas.getContext("2d");
+    const rctx = responseCanvas.getContext("2d");
+    const cctx = controlCanvas.getContext("2d");
+
+    let latestResult = null;
+    let animationStart = performance.now();
+
+    // ------------------------------------------------------------
+    // Presets help compare controller behaviors quickly.
+    // ------------------------------------------------------------
+    const presets = {
+      balanced: {
+        setpoint: 1.20, kp: 5.00, ki: 1.20, kd: 3.20,
+        uMax: 2.20, disturbance: 0.60, filterAlpha: 0.22,
+        antiWindup: true, sensorNoise: false, useFilter: true,
+        label: "Balanced"
+      },
+      pOnly: {
+        setpoint: 1.20, kp: 4.40, ki: 0.00, kd: 0.00,
+        uMax: 2.20, disturbance: 0.60, filterAlpha: 0.22,
+        antiWindup: true, sensorNoise: false, useFilter: true,
+        label: "P Only"
+      },
+      pi: {
+        setpoint: 1.20, kp: 4.20, ki: 1.90, kd: 0.00,
+        uMax: 2.20, disturbance: 0.60, filterAlpha: 0.22,
+        antiWindup: true, sensorNoise: false, useFilter: true,
+        label: "PI"
+      },
+      pd: {
+        setpoint: 1.20, kp: 5.20, ki: 0.00, kd: 3.40,
+        uMax: 2.20, disturbance: 0.60, filterAlpha: 0.24,
+        antiWindup: true, sensorNoise: false, useFilter: true,
+        label: "PD"
+      },
+      windup: {
+        setpoint: 1.50, kp: 4.80, ki: 3.50, kd: 0.80,
+        uMax: 1.00, disturbance: 0.80, filterAlpha: 0.15,
+        antiWindup: false, sensorNoise: false, useFilter: true,
+        label: "Windup risk"
+      },
+      noise: {
+        setpoint: 1.20, kp: 4.80, ki: 1.00, kd: 5.60,
+        uMax: 2.40, disturbance: 0.50, filterAlpha: 0.36,
+        antiWindup: true, sensorNoise: true, useFilter: true,
+        label: "Filtered D"
+      }
+    };
+
+    // ------------------------------------------------------------
+    // Small deterministic pseudo-random helper.
+    // This keeps the noise pattern stable every time you drag sliders.
+    // ------------------------------------------------------------
+    function seededNoise(step) {
+      const x = Math.sin(step * 12.9898) * 43758.5453123;
+      return x - Math.floor(x);
+    }
+
+    // ------------------------------------------------------------
+    // Read all UI values as numbers / booleans.
+    // ------------------------------------------------------------
+    function readParams() {
+      return {
+        setpoint: Number(el.setpoint.value),
+        kp: Number(el.kp.value),
+        ki: Number(el.ki.value),
+        kd: Number(el.kd.value),
+        uMax: Number(el.uMax.value),
+        disturbance: Number(el.disturbance.value),
+        filterAlpha: Number(el.filterAlpha.value),
+        antiWindup: el.antiWindup.checked,
+        sensorNoise: el.sensorNoise.checked,
+        useFilter: el.useFilter.checked
+      };
+    }
+
+    // ------------------------------------------------------------
+    // Update the numeric labels beside sliders.
+    // ------------------------------------------------------------
+    function updateReadouts(params) {
+      el.setpointValue.textContent = `${params.setpoint.toFixed(2)} m`;
+      el.kpValue.textContent = params.kp.toFixed(2);
+      el.kiValue.textContent = params.ki.toFixed(2);
+      el.kdValue.textContent = params.kd.toFixed(2);
+      el.uMaxValue.textContent = params.uMax.toFixed(2);
+      el.disturbanceValue.textContent = params.disturbance.toFixed(2);
+      el.filterValue.textContent = params.filterAlpha.toFixed(2);
+    }
+
+    // ------------------------------------------------------------
+    // A simple vertical-motion plant:
+    // y     = altitude
+    // v     = vertical speed
+    // a     = plantGain * u - drag * v + disturbance
+    //
+    // The target steps up after a short delay. A disturbance pulse appears later.
+    // This is intentionally simplified so that controller behavior is easy to see.
+    // ------------------------------------------------------------
+    function simulate(params) {
+      const dt = 0.02;
+      const totalTime = 12;
+      const steps = Math.floor(totalTime / dt);
+
+      const plantGain = 1.25;
+      const drag = 0.95;
+
+      let y = 0;
+      let v = 0;
+      let integral = 0;
+      let prevError = 0;
+      let filteredDerivative = 0;
+
+      const time = [];
+      const target = [];
+      const altitude = [];
+      const control = [];
+      const rawControl = [];
+      const disturbanceSeries = [];
+
+      for (let i = 0; i < steps; i++) {
+        const t = i * dt;
+
+        // Step target starts after 0.6 s so the graph is easier to read.
+        const sp = t >= 0.6 ? params.setpoint : 0;
+
+        // Short disturbance pulse, like a gust.
+        let gust = 0;
+        if (t >= 4.2 && t <= 4.9) {
+          gust = -params.disturbance;
+        }
+
+        // Optional measurement noise.
+        const noise = params.sensorNoise ? (seededNoise(i) - 0.5) * 0.08 : 0;
+        const measuredY = y + noise;
+
+        const error = sp - measuredY;
+
+        // Integral update.
+        integral += error * dt;
+
+        // Derivative term.
+        const rawDerivative = (error - prevError) / dt;
+
+        if (params.useFilter) {
+          filteredDerivative =
+            params.filterAlpha * rawDerivative +
+            (1 - params.filterAlpha) * filteredDerivative;
+        } else {
+          filteredDerivative = rawDerivative;
+        }
+
+        const pTerm = params.kp * error;
+        const iTerm = params.ki * integral;
+        const dTerm = params.kd * filteredDerivative;
+
+        let u = pTerm + iTerm + dTerm;
+        const unclamped = u;
+
+        // Saturation.
+        if (u > params.uMax) u = params.uMax;
+        if (u < -params.uMax) u = -params.uMax;
+
+        // Basic anti-windup:
+        // If the controller is saturated and still trying to integrate in the same direction,
+        // roll back the latest integral addition.
+        if (params.antiWindup && params.ki > 0) {
+          const saturatedHigh = unclamped > params.uMax && error > 0;
+          const saturatedLow = unclamped < -params.uMax && error < 0;
+          if (saturatedHigh || saturatedLow) {
+            integral -= error * dt;
+          }
+
+          // Also clamp the integral to a reasonable range.
+          const integralLimit = params.uMax / Math.max(params.ki, 0.001);
+          if (integral > integralLimit) integral = integralLimit;
+          if (integral < -integralLimit) integral = -integralLimit;
+        }
+
+        // Plant update.
+        const acceleration = plantGain * u - drag * v + gust;
+        v += acceleration * dt;
+        y += v * dt;
+
+        time.push(t);
+        target.push(sp);
+        altitude.push(y);
+        control.push(u);
+        rawControl.push(unclamped);
+        disturbanceSeries.push(gust);
+
+        prevError = error;
+      }
+
+      return {
+        params,
+        dt,
+        totalTime,
+        time,
+        target,
+        altitude,
+        control,
+        rawControl,
+        disturbanceSeries,
+        metrics: computeMetrics(time, target, altitude)
+      };
+    }
+
+    // ------------------------------------------------------------
+    // Compute a few simple response metrics.
+    // ------------------------------------------------------------
+    function computeMetrics(time, target, altitude) {
+      const finalTarget = target[target.length - 1];
+      const finalAltitude = altitude[altitude.length - 1];
+
+      if (finalTarget <= 0) {
+        return {
+          riseTime: null,
+          overshootPct: 0,
+          steadyStateError: 0,
+          verdict: "No step command"
+        };
+      }
+
+      const tenPct = 0.1 * finalTarget;
+      const ninetyPct = 0.9 * finalTarget;
+
+      let t10 = null;
+      let t90 = null;
+      for (let i = 0; i < altitude.length; i++) {
+        if (time[i] >= 0.6 && t10 === null && altitude[i] >= tenPct) t10 = time[i];
+        if (time[i] >= 0.6 && t90 === null && altitude[i] >= ninetyPct) {
+          t90 = time[i];
+          break;
+        }
+      }
+
+      let maxAltitude = -Infinity;
+      for (let i = 0; i < altitude.length; i++) {
+        if (time[i] >= 0.6 && altitude[i] > maxAltitude) {
+          maxAltitude = altitude[i];
+        }
+      }
+
+      const overshoot = Math.max(0, maxAltitude - finalTarget);
+      const overshootPct = (overshoot / finalTarget) * 100;
+      const steadyStateError = finalTarget - finalAltitude;
+
+      let verdict = "Balanced";
+      if (Math.abs(steadyStateError) > 0.08 && overshootPct < 8) {
+        verdict = "Residual error";
+      } else if (overshootPct > 25) {
+        verdict = "Aggressive / underdamped";
+      } else if (overshootPct > 12) {
+        verdict = "Fast with overshoot";
+      } else if ((t10 !== null && t90 !== null) && (t90 - t10 > 2.0)) {
+        verdict = "Stable but slow";
+      } else if (Math.abs(steadyStateError) < 0.03 && overshootPct < 10) {
+        verdict = "Well tuned";
+      }
+
+      return {
+        riseTime: (t10 !== null && t90 !== null) ? (t90 - t10) : null,
+        overshootPct,
+        steadyStateError,
+        verdict
+      };
+    }
+
+    // ------------------------------------------------------------
+    // Draw helper functions.
+    // ------------------------------------------------------------
+    function drawGrid(ctx, width, height, cols, rows) {
+      ctx.save();
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.lineWidth = 1;
+
+      for (let i = 0; i <= cols; i++) {
+        const x = (i / cols) * width;
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+
+      for (let j = 0; j <= rows; j++) {
+        const y = (j / rows) * height;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function mapX(value, min, max, width, pad) {
+      return pad + ((value - min) / (max - min)) * (width - 2 * pad);
+    }
+
+    function mapY(value, min, max, height, pad) {
+      return height - pad - ((value - min) / (max - min)) * (height - 2 * pad);
+    }
+
+    function drawLineSeries(ctx, xs, ys, options) {
+      const {
+        width, height, minX, maxX, minY, maxY, pad,
+        color = "#7dd3fc", lineWidth = 2
+      } = options;
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.beginPath();
+
+      for (let i = 0; i < xs.length; i++) {
+        const x = mapX(xs[i], minX, maxX, width, pad);
+        const y = mapY(ys[i], minY, maxY, height, pad);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ------------------------------------------------------------
+    // Draw the main response chart.
+    // ------------------------------------------------------------
+    function drawResponseChart(result) {
+      const ctx = rctx;
+      const w = responseCanvas.width;
+      const h = responseCanvas.height;
+      const pad = 36;
+
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h, 8, 5);
+
+      const maxYData = Math.max(...result.altitude, ...result.target, 0.5) + 0.25;
+      const minYData = Math.min(0, ...result.altitude) - 0.15;
+
+      drawLineSeries(ctx, result.time, result.target, {
+        width: w, height: h,
+        minX: 0, maxX: result.totalTime,
+        minY: minYData, maxY: maxYData,
+        pad,
+        color: "#a78bfa",
+        lineWidth: 2
+      });
+
+      drawLineSeries(ctx, result.time, result.altitude, {
+        width: w, height: h,
+        minX: 0, maxX: result.totalTime,
+        minY: minYData, maxY: maxYData,
+        pad,
+        color: "#7dd3fc",
+        lineWidth: 3
+      });
+
+      ctx.save();
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+      ctx.font = "12px Inter, sans-serif";
+      ctx.fillText("Altitude", 12, 18);
+
+      for (let i = 0; i <= 8; i++) {
+        const t = (result.totalTime / 8) * i;
+        const x = mapX(t, 0, result.totalTime, w, pad);
+        ctx.fillStyle = "rgba(255,255,255,0.45)";
+        ctx.fillText(`${t.toFixed(0)}s`, x - 8, h - 10);
+      }
+
+      for (let i = 0; i <= 4; i++) {
+        const yVal = minYData + ((maxYData - minYData) / 4) * i;
+        const y = mapY(yVal, minYData, maxYData, h, pad);
+        ctx.fillStyle = "rgba(255,255,255,0.45)";
+        ctx.fillText(`${yVal.toFixed(1)}`, 6, y + 4);
+      }
+
+      // Legend
+      ctx.fillStyle = "#7dd3fc";
+      ctx.fillRect(w - 180, 16, 14, 4);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fillText("Output", w - 156, 20);
+
+      ctx.fillStyle = "#a78bfa";
+      ctx.fillRect(w - 100, 16, 14, 4);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fillText("Target", w - 76, 20);
+      ctx.restore();
+    }
+
+    // ------------------------------------------------------------
+    // Draw the control effort chart.
+    // ------------------------------------------------------------
+    function drawControlChart(result) {
+      const ctx = cctx;
+      const w = controlCanvas.width;
+      const h = controlCanvas.height;
+      const pad = 34;
+
+      ctx.clearRect(0, 0, w, h);
+      drawGrid(ctx, w, h, 8, 4);
+
+      const range = Math.max(result.params.uMax, Math.max(...result.rawControl.map(v => Math.abs(v)))) + 0.25;
+      const minY = -range;
+      const maxY = range;
+
+      drawLineSeries(ctx, result.time, result.rawControl, {
+        width: w, height: h,
+        minX: 0, maxX: result.totalTime,
+        minY, maxY,
+        pad,
+        color: "rgba(248,113,113,0.45)",
+        lineWidth: 2
+      });
+
+      drawLineSeries(ctx, result.time, result.control, {
+        width: w, height: h,
+        minX: 0, maxX: result.totalTime,
+        minY, maxY,
+        pad,
+        color: "#86efac",
+        lineWidth: 2.5
+      });
+
+      // Saturation bounds
+      ctx.save();
+      ctx.strokeStyle = "rgba(251,191,36,0.8)";
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([6, 6]);
+
+      const yTop = mapY(result.params.uMax, minY, maxY, h, pad);
+      const yBottom = mapY(-result.params.uMax, minY, maxY, h, pad);
+
+      ctx.beginPath();
+      ctx.moveTo(pad, yTop);
+      ctx.lineTo(w - pad, yTop);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(pad, yBottom);
+      ctx.lineTo(w - pad, yBottom);
+      ctx.stroke();
+
+      ctx.setLineDash([]);
+
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+      ctx.font = "12px Inter, sans-serif";
+      ctx.fillText("Control", 12, 18);
+      ctx.fillText("+sat", w - 54, yTop - 6);
+      ctx.fillText("-sat", w - 54, yBottom - 6);
+
+      ctx.fillStyle = "#86efac";
+      ctx.fillRect(w - 230, 16, 14, 4);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fillText("Applied", w - 206, 20);
+
+      ctx.fillStyle = "rgba(248,113,113,0.7)";
+      ctx.fillRect(w - 140, 16, 14, 4);
+      ctx.fillStyle = "rgba(255,255,255,0.8)";
+      ctx.fillText("Raw", w - 116, 20);
+      ctx.restore();
+    }
+
+    // ------------------------------------------------------------
+    // Draw the animated drone window.
+    // ------------------------------------------------------------
+    function drawFlightWindow(result, nowMs) {
+      const ctx = fctx;
+      const w = flightCanvas.width;
+      const h = flightCanvas.height;
+
+      ctx.clearRect(0, 0, w, h);
+
+      // Background
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, "#0c1c35");
+      grad.addColorStop(1, "#07101d");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Ground
+      ctx.fillStyle = "#0f1f13";
+      ctx.fillRect(0, h - 42, w, 42);
+
+      // Replay the response on a loop.
+      const elapsedSec = ((nowMs - animationStart) / 1000) % result.totalTime;
+      let index = Math.floor(elapsedSec / result.dt);
+      if (index < 0) index = 0;
+      if (index >= result.altitude.length) index = result.altitude.length - 1;
+
+      const currentAltitude = result.altitude[index];
+      const currentTarget = result.target[index];
+
+      const displayMax = Math.max(result.params.setpoint, Math.max(...result.altitude), 0.6) + 0.35;
+      const displayMin = Math.min(0, ...result.altitude) - 0.1;
+
+      function altitudeToY(a) {
+        const top = 20;
+        const bottom = h - 58;
+        return bottom - ((a - displayMin) / (displayMax - displayMin)) * (bottom - top);
+      }
+
+      // Grid lines
+      ctx.strokeStyle = "rgba(255,255,255,0.08)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 5; i++) {
+        const y = 24 + (i / 5) * (h - 82);
+        ctx.beginPath();
+        ctx.moveTo(12, y);
+        ctx.lineTo(w - 12, y);
+        ctx.stroke();
+      }
+
+      // Target line
+      const targetY = altitudeToY(currentTarget);
+      ctx.strokeStyle = "#a78bfa";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([8, 6]);
+      ctx.beginPath();
+      ctx.moveTo(18, targetY);
+      ctx.lineTo(w - 18, targetY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Drone position
+      const droneY = altitudeToY(currentAltitude);
+      const droneX = w / 2;
+
+      // Motion trail
+      ctx.strokeStyle = "rgba(125,211,252,0.25)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let j = Math.max(0, index - 40); j <= index; j++) {
+        const y = altitudeToY(result.altitude[j]);
+        const x = droneX + Math.sin(j * 0.2) * 2.5;
+        if (j === Math.max(0, index - 40)) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+
+      // Drone body
+      ctx.save();
+      ctx.translate(droneX, droneY);
+
+      ctx.fillStyle = "#dbeafe";
+      ctx.strokeStyle = "#7dd3fc";
+      ctx.lineWidth = 2;
+
+      // arms
+      ctx.beginPath();
+      ctx.moveTo(-32, 0);
+      ctx.lineTo(32, 0);
+      ctx.moveTo(-22, -12);
+      ctx.lineTo(22, 12);
+      ctx.moveTo(-22, 12);
+      ctx.lineTo(22, -12);
+      ctx.stroke();
+
+      // prop circles
+      const props = [
+        [-36, -6], [36, -6], [-36, 6], [36, 6]
+      ];
+      props.forEach(([x, y]) => {
+        ctx.beginPath();
+        ctx.arc(x, y, 7, 0, Math.PI * 2);
+        ctx.stroke();
+      });
+
+      // center body
+      ctx.fillStyle = "#93c5fd";
+      ctx.beginPath();
+      ctx.roundRect(-16, -10, 32, 20, 8);
+      ctx.fill();
+
+      ctx.restore();
+
+      // Labels
+      ctx.fillStyle = "rgba(255,255,255,0.82)";
+      ctx.font = "12px Inter, sans-serif";
+      ctx.fillText(`t = ${elapsedSec.toFixed(2)} s`, 14, 20);
+      ctx.fillText(`target: ${currentTarget.toFixed(2)} m`, 14, h - 18);
+      ctx.fillText(`output: ${currentAltitude.toFixed(2)} m`, w - 104, h - 18);
+    }
+
+    // ------------------------------------------------------------
+    // Update metrics text on the page.
+    // ------------------------------------------------------------
+    function updateMetrics(result) {
+      const { riseTime, overshootPct, steadyStateError, verdict } = result.metrics;
+
+      el.riseMetric.textContent = riseTime === null ? "—" : `${riseTime.toFixed(2)} s`;
+      el.overshootMetric.textContent = `${overshootPct.toFixed(1)} %`;
+      el.sseMetric.textContent = `${steadyStateError.toFixed(3)} m`;
+      el.verdictMetric.textContent = verdict;
+      el.behaviorChip.textContent = verdict;
+    }
+
+    // ------------------------------------------------------------
+    // Full refresh when any setting changes.
+    // ------------------------------------------------------------
+    function refresh() {
+      const params = readParams();
+      updateReadouts(params);
+      latestResult = simulate(params);
+      updateMetrics(latestResult);
+      drawResponseChart(latestResult);
+      drawControlChart(latestResult);
+      animationStart = performance.now();
+    }
+
+    // ------------------------------------------------------------
+    // Apply a preset to all controls.
+    // ------------------------------------------------------------
+    function applyPreset(name) {
+      const p = presets[name];
+      if (!p) return;
+
+      el.setpoint.value = p.setpoint;
+      el.kp.value = p.kp;
+      el.ki.value = p.ki;
+      el.kd.value = p.kd;
+      el.uMax.value = p.uMax;
+      el.disturbance.value = p.disturbance;
+      el.filterAlpha.value = p.filterAlpha;
+      el.antiWindup.checked = p.antiWindup;
+      el.sensorNoise.checked = p.sensorNoise;
+      el.useFilter.checked = p.useFilter;
+
+      el.presetButtons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.preset === name);
+      });
+
+      refresh();
+    }
+
+    // ------------------------------------------------------------
+    // Animation loop for the flight window.
+    // ------------------------------------------------------------
+    function animate(now) {
+      if (latestResult) {
+        drawFlightWindow(latestResult, now);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // ------------------------------------------------------------
+    // Event listeners.
+    // ------------------------------------------------------------
+    [
+      el.setpoint, el.kp, el.ki, el.kd, el.uMax,
+      el.disturbance, el.filterAlpha,
+      el.antiWindup, el.sensorNoise, el.useFilter
+    ].forEach(input => {
+      input.addEventListener("input", refresh);
+      input.addEventListener("change", refresh);
+    });
+
+    el.presetButtons.forEach(btn => {
+      btn.addEventListener("click", () => applyPreset(btn.dataset.preset));
+    });
+
+    el.replayBtn.addEventListener("click", () => {
+      animationStart = performance.now();
+    });
+
+    // ------------------------------------------------------------
+    // Initial page load.
+    // ------------------------------------------------------------
+    applyPreset("balanced");
+    requestAnimationFrame(animate);
+  </script>
+</body>
+</html>
