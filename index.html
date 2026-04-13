@@ -1,333 +1,388 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects | Portfolio</title>
-  <meta
-    name="description"
-    content="Project index for portfolio site: CIV102 Bridge, Praxis I Morning Supplement Dispenser, Praxis II Filming, Lorenz Chaotic Circuit, and PID Control Demo."
-  />
-  <meta name="theme-color" content="#0b0f19" />
-  <link rel="stylesheet" href="../style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Praxis | Project Showcase</title>
+  <meta name="description" content="A clean, evidence-first hub for deliverables, Praxis concepts, and project pages." />
+  <meta name="description" content="Evidence-first documentation of design work, guided by reusable Praxis concepts and tools." />
+<meta name="theme-color" content="#0b0f19" />
+<link rel="stylesheet" href="style.css" />
 
-  <style>
-    /* Cover placeholders (no need to edit style.css) */
-    .proj-link { display: block; }
+  <!-- Cover placeholders (no need to edit style.css) -->
+<style>
+    /* ---- Cover placeholders (no need to edit style.css) ---- */
+.proj-link { display:block; }
 
-    .proj-cover {
-      aspect-ratio: 16 / 9;
-      border-radius: 16px;
-      overflow: hidden;
+.proj-cover{
+@@ -51,20 +51,59 @@
+opacity: .9;
+}
+
+    /* Praxis concept cards */
+    /* ---- Praxis concepts window: 2x2 visible (4 at a time) + scroll for more ---- */
+    .concept-window{
       border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.05), transparent 60%), var(--panel2);
+      padding: 12px;
+      max-width: 100%;
+      box-shadow: var(--shadow);
+    }
+    .concept-window-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .concept-window-head .muted{ margin:0; }
+    .concept-hint{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      white-space: nowrap;
+    }
+
+    /* 2 columns, show exactly 2 rows (4 cards) in the viewport */
+.concept-grid{
+display:grid;
+      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
+gap: 12px;
+      height: 320px;            /* tuned to show ~2 rows */
+      overflow-y: auto;         /* scroll inside the window */
+      padding-right: 6px;       /* space for scrollbar */
+      scroll-behavior: smooth;
+}
+    @media (min-width: 920px){
+      .concept-grid{ grid-template-columns: 1fr 1fr; }
+
+    /* Scrollbar (optional nice touch) */
+    .concept-grid::-webkit-scrollbar{ width: 10px; }
+    .concept-grid::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.10);
+}
+    .concept-grid::-webkit-scrollbar-track{ background: transparent; }
+
+.concept-card{
+border: 1px solid var(--line);
       background: var(--panel2);
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    .proj-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .cover-ph {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+      border-radius: 18px;
       padding: 14px;
+      background: rgba(255,255,255,.03);
+      border-radius: 16px;
+      padding: 12px;
+      min-height: 140px;
+}
+.concept-top{
+display:flex;
+@@ -73,7 +112,11 @@
+gap: 10px;
+margin-bottom: 8px;
+}
+    .concept-top h3{ margin:0; }
+    .concept-top h3{
+      margin:0;
+      font-size: 15px;
+      letter-spacing: -.1px;
+    }
+.concept-tag{
+font-size: 12px;
+padding: 6px 10px;
+@@ -83,11 +126,23 @@
+background: rgba(255,255,255,.03);
+white-space: nowrap;
+}
+    .concept-card p{
+      margin: 0;
       color: var(--muted);
-      font-weight: 800;
-      letter-spacing: .2px;
-      background:
-        radial-gradient(800px 400px at 20% 0%, rgba(122,162,255,.18), transparent 60%),
-        radial-gradient(700px 380px at 90% 20%, rgba(140,255,214,.14), transparent 60%),
-        var(--panel2);
+      font-size: 13px;
+      line-height: 1.45;
     }
 
-    .cover-ph small {
-      display: block;
-      margin-top: 6px;
-      font-weight: 600;
-      color: var(--muted);
-      opacity: .9;
+    @media (max-width: 720px){
+      .concept-grid{
+        grid-template-columns: 1fr;
+        height: 520px;          /* still “small window”, shows ~4 single-column cards */
+      }
     }
-
-    .page-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <div class="bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="grain"></div>
-  </div>
+  <!-- subtle background decoration -->
+<div class="bg">
+<div class="blob b1"></div>
+<div class="blob b2"></div>
+@@ -122,17 +177,15 @@
 
-  <header class="header">
-    <div class="container nav">
-      <a class="brand" href="../" aria-label="Home">
-        <span class="brand-dot"></span><span>portfolio</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Primary">
-        <a href="../#praxis">Praxis concepts</a>
-        <a href="../#deliverables">Deliverables</a>
-        <a href="./">Projects</a>
-        <a href="../#process">Process</a>
-        <a href="../#about">About</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a class="pill-btn" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
-    </div>
-
-    <div class="container hero" style="padding-bottom:10px;">
-      <div class="hero-left">
-        <p class="kicker">Directory</p>
-        <h1 class="title">Project <span class="title-accent">Index</span></h1>
-        <p class="lead">
-          A single page that lists all projects with direct links, quick context, and key artifacts.
+<div class="container hero">
+<div class="hero-left">
+        <p class="kicker">
+          GitHub Pages（GitHub Pages） · Project site（Project site）
         </p>
+        <p class="kicker">GitHub Pages · Project site</p>
 
-        <div class="chips">
-          <span class="chip">5 projects</span>
-          <span class="chip">covers in <code>assets/img/</code></span>
-          <span class="chip">evidence-first</span>
+<h1 class="title">
+Praxis Project
+<span class="title-accent">Showcase</span>
+</h1>
+
+<p class="lead">
+          Evidence-first documentation of design work, guided by reusable Praxis concepts and tools.
+          Evidence-first documentation of design work, guided by reusable concepts and tools.
+</p>
+
+<div class="chips">
+@@ -149,7 +202,6 @@ <h1 class="title">
+<a class="btn ghost" href="#praxis">Praxis concepts</a>
+</div>
+
+        <!-- Direct jump links -->
+<div class="proj-actions" style="margin-top:12px;">
+<a class="link" href="projects/civ102-bridge.html">CIV102 Bridge →</a>
+<a class="link" href="projects/praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser →</a>
+@@ -203,85 +255,122 @@ <h1 class="title">
+<div class="section-head">
+<h2>Praxis concepts</h2>
+<p class="muted">
+          A small “legend” so a reader can understand how my pages are structured (and how to navigate the evidence).
+          A small reference window for how this site is structured. Scroll to explore more concepts.
+</p>
+</div>
+
+      <div class="concept-grid">
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>CTMF（Concepts, Tools, Models, Frameworks）</h3>
+            <span class="concept-tag">portfolio building blocks</span>
+          </div>
+          <p class="muted">
+            A CTMF is something I reuse across projects: a <strong>Concept（概念）</strong>, <strong>Tool（工具）</strong>,
+            <strong>Model（模型）</strong>, or <strong>Framework（框架）</strong>. Each CTMF on this site is linked to:
+            (1) evidence of use, and (2) a short assessment of utility/fit.
+          </p>
+          <ul class="list">
+            <li><strong>Example tools:</strong> requirements table, measurement matrix, PUGH chart, pairwise comparison</li>
+            <li><strong>Example frameworks:</strong> FDCT loop, stakeholder mapping</li>
+          </ul>
+      <div class="concept-window">
+        <div class="concept-window-head">
+          <p class="muted">Showing 4 at a time (2×2). Scroll inside the window to view more.</p>
+          <span class="concept-hint">Scroll</span>
+</div>
+
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>FDCT（Frame, Diverge, Converge, Test）</h3>
+            <span class="concept-tag">process loop</span>
+        <div class="concept-grid" aria-label="Praxis concepts window">
+          <!-- 12 concept groups ( > 8 ) -->
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>CTMF</h3>
+              <span class="concept-tag">building blocks</span>
+            </div>
+            <p>Reusable Concepts, Tools, Models, and Frameworks. Each CTMF is linked to evidence of use and a short utility assessment.</p>
+</div>
+          <p class="muted">
+            A practical iteration loop I use to keep work evidence-first:
+            <strong>Frame（定义）</strong> the problem and success metrics → <strong>Diverge（发散）</strong> options →
+            <strong>Converge（收敛）</strong> with explicit tradeoffs → <strong>Test（测试）</strong> to validate claims.
+          </p>
+          <ul class="list">
+            <li><strong>Frame:</strong> constraints, stakeholders, measurable success</li>
+            <li><strong>Test:</strong> proxy tests, stakeholder feedback, verification tables</li>
+          </ul>
         </div>
 
-        <div class="page-actions">
-          <a class="btn primary" href="../#projects">Back to Home Projects <span class="arrow">→</span></a>
-          <a class="btn ghost" href="../#deliverables">Go to Deliverables</a>
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>Tools（常用工具）</h3>
+            <span class="concept-tag">decision + evidence</span>
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>FDCT</h3>
+              <span class="concept-tag">process loop</span>
+            </div>
+            <p>Frame → Diverge → Converge → Test. A pragmatic loop to keep work evidence-first and iteration-driven.</p>
+</div>
+          <ul class="list">
+            <li><strong>Requirements table（需求表）:</strong> turns complaints into testable criteria.</li>
+            <li><strong>Measurement matrix（测量矩阵）:</strong> compares concepts with numbers, not vibes.</li>
+            <li><strong>PUGH chart（PUGH 图）:</strong> structured comparison vs a reference concept.</li>
+            <li><strong>Pairwise comparison（两两比较）:</strong> resolves close calls through debate + judging.</li>
+            <li><strong>Proxy test（代理测试）:</strong> fast evidence before high-fidelity builds.</li>
+          </ul>
         </div>
-      </div>
 
-      <div class="hero-right" aria-hidden="true">
-        <div class="glass-card">
-          <div class="glass-title">Quick links</div>
-          <a class="q" href="./civ102-bridge.html">CIV102 Bridge</a>
-          <a class="q" href="./praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser</a>
-          <a class="q" href="./praxis2-filming.html">Praxis II Filming</a>
-          <a class="q" href="./lorenz.html#top">Lorenz Chaotic Circuit</a>
-          <a class="q" href="./pid-control-demo.html">PID Control Demo</a>
+        <div class="concept-card">
+          <div class="concept-top">
+            <h3>Evidence trail（证据链）</h3>
+            <span class="concept-tag">navigation</span>
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Stakeholder map</h3>
+              <span class="concept-tag">people</span>
+            </div>
+            <p>Who is affected, who decides, and what “success” means for each group. Useful for aligning criteria and messaging.</p>
+</div>
+          <p class="muted">
+            Every major claim should have a nearby link to supporting evidence (figure/table/report/video).
+            This makes grading fast and makes the work reusable for future projects.
+          </p>
+          <ul class="list">
+            <li><strong>Pattern:</strong> Claim → Evidence → So-what</li>
+            <li><strong>Rule:</strong> if a reader can’t find evidence in 10 seconds, it’s not “documented” yet.</li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container main">
-    <section class="section">
-      <div class="section-head row">
-        <div>
-          <h2>Projects</h2>
-          <p class="muted">Click a card to open the project page.</p>
-        </div>
-        <span class="tag">Featured</span>
-      </div>
-
-      <div class="project-grid">
-        <!-- CIV102 Bridge -->
-        <a class="proj proj-link" href="./civ102-bridge.html" aria-label="Open CIV102 Bridge">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/civ102-bridge.jpg"
-              alt="CIV102 Bridge cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              CIV102 Bridge cover image
-              <small>Place image at: assets/img/civ102-bridge.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>CIV102 Bridge</h3>
-            <span class="pill">structures</span>
-          </div>
-
-          <p class="muted">
-            Box girder design, iteration, testing evidence, and failure-mode reasoning.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> buckling risk, strength-to-weight ratio, constructibility</li>
-            <li><strong>Artifacts:</strong> report, annotated figures</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- Praxis I Morning Supplement Dispenser -->
-        <a
-          class="proj proj-link"
-          href="./praxis1-morning-supplement-dispenser.html"
-          aria-label="Open Praxis I Morning Supplement Dispenser"
-        >
-          <div class="proj-cover">
-            <img
-              src="../assets/img/praxis1.jpg"
-              alt="Praxis I cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              Praxis I cover image
-              <small>Place image at: assets/img/praxis1.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>Praxis I Morning Supplement Dispenser</h3>
-            <span class="pill">product</span>
-          </div>
-
-          <p class="muted">
-            Evidence-first concept selection using proxy tests, measurement matrices, and structured convergence.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> usability friction, time, steps, cleaning, and dorm constraints</li>
-            <li><strong>Artifacts:</strong> final report, prototype</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- Praxis II Filming -->
-        <a class="proj proj-link" href="./praxis2-filming.html" aria-label="Open Praxis II Filming">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/praxis2.jpg"
-              alt="Praxis II cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              Praxis II cover image
-              <small>Place image at: assets/img/praxis2.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>Praxis II Filming</h3>
-            <span class="pill">media</span>
-          </div>
-
-          <p class="muted">
-            Accessible filming design for Pegasus, centered on stakeholder needs, creative control, and independent use.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> stakeholder-centered design</li>
-            <li><strong>Artifacts:</strong> showcase, prototype</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- Lorenz Chaotic Circuit -->
-        <a class="proj proj-link" href="./lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/lorenz.jpg"
-              alt="Lorenz Chaotic Circuit cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              Lorenz project cover image
-              <small>Place image at: assets/img/lorenz.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>Lorenz Chaotic Circuit</h3>
-            <span class="pill">nonlinear systems</span>
-          </div>
-
-          <p class="muted">
-            An interactive portfolio page exploring deterministic chaos, attractors, and the translation of equations into analog circuits.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> Lorenz system, circuit implementation, interactive visualization</li>
-            <li><strong>Artifacts:</strong> showcase page, visuals</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- PID Control Demo -->
-        <a class="proj proj-link" href="./pid-control-demo.html" aria-label="Open PID Control Demo">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/pid-control-demo.jpg"
-              alt="PID Control Demo cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              PID project cover image
-              <small>Place image at: assets/img/pid-control-demo.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>PID Control Demo</h3>
-            <span class="pill">control systems</span>
-          </div>
-
-          <p class="muted">
-            An interactive PID simulator showing how proportional, integral, and derivative gains affect response, overshoot, and stability.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> control intuition, parameter tuning, drone-inspired response</li>
-            <li><strong>Artifacts:</strong> simulator, demo page</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
       </div>
 
       <div class="hint">
-        This page is a directory only. Detailed writeups live in each project page. Images are loaded from <code>assets/img/</code>.
+        This section is intentionally short: it’s just enough for a reader to interpret the rest of the site quickly.
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Requirements & metrics</h3>
+              <span class="concept-tag">frame</span>
+            </div>
+            <p>Translate vague complaints into testable criteria and measurable success metrics. Prevents feature creep.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Assumption log</h3>
+              <span class="concept-tag">risk</span>
+            </div>
+            <p>List assumptions, their risk, and how to validate them. Helps plan tests before committing to high effort builds.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Proxy test</h3>
+              <span class="concept-tag">test</span>
+            </div>
+            <p>Fast, low-fidelity tests to validate key claims early. Turns “seems good” into evidence.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Measurement matrix</h3>
+              <span class="concept-tag">compare</span>
+            </div>
+            <p>Compare concepts with numbers (time, steps, reliability, size). Great for transparent convergence.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>PUGH chart</h3>
+              <span class="concept-tag">converge</span>
+            </div>
+            <p>Structured comparison vs a reference concept. Useful when you need a defensible selection rationale.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Pairwise comparison</h3>
+              <span class="concept-tag">weights</span>
+            </div>
+            <p>Resolve close calls by comparing criteria one pair at a time. Produces clearer priorities and weights.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Evidence trail</h3>
+              <span class="concept-tag">navigation</span>
+            </div>
+            <p>Claim → Evidence → So-what. Every major claim should be near a figure/table/report link.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Failure modes</h3>
+              <span class="concept-tag">engineering</span>
+            </div>
+            <p>Identify how a system fails before optimizing. Guides safe convergence and reduces fragile designs.</p>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-top">
+              <h3>Reflection loop</h3>
+              <span class="concept-tag">learning</span>
+            </div>
+            <p>What worked, what failed, what I would change. Converts project work into reusable personal practice.</p>
+          </div>
+        </div>
+</div>
+</section>
+
+<!-- Deliverables -->
+<section id="deliverables" class="section">
+<div class="section-head">
+<h2>Deliverables</h2>
+        <p class="muted">
+          Replace these links after you upload files under <code>assets/docs/</code>.
+        </p>
+        <p class="muted">Replace these links after you upload files under <code>assets/docs/</code>.</p>
+</div>
+
+<div class="cards">
+@@ -321,18 +410,14 @@ <h2>Deliverables</h2>
+<div class="card-cta">Open →</div>
+</a>
+</div>
+
+      <div class="hint">
+        Tip: keep filenames stable during grading. If a file changes, update the link here.
       </div>
-    </section>
+</section>
 
-    <footer class="footer">
-      <div><a class="link" href="../">← Home</a></div>
-      <div class="muted">Projects index</div>
-    </footer>
-  </main>
+<!-- Projects -->
+<section id="projects" class="section">
+<div class="section-head row">
+<div>
+<h2>Projects</h2>
+          <p class="muted">Three featured projects with cover images and direct navigation.</p>
+          <p class="muted">Three featured projects with cover placeholders and direct navigation.</p>
+</div>
+<a class="pill-btn" href="projects/">All projects</a>
+</div>
+@@ -388,7 +473,7 @@ <h3>Praxis I Morning Supplement Dispenser</h3>
+Evidence-first concept selection using proxy tests, measurement matrix, and structured convergence.
+</p>
+<ul class="list">
+            <li><strong>Focus:</strong> usability friction (time/steps/cleaning) + dorm constraints</li>
+            <li><strong>Focus:</strong> usability friction (time/steps/cleaning) and dorm constraints</li>
+<li><strong>Artifacts:</strong> final report, prototype</li>
+</ul>
+<div class="proj-actions">
+@@ -427,8 +512,7 @@ <h3>Praxis II Filming</h3>
+</div>
 
-  <script>
-    // Keep the theme consistent with the homepage if you toggle there
-    const root = document.documentElement;
-    const key = "praxis_theme";
-    const saved = localStorage.getItem(key);
-    if (saved) root.setAttribute("data-theme", saved);
-  </script>
-</body>
-</html>
+<div class="hint">
+        Image rule (your request): all images live directly under <code>assets/img/</code> (no subfolders).
+        Keep names exact to avoid 404.
+        Image rule: all images live directly under <code>assets/img/</code> with no subfolders.
+</div>
+</section>
+
+@@ -493,16 +577,14 @@ <h2>About</h2>
+
+<footer class="footer">
+<div>© <span id="y"></span> <span class="muted">sp-zh</span></div>
+      <div class="muted">Built with HTML（HTML） + CSS（CSS） on GitHub Pages（GitHub Pages）</div>
+      <div class="muted">Built with HTML + CSS on GitHub Pages</div>
+</footer>
+</main>
+
+<script>
+    // footer/year + updated date
+document.getElementById("y").textContent = new Date().getFullYear();
+document.getElementById("updated").textContent = new Date().toISOString().slice(0, 10);
+
+    // theme toggle (persist)
+const root = document.documentElement;
+const key = "praxis_theme";
+const saved = localStorage.getItem(key);
