@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="../style.css" />
 
   <style>
-    /* Cover placeholders (no need to edit style.css) */
     .proj-link{ display:block; }
     .proj-cover{
       aspect-ratio: 16 / 9;
@@ -50,7 +49,6 @@
       opacity: .9;
     }
 
-    /* Small helpers */
     .page-actions{
       display:flex;
       gap:10px;
@@ -82,6 +80,7 @@
       </nav>
 
       <div class="nav-actions">
+        <a class="pill-btn" href="https://sp-zh.github.io/" target="_blank" rel="noreferrer">Personal Homepage</a>
         <a class="pill-btn" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </div>
@@ -96,7 +95,7 @@
 
         <div class="chips">
           <span class="chip">5 projects</span>
-          <span class="chip">covers in <code>assets/img/</code></span>
+          <span class="chip">covers in <code>projects/assets/img/</code></span>
           <span class="chip">evidence-first</span>
         </div>
 
@@ -112,7 +111,7 @@
           <a class="q" href="./civ102-bridge.html">CIV102 Bridge</a>
           <a class="q" href="./praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser</a>
           <a class="q" href="./praxis2-filming.html">Praxis II Filming</a>
-          <a class="q" href="./lorenz.html#top">Lorenz Chaotic Circuit</a>
+          <a class="q" href="./lorenz.html">Lorenz Chaotic Circuit</a>
           <a class="q" href="./pid-control-demo.html">PID Control Demo</a>
         </div>
       </div>
@@ -130,10 +129,9 @@
       </div>
 
       <div class="project-grid">
-        <!-- CIV102 Bridge -->
         <a class="proj proj-link" href="./civ102-bridge.html" aria-label="Open CIV102 Bridge">
           <div class="proj-cover">
-            <img src="../assets/img/civ102-bridge.jpg" alt="CIV102 Bridge cover"
+            <img src="assets/img/civ102-bridge.jpg" alt="CIV102 Bridge cover"
                  onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
@@ -161,10 +159,9 @@
           </div>
         </a>
 
-        <!-- Praxis I Morning Supplement Dispenser -->
         <a class="proj proj-link" href="./praxis1-morning-supplement-dispenser.html" aria-label="Open Praxis I Morning Supplement Dispenser">
           <div class="proj-cover">
-            <img src="../assets/img/praxis1.jpg" alt="Praxis I cover"
+            <img src="assets/img/praxis1.jpg" alt="Praxis I cover"
                  onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
@@ -192,10 +189,9 @@
           </div>
         </a>
 
-        <!-- Praxis II Filming -->
         <a class="proj proj-link" href="./praxis2-filming.html" aria-label="Open Praxis II Filming">
           <div class="proj-cover">
-            <img src="../assets/img/praxis2.jpg" alt="Praxis II cover"
+            <img src="assets/img/praxis2.jpg" alt="Praxis II cover"
                  onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
@@ -223,10 +219,9 @@
           </div>
         </a>
 
-        <!-- Lorenz -->
-        <a class="proj proj-link" href="./lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
+        <a class="proj proj-link" href="./lorenz.html" aria-label="Open Lorenz Chaotic Circuit">
           <div class="proj-cover">
-            <img src="../assets/img/lorenz.jpg" alt="Lorenz Chaotic Circuit cover"
+            <img src="assets/img/lorenz.jpg" alt="Lorenz Chaotic Circuit cover"
                  onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
@@ -254,10 +249,9 @@
           </div>
         </a>
 
-        <!-- PID -->
         <a class="proj proj-link" href="./pid-control-demo.html" aria-label="Open PID Control Demo">
           <div class="proj-cover">
-            <img src="../assets/img/pid-control-demo.jpg" alt="PID Control Demo cover"
+            <img src="assets/img/pid-control-demo.jpg" alt="PID Control Demo cover"
                  onload="this.nextElementSibling.style.display='none';"
                  onerror="this.style.display='none';" />
             <div class="cover-ph">
@@ -287,7 +281,7 @@
       </div>
 
       <div class="hint">
-        This page is a directory only. Detailed writeups live in each project page. Images are loaded from <code>assets/img/</code> with no subfolders.
+        This page is a directory only. Detailed writeups live in each project page. Images are loaded from <code>projects/assets/img/</code>.
       </div>
     </section>
 
@@ -298,7 +292,6 @@
   </main>
 
   <script>
-    // Keep the theme consistent with the homepage if you toggle there
     const root = document.documentElement;
     const key = "praxis_theme";
     const saved = localStorage.getItem(key);
