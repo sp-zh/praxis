@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects | Praxis</title>
-  <meta name="description" content="Project index for Praxis site: CIV102 Bridge, Praxis I Morning Supplement Dispenser, Praxis II Filming." />
+  <title>Projects | Portfolio</title>
+  <meta name="description" content="Project index for portfolio site: CIV102 Bridge, Praxis I Morning Supplement Dispenser, Praxis II Filming, Lorenz Chaotic Circuit, and PID Control Demo." />
   <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="../style.css" />
 
@@ -70,7 +70,7 @@
   <header class="header">
     <div class="container nav">
       <a class="brand" href="../" aria-label="Home">
-        <span class="brand-dot"></span><span>praxis</span>
+        <span class="brand-dot"></span><span>portfolio</span>
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -95,7 +95,7 @@
         </p>
 
         <div class="chips">
-          <span class="chip">3 projects</span>
+          <span class="chip">5 projects</span>
           <span class="chip">covers in <code>assets/img/</code></span>
           <span class="chip">evidence-first</span>
         </div>
@@ -112,6 +112,8 @@
           <a class="q" href="./civ102-bridge.html">CIV102 Bridge</a>
           <a class="q" href="./praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser</a>
           <a class="q" href="./praxis2-filming.html">Praxis II Filming</a>
+          <a class="q" href="./lorenz.html#top">Lorenz Chaotic Circuit</a>
+          <a class="q" href="./pid-control-demo.html">PID Control Demo</a>
         </div>
       </div>
     </div>
@@ -214,6 +216,68 @@
           <ul class="list">
             <li><strong>Focus:</strong> stakeholder</li>
             <li><strong>Artifacts:</strong> showcase, prototype</li>
+          </ul>
+
+          <div class="proj-actions">
+            <span class="link">Open →</span>
+          </div>
+        </a>
+
+        <!-- Lorenz -->
+        <a class="proj proj-link" href="./lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
+          <div class="proj-cover">
+            <img src="../assets/img/lorenz.jpg" alt="Lorenz Chaotic Circuit cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
+            <div class="cover-ph">
+              Lorenz cover image
+              <small>Place image at: assets/img/lorenz.jpg</small>
+            </div>
+          </div>
+
+          <div class="proj-top">
+            <h3>Lorenz Chaotic Circuit</h3>
+            <span class="pill">nonlinear systems</span>
+          </div>
+
+          <p class="muted">
+            Interactive showcase of deterministic chaos, attractors, and analog circuit implementation.
+          </p>
+
+          <ul class="list">
+            <li><strong>Focus:</strong> nonlinear dynamics, equations-to-circuits, visualization</li>
+            <li><strong>Artifacts:</strong> showcase page, visuals</li>
+          </ul>
+
+          <div class="proj-actions">
+            <span class="link">Open →</span>
+          </div>
+        </a>
+
+        <!-- PID -->
+        <a class="proj proj-link" href="./pid-control-demo.html" aria-label="Open PID Control Demo">
+          <div class="proj-cover">
+            <img src="../assets/img/pid-control-demo.jpg" alt="PID Control Demo cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
+            <div class="cover-ph">
+              PID cover image
+              <small>Place image at: assets/img/pid-control-demo.jpg</small>
+            </div>
+          </div>
+
+          <div class="proj-top">
+            <h3>PID Control Demo</h3>
+            <span class="pill">control systems</span>
+          </div>
+
+          <p class="muted">
+            Interactive PID simulator showing how proportional, integral, and derivative gains shape response.
+          </p>
+
+          <ul class="list">
+            <li><strong>Focus:</strong> control intuition, tuning, overshoot, stability</li>
+            <li><strong>Artifacts:</strong> simulator, demo page</li>
           </ul>
 
           <div class="proj-actions">
