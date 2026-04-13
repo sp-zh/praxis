@@ -9,6 +9,62 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    /* ---------- Hero profile ---------- */
+    .hero-profile{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin-bottom:14px;
+    }
+    .avatar-wrap{
+      width:72px;
+      height:72px;
+      border-radius:50%;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:var(--panel2);
+      position:relative;
+      flex:0 0 72px;
+      box-shadow: var(--shadow);
+    }
+    .avatar-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .avatar-ph{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+      letter-spacing:.5px;
+      color:var(--text);
+      background:
+        radial-gradient(120px 80px at 20% 0%, rgba(122,162,255,.22), transparent 60%),
+        radial-gradient(120px 80px at 90% 20%, rgba(140,255,214,.16), transparent 60%),
+        var(--panel2);
+    }
+    .hero-identity{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+    .hero-name{
+      margin:0;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+    }
+    .hero-role{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
     /* ---------- Project cover placeholders ---------- */
     .proj-link { display:block; }
 
@@ -148,6 +204,9 @@
         grid-template-columns: 1fr;
         height: calc(var(--concept-card-h) * var(--concept-visible-rows) + var(--concept-gap) * (var(--concept-visible-rows) - 1));
       }
+      .hero-profile{
+        align-items:flex-start;
+      }
     }
   </style>
 </head>
@@ -181,12 +240,30 @@
               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
+        <a class="pill-btn" href="https://sp-zh.github.io/" target="_blank" rel="noreferrer">Personal Homepage</a>
         <a class="pill-btn" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub</a>
       </div>
     </div>
 
     <div class="container hero">
       <div class="hero-left">
+        <div class="hero-profile">
+          <div class="avatar-wrap" aria-hidden="true">
+            <img
+              src="assets/img/avatar.jpg"
+              alt="Shupei Zhang portrait"
+              onload="this.nextElementSibling.style.display='none';"
+              onerror="this.style.display='none';"
+            />
+            <div class="avatar-ph">SZ</div>
+          </div>
+
+          <div class="hero-identity">
+            <h2 class="hero-name">Shupei Zhang</h2>
+            <p class="hero-role">Engineering portfolio · design work · interactive projects</p>
+          </div>
+        </div>
+
         <p class="kicker">GitHub Pages · Project site</p>
 
         <h1 class="title">portfolio</h1>
@@ -205,14 +282,14 @@
           <a class="btn primary" href="#projects">
             View Projects <span class="arrow">→</span>
           </a>
-          <a class="btn ghost" href="#praxis">Praxis concepts</a>
+          <a class="btn ghost" href="https://sp-zh.github.io/" target="_blank" rel="noreferrer">Visit Personal Homepage</a>
         </div>
 
         <div class="proj-actions" style="margin-top:12px;">
           <a class="link" href="projects/civ102-bridge.html">CIV102 Bridge →</a>
           <a class="link" href="projects/praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser →</a>
           <a class="link" href="projects/praxis2-filming.html">Praxis II Filming →</a>
-          <a class="link" href="projects/lorenz.html#top">Lorenz Chaotic Circuit →</a>
+          <a class="link" href="projects/lorenz.html">Lorenz Chaotic Circuit →</a>
           <a class="link" href="projects/pid-control-demo.html">PID Control Demo →</a>
         </div>
       </div>
@@ -252,6 +329,7 @@
           <a class="q" href="#deliverables">Deliverables</a>
           <a class="q" href="#projects">Projects</a>
           <a class="q" href="#process">Process</a>
+          <a class="q" href="https://sp-zh.github.io/" target="_blank" rel="noreferrer">Personal Homepage</a>
         </div>
       </div>
     </div>
@@ -262,7 +340,6 @@
     <section id="praxis" class="section">
       <div class="section-head">
         <h2>Praxis concepts</h2>
-        <p class="muted">A small scrollable window. Exactly 4 cards are visible at a time.</p>
       </div>
 
       <div class="concept-window">
@@ -344,7 +421,6 @@
     <section id="deliverables" class="section">
       <div class="section-head">
         <h2>Deliverables</h2>
-        <p class="muted">Replace these links after you upload files under <code>assets/docs/</code>.</p>
       </div>
 
       <div class="cards">
@@ -352,7 +428,7 @@
           <div class="card-icon">📄</div>
           <div class="card-body">
             <div class="card-title">Design Portfolio (PDF)</div>
-            <div class="card-sub">assets/docs/ESC102-Portfolio.pdf</div>
+            <div class="card-sub">ESC102 portfolio document</div>
           </div>
           <div class="card-cta">Open →</div>
         </a>
@@ -370,7 +446,7 @@
           <div class="card-icon">🧾</div>
           <div class="card-body">
             <div class="card-title">Project One-pagers</div>
-            <div class="card-sub">3 × one-page summaries</div>
+            <div class="card-sub">Three project summaries</div>
           </div>
           <div class="card-cta">Open →</div>
         </a>
@@ -379,7 +455,7 @@
           <div class="card-icon">🔗</div>
           <div class="card-body">
             <div class="card-title">References</div>
-            <div class="card-sub">Sources & citations</div>
+            <div class="card-sub">Sources and citations</div>
           </div>
           <div class="card-cta">Open →</div>
         </a>
@@ -445,7 +521,7 @@
           <div class="proj-actions"><span class="link">Open →</span></div>
         </a>
 
-        <a class="proj proj-link" href="projects/lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
+        <a class="proj proj-link" href="projects/lorenz.html" aria-label="Open Lorenz Chaotic Circuit">
           <div class="proj-cover">
             <img src="assets/img/lorenz.jpg" alt="Lorenz Chaotic Circuit cover"
                  onload="this.nextElementSibling.style.display='none';"
@@ -518,10 +594,9 @@
         <div class="about-card">
           <div class="about-title">Links</div>
           <div class="about-links">
+            <a class="link" href="https://sp-zh.github.io/" target="_blank" rel="noreferrer">Personal Homepage →</a>
             <a class="link" href="https://github.com/sp-zh" target="_blank" rel="noreferrer">GitHub →</a>
-            <a class="link" href="#" title="Replace with your contact link">Contact →</a>
           </div>
-          <p class="muted small">Replace placeholders with your real links.</p>
         </div>
       </div>
     </section>
