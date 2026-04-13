@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lorenz Attractor Circuit Project</title>
+  <style>
+    :root {
+      --bg: #071017;
+      --bg-soft: #0d1720;
+      --panel: rgba(13, 23, 32, 0.86);
+      --line: rgba(118, 255, 199, 0.18);
+      --text: #e8fff8;
+      --muted: #9ec3b6;
+      --accent: #67ffc3;
+      --accent-2: #7de7ff;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.32);
+      --radius: 20px;
+      --max-width: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(103, 255, 195, 0.08), transparent 30%),
+        linear-gradient(180deg, #050c12 0%, #09131b 52%, #050b11 100%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(5, 12, 18, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(103, 255, 195, 0.22), rgba(125, 231, 255, 0.18));
+      border: 1px solid rgba(103, 255, 195, 0.22);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 18px rgba(103, 255, 195, 0.14);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 26px;
+      height: 11px;
+      border: 1.4px solid rgba(103, 255, 195, 0.72);
+      border-radius: 100px;
+    }
+
+    .brand-mark::before {
+      transform: translateY(-4px) rotate(18deg);
+    }
+
+    .brand-mark::after {
+      transform: translateY(4px) rotate(-18deg);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .nav-links a {
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      transition: 0.22s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(103, 255, 195, 0.08);
+    }
+
+    .hero {
+      padding: 4.2rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-copy {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 560px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -90px -110px auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(103, 255, 195, 0.18), transparent 64%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      width: fit-content;
+      color: var(--accent);
+      background: rgba(103, 255, 195, 0.08);
+      border: 1px solid rgba(103, 255, 195, 0.16);
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.14;
+      margin: 0 0 0.9rem;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5vw, 4.3rem);
+      max-width: 11ch;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, 2.6vw, 2.35rem);
+    }
+
+    h3 {
+      font-size: 1.15rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .lead {
+      font-size: 1.08rem;
+      max-width: 62ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 46px;
+      padding: 0.85rem 1.05rem;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, rgba(103, 255, 195, 0.9), rgba(125, 231, 255, 0.85));
+      color: #031117;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+    }
+
+    .stats {
+      margin-top: 1.4rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .oscilloscope {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 560px;
+    }
+
+    .scope-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.35rem 0.3rem 1rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .scope-badges {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .scope-badge {
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .scope-screen {
+      position: relative;
+      flex: 1;
+      border-radius: 18px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(103, 255, 195, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(103, 255, 195, 0.06) 1px, transparent 1px),
+        radial-gradient(circle at center, rgba(103, 255, 195, 0.075), transparent 64%),
+        #02090d;
+      background-size: 28px 28px, 28px 28px, auto, auto;
+      border: 1px solid rgba(103, 255, 195, 0.16);
+      box-shadow: inset 0 0 32px rgba(103, 255, 195, 0.06);
+    }
+
+    #lorenzCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .scope-label {
+      position: absolute;
+      left: 16px;
+      bottom: 14px;
+      color: rgba(232, 255, 248, 0.72);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    section {
+      padding: 1rem 0 0.25rem;
+    }
+
+    .section-head {
+      max-width: 62ch;
+      margin-bottom: 1.2rem;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .info-card,
+    .image-card,
+    .application-card,
+    .timeline-card {
+      padding: 1.4rem;
+      height: 100%;
+    }
+
+    .mini-title {
+      color: var(--accent);
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .bullet-list {
+      display: grid;
+      gap: 0.9rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bullet-list li {
+      padding-left: 1rem;
+      border-left: 2px solid rgba(103, 255, 195, 0.18);
+      color: var(--muted);
+    }
+
+    .bullet-list strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 0.22rem;
+    }
+
+    .image-frame {
+      aspect-ratio: 16 / 10;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        #0a131a;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .image-frame.placeholder {
+      padding: 1.2rem;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .image-frame.placeholder::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(103, 255, 195, 0.2);
+    }
+
+    .image-caption {
+      margin-top: 0.85rem;
+      font-size: 0.95rem;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .concept-card {
+      padding: 1.35rem;
+    }
+
+    .concept-card p:last-child,
+    .application-card p:last-child,
+    .timeline-card p:last-child,
+    .info-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .application-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 84px 1fr;
+      gap: 0.9rem;
+      align-items: start;
+    }
+
+    .timeline-year {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding-top: 0.1rem;
+    }
+
+    .footer {
+      padding: 3rem 0 4rem;
+      color: var(--muted);
+    }
+
+    .footer-card {
+      padding: 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer small {
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 1000px) {
+      .hero-grid,
+      .two-col,
+      .concept-grid,
+      .application-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy,
+      .oscilloscope {
+        min-height: auto;
+      }
+
+      .scope-screen {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 1rem));
+      }
+
+      .nav-inner {
+        padding: 0.35rem 0;
+      }
+
+      .nav-links {
+        font-size: 0.9rem;
+        gap: 0.35rem;
+      }
+
+      .hero {
+        padding-top: 2.2rem;
+      }
+
+      .hero-copy,
+      .oscilloscope,
+      .info-card,
+      .image-card,
+      .application-card,
+      .timeline-card,
+      .concept-card,
+      .footer-card {
+        padding: 1rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="Lorenz attractor project home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Lorenz Attractor Circuit</span>
+      </a>
+      <nav class="nav-links" aria-label="Page navigation">
+        <a href="#overview">Overview</a>
+        <a href="#attractor">Attractor</a>
+        <a href="#hardware">Hardware</a>
+        <a href="#applications">Applications</a>
+        <a href="#future">Future</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <article class="card hero-copy">
+          <div class="eyebrow">Nonlinear Dynamics · Analog Circuit · Chaos</div>
+          <h1>Lorenz Attractor Circuit Project</h1>
+          <p class="lead">
+            This page presents my exploration of the Lorenz Attractor through circuit design, simulation, and hardware implementation. The project connects mathematical chaos with physical electronics: instead of only seeing equations on paper, I wanted to observe a chaotic system emerge as a real signal.
+          </p>
+          <p>
+            The result is a project that sits between mathematics, nonlinear systems, and analog engineering. It uses the language of trajectories, feedback, and state-space behavior to turn abstract dynamics into something visible on a screen and buildable on a board.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#attractor">See the animation</a>
+            <a class="btn btn-secondary" href="#hardware">View circuit section</a>
+          </div>
+          <div class="stats" aria-label="project highlights">
+            <div class="stat">
+              <strong>Chaotic</strong>
+              <span>Deterministic but highly sensitive to initial conditions</span>
+            </div>
+            <div class="stat">
+              <strong>Analog</strong>
+              <span>Implemented as a physical circuit rather than a purely numerical plot</span>
+            </div>
+            <div class="stat">
+              <strong>Visual</strong>
+              <span>Trajectory rendered like an oscilloscope trace to reveal state evolution</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="card oscilloscope" aria-labelledby="oscilloscope-title">
+          <div class="scope-top">
+            <strong id="oscilloscope-title">Live attractor view</strong>
+            <div class="scope-badges">
+              <span class="scope-badge">XY projection</span>
+              <span class="scope-badge">Phosphor trail</span>
+              <span class="scope-badge">Lorenz system</span>
+            </div>
+          </div>
+          <div class="scope-screen">
+            <canvas id="lorenzCanvas"></canvas>
+            <div class="scope-label">Oscilloscope-style trajectory</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="container">
+        <div class="section-head">
+          <span class="mini-title">Project overview</span>
+          <h2>From equations to visible behavior</h2>
+          <p>
+            The Lorenz Attractor is a classic example of how a simple system of coupled differential equations can generate behavior that is structured, bounded, and yet never exactly repeating. That combination is what makes it so compelling: it is not random noise, but it also refuses to settle into a fixed cycle.
+          </p>
+        </div>
+        <div class="two-col">
+          <article class="card info-card">
+            <h3>Why this project matters</h3>
+            <ul class="bullet-list">
+              <li>
+                <strong>It makes nonlinear dynamics tangible.</strong>
+                Instead of only discussing chaos in theory, the project turns mathematical behavior into an observable electrical signal.
+              </li>
+              <li>
+                <strong>It links math and hardware.</strong>
+                State variables, feedback loops, and parameter tuning become design decisions in a real electronic system.
+              </li>
+              <li>
+                <strong>It highlights engineering interpretation.</strong>
+                The interesting question is not only whether the attractor exists, but how circuit non-idealities, component values, and layout affect the observed trajectory.
+              </li>
+            </ul>
+          </article>
+          <article class="card info-card">
+            <h3>Core project idea</h3>
+            <p>
+              The Lorenz system is often written in terms of three evolving state variables. When those variables are coupled with the right parameters, the system traces a folded, butterfly-like shape in phase space. In a circuit implementation, that means using analog building blocks to reproduce the same underlying relationships and then observing the resulting motion through measured voltages.
+            </p>
+            <p>
+              This project therefore combines conceptual modelling, circuit realization, and experimental visualization into a single narrative: understand the system, build it, and then verify that the hardware still expresses the expected chaotic structure.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="attractor">
+      <div class="container">
+        <div class="section-head">
+          <span class="mini-title">Attractor</span>
+          <h2>What is an attractor, and what is special about the Lorenz Attractor?</h2>
+          <p>
+            In dynamical systems, an attractor is a set of states toward which a system tends to evolve over time. Some attractors are simple, such as a fixed point or a periodic loop. The Lorenz Attractor is different: it is a strange attractor, meaning that trajectories remain confined within a bounded region while showing aperiodic, highly intricate motion.
+          </p>
+        </div>
+        <div class="concept-grid">
+          <article class="card concept-card">
+            <h3>Bounded but non-repeating</h3>
+            <p>
+              The motion does not diverge to infinity, yet it also does not collapse into a single equilibrium or a clean repeating orbit. The trajectory keeps folding back into a recognizable overall shape while never exactly retracing itself.
+            </p>
+          </article>
+          <article class="card concept-card">
+            <h3>Sensitive dependence</h3>
+            <p>
+              Very small differences in initial conditions can produce dramatically different long-term trajectories. This is the classic hallmark of chaos and the reason long-term prediction becomes difficult even when the system is deterministic.
+            </p>
+          </article>
+          <article class="card concept-card">
+            <h3>Structure inside apparent disorder</h3>
+            <p>
+              The system looks irregular at first glance, but it is not arbitrary. Its motion reveals geometry, folding, stretching, and repeated state-space patterns. That hidden order is what makes chaotic systems scientifically rich.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="hardware">
+      <div class="container">
+        <div class="section-head">
+          <span class="mini-title">Hardware implementation</span>
+          <h2>Circuit and PCB representation</h2>
+          <p>
+            Replace the placeholders below with your own schematic and PCB images. The layout is already prepared so the page will look complete once you add the image files to your project folder.
+          </p>
+        </div>
+        <div class="two-col">
+          <article class="card image-card">
+            <h3>Circuit schematic</h3>
+            <div class="image-frame placeholder">
+              <div>
+                <strong>Add your schematic image here</strong>
+                <p style="margin-top:0.6rem; margin-bottom:0;">
+                  Suggested file path:<br />
+                  <code>img/lorenz-schematic.png</code>
+                </p>
+              </div>
+            </div>
+            <p class="image-caption">
+              This section can briefly explain the major functional blocks, such as integrator stages, feedback paths, multipliers, or any parameter-setting components you want to highlight.
+            </p>
+          </article>
+
+          <article class="card image-card">
+            <h3>PCB or board layout</h3>
+            <div class="image-frame placeholder">
+              <div>
+                <strong>Add your PCB image here</strong>
+                <p style="margin-top:0.6rem; margin-bottom:0;">
+                  Suggested file path:<br />
+                  <code>img/lorenz-pcb.png</code>
+                </p>
+              </div>
+            </div>
+            <p class="image-caption">
+              You can use this section to discuss physical realization: component placement, signal routing, noise considerations, debugging observations, or how the final board differed from early prototypes.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container two-col">
+        <article class="card info-card">
+          <span class="mini-title">Suggested engineering notes</span>
+          <h2>What this build demonstrates</h2>
+          <ul class="bullet-list">
+            <li>
+              <strong>Model translation.</strong>
+              A mathematical system becomes a circuit architecture through interpretation, approximation, and parameter selection.
+            </li>
+            <li>
+              <strong>Experimental validation.</strong>
+              The observed waveform is used not just as a pretty pattern but as evidence that the implemented dynamics match the intended qualitative behavior.
+            </li>
+            <li>
+              <strong>Design iteration.</strong>
+              Real hardware introduces practical issues such as tolerance, saturation, drift, bandwidth limits, and layout effects, which means the project becomes an exercise in both theory and debugging.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card timeline-card">
+          <span class="mini-title">Possible process story</span>
+          <h2>A good narrative for this page</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">01</div>
+              <div>
+                <h3>Understand the system</h3>
+                <p>Start from the Lorenz equations and identify what makes the trajectory chaotic rather than periodic.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">02</div>
+              <div>
+                <h3>Simulate before building</h3>
+                <p>Use simulation to verify that chosen parameters can generate the expected attractor-like motion.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-year">03</div>
+              <div>
+                <h3>Build and refine</h3>
+                <p>Prototype the circuit, observe deviations, and tune the implementation until the hardware behavior is clear and stable enough to analyze.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="applications">
+      <div class="container">
+        <div class="section-head">
+          <span class="mini-title">Applications</span>
+          <h2>Why chaotic systems matter beyond a classroom demonstration</h2>
+          <p>
+            Chaotic systems are interesting not only because they look beautiful, but because they reveal how complex behavior can emerge from compact rules. Studying them helps build intuition for nonlinear control, modelling, signal behavior, and the limits of prediction.
+          </p>
+        </div>
+        <div class="application-grid">
+          <article class="card application-card">
+            <h3>Secure communication and signal masking</h3>
+            <p>
+              Chaotic waveforms have been explored for communication schemes and signal hiding because they can appear noise-like while still being generated deterministically.
+            </p>
+          </article>
+          <article class="card application-card">
+            <h3>Nonlinear system education</h3>
+            <p>
+              A hardware attractor is a powerful teaching tool. It helps connect differential equations, phase portraits, bifurcation ideas, and analog electronics in one experiment.
+            </p>
+          </article>
+          <article class="card application-card">
+            <h3>Sensing, modelling, and prediction limits</h3>
+            <p>
+              Chaotic dynamics provide a natural setting for studying sensitivity, robustness, and how uncertainty propagates in real systems.
+            </p>
+          </article>
+          <article class="card application-card">
+            <h3>Creative technology and visualization</h3>
+            <p>
+              Because attractors are both mathematically meaningful and visually striking, they are also used in interactive visual art, generative systems, and data-driven installations.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="future">
+      <div class="container two-col">
+        <article class="card info-card">
+          <span class="mini-title">Future directions</span>
+          <h2>Where this project can go next</h2>
+          <ul class="bullet-list">
+            <li>
+              <strong>Parameter exploration.</strong>
+              Add adjustable controls so the page can be paired with experiments showing how the attractor changes as system parameters vary.
+            </li>
+            <li>
+              <strong>Measured waveform integration.</strong>
+              Replace the simulated animation with data captured from the real circuit for an even stronger connection between hardware and visualization.
+            </li>
+            <li>
+              <strong>Comparison with related systems.</strong>
+              A natural extension is to compare the Lorenz system with other chaotic circuits and show how each produces a different geometry and engineering challenge.
+            </li>
+          </ul>
+        </article>
+
+        <article class="card info-card">
+          <span class="mini-title">Personal takeaway</span>
+          <h2>Why I chose to build this</h2>
+          <p>
+            What draws me to this project is that it sits at the boundary between abstraction and implementation. The Lorenz Attractor is often introduced as a mathematical symbol of chaos, but building it as a circuit turns it into an engineering problem: equations become components, geometry becomes waveform, and theory becomes something that can fail, drift, saturate, and then be improved.
+          </p>
+          <p>
+            That translation process is what makes the project meaningful. It is not only about reproducing a famous shape, but about understanding how engineering can make a complex idea physically real.
+          </p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="card footer-card">
+        <div>
+          <strong>Lorenz Attractor Circuit Project</strong><br />
+          <small>Supplementary project page linked from the main portfolio site.</small>
+        </div>
+        <small>Update the two image placeholders with your real schematic and PCB files.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('lorenzCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const lorenz = {
+      sigma: 10,
+      rho: 28,
+      beta: 8 / 3,
+      dt: 0.005,
+      x: 0.01,
+      y: 0,
+      z: 0,
+      points: []
+    };
+
+    const MAX_POINTS = 3600;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      drawBackground();
+    }
+
+    function stepLorenz() {
+      const { sigma, rho, beta, dt } = lorenz;
+      const dx = sigma * (lorenz.y - lorenz.x);
+      const dy = lorenz.x * (rho - lorenz.z) - lorenz.y;
+      const dz = lorenz.x * lorenz.y - beta * lorenz.z;
+
+      lorenz.x += dx * dt;
+      lorenz.y += dy * dt;
+      lorenz.z += dz * dt;
+
+      const scale = Math.min(width, height) * 0.018;
+      const px = width * 0.5 + lorenz.x * scale;
+      const py = height * 0.53 - (lorenz.z - 24) * scale * 0.78;
+
+      lorenz.points.push({ x: px, y: py });
+      if (lorenz.points.length > MAX_POINTS) lorenz.points.shift();
+    }
+
+    function drawBackground() {
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = '#02090d';
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.save();
+      ctx.strokeStyle = 'rgba(103,255,195,0.06)';
+      ctx.lineWidth = 1;
+      const grid = 28;
+      for (let x = 0; x <= width; x += grid) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= height; y += grid) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    function renderTrace() {
+      ctx.fillStyle = 'rgba(2, 9, 13, 0.09)';
+      ctx.fillRect(0, 0, width, height);
+
+      if (lorenz.points.length < 2) return;
+
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 1; i < lorenz.points.length; i++) {
+        const p0 = lorenz.points[i - 1];
+        const p1 = lorenz.points[i];
+        const t = i / lorenz.points.length;
+
+        ctx.strokeStyle = `rgba(103, 255, 195, ${0.04 + t * 0.72})`;
+        ctx.lineWidth = 0.7 + t * 2.1;
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        ctx.stroke();
+      }
+
+      const last = lorenz.points[lorenz.points.length - 1];
+      const glow = ctx.createRadialGradient(last.x, last.y, 0, last.x, last.y, 18);
+      glow.addColorStop(0, 'rgba(125, 231, 255, 0.95)');
+      glow.addColorStop(0.35, 'rgba(103, 255, 195, 0.35)');
+      glow.addColorStop(1, 'rgba(103, 255, 195, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(last.x, last.y, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function animate() {
+      for (let i = 0; i < 4; i++) stepLorenz();
+      renderTrace();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    for (let i = 0; i < 800; i++) stepLorenz();
+    drawBackground();
+    animate();
+  </script>
+</body>
+</html>
