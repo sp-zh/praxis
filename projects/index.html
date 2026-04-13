@@ -3,19 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects | Portfolio</title>
-  <meta
-    name="description"
-    content="Project index for portfolio site: CIV102 Bridge, Praxis I Morning Supplement Dispenser, Praxis II Filming, Lorenz Chaotic Circuit, and PID Control Demo."
-  />
+  <title>Projects | Praxis</title>
+  <meta name="description" content="Project index for Praxis site: CIV102 Bridge, Praxis I Morning Supplement Dispenser, Praxis II Filming." />
   <meta name="theme-color" content="#0b0f19" />
   <link rel="stylesheet" href="../style.css" />
 
   <style>
     /* Cover placeholders (no need to edit style.css) */
-    .proj-link { display: block; }
-
-    .proj-cover {
+    .proj-link{ display:block; }
+    .proj-cover{
       aspect-ratio: 16 / 9;
       border-radius: 16px;
       overflow: hidden;
@@ -24,21 +20,19 @@
       margin-bottom: 12px;
       position: relative;
     }
-
-    .proj-cover img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .proj-cover img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
     }
-
-    .cover-ph {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+    .cover-ph{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
       padding: 14px;
       color: var(--muted);
       font-weight: 800;
@@ -48,19 +42,19 @@
         radial-gradient(700px 380px at 90% 20%, rgba(140,255,214,.14), transparent 60%),
         var(--panel2);
     }
-
-    .cover-ph small {
-      display: block;
+    .cover-ph small{
+      display:block;
       margin-top: 6px;
       font-weight: 600;
       color: var(--muted);
       opacity: .9;
     }
 
-    .page-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    /* Small helpers */
+    .page-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
       margin-top: 12px;
     }
   </style>
@@ -76,7 +70,7 @@
   <header class="header">
     <div class="container nav">
       <a class="brand" href="../" aria-label="Home">
-        <span class="brand-dot"></span><span>portfolio</span>
+        <span class="brand-dot"></span><span>praxis</span>
       </a>
 
       <nav class="nav-links" aria-label="Primary">
@@ -101,7 +95,7 @@
         </p>
 
         <div class="chips">
-          <span class="chip">5 projects</span>
+          <span class="chip">3 projects</span>
           <span class="chip">covers in <code>assets/img/</code></span>
           <span class="chip">evidence-first</span>
         </div>
@@ -118,8 +112,6 @@
           <a class="q" href="./civ102-bridge.html">CIV102 Bridge</a>
           <a class="q" href="./praxis1-morning-supplement-dispenser.html">Praxis I Morning Supplement Dispenser</a>
           <a class="q" href="./praxis2-filming.html">Praxis II Filming</a>
-          <a class="q" href="./lorenz.html#top">Lorenz Chaotic Circuit</a>
-          <a class="q" href="./pid-control-demo.html">PID Control Demo</a>
         </div>
       </div>
     </div>
@@ -139,12 +131,9 @@
         <!-- CIV102 Bridge -->
         <a class="proj proj-link" href="./civ102-bridge.html" aria-label="Open CIV102 Bridge">
           <div class="proj-cover">
-            <img
-              src="../assets/img/civ102-bridge.jpg"
-              alt="CIV102 Bridge cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
+            <img src="../assets/img/civ102-bridge.jpg" alt="CIV102 Bridge cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
             <div class="cover-ph">
               CIV102 Bridge cover image
               <small>Place image at: assets/img/civ102-bridge.jpg</small>
@@ -157,11 +146,11 @@
           </div>
 
           <p class="muted">
-            Box girder design, iteration, testing evidence, and failure-mode reasoning.
+            Box girder design + iteration + testing evidence + failure-mode reasoning.
           </p>
 
           <ul class="list">
-            <li><strong>Focus:</strong> buckling risk, strength-to-weight ratio, constructibility</li>
+            <li><strong>Focus:</strong> buckling risk, strength-to-weight, constructibility</li>
             <li><strong>Artifacts:</strong> report, annotated figures</li>
           </ul>
 
@@ -171,18 +160,11 @@
         </a>
 
         <!-- Praxis I Morning Supplement Dispenser -->
-        <a
-          class="proj proj-link"
-          href="./praxis1-morning-supplement-dispenser.html"
-          aria-label="Open Praxis I Morning Supplement Dispenser"
-        >
+        <a class="proj proj-link" href="./praxis1-morning-supplement-dispenser.html" aria-label="Open Praxis I Morning Supplement Dispenser">
           <div class="proj-cover">
-            <img
-              src="../assets/img/praxis1.jpg"
-              alt="Praxis I cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
+            <img src="../assets/img/praxis1.jpg" alt="Praxis I cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
             <div class="cover-ph">
               Praxis I cover image
               <small>Place image at: assets/img/praxis1.jpg</small>
@@ -199,7 +181,7 @@
           </p>
 
           <ul class="list">
-            <li><strong>Focus:</strong> usability friction, time, steps, cleaning, and dorm constraints</li>
+            <li><strong>Focus:</strong> usability friction (time/steps/cleaning) and dorm constraints</li>
             <li><strong>Artifacts:</strong> final report, prototype</li>
           </ul>
 
@@ -211,12 +193,9 @@
         <!-- Praxis II Filming -->
         <a class="proj proj-link" href="./praxis2-filming.html" aria-label="Open Praxis II Filming">
           <div class="proj-cover">
-            <img
-              src="../assets/img/praxis2.jpg"
-              alt="Praxis II cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
+            <img src="../assets/img/praxis2.jpg" alt="Praxis II cover"
+                 onload="this.nextElementSibling.style.display='none';"
+                 onerror="this.style.display='none';" />
             <div class="cover-ph">
               Praxis II cover image
               <small>Place image at: assets/img/praxis2.jpg</small>
@@ -229,80 +208,12 @@
           </div>
 
           <p class="muted">
-            Accessible filming design for Pegasus, centered on stakeholder needs, creative control, and independent use.
+            Filming workflow + narrative structure + representation choices for an audience.
           </p>
 
           <ul class="list">
-            <li><strong>Focus:</strong> stakeholder-centered design</li>
+            <li><strong>Focus:</strong> stakeholder</li>
             <li><strong>Artifacts:</strong> showcase, prototype</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- Lorenz Chaotic Circuit -->
-        <a class="proj proj-link" href="./lorenz.html#top" aria-label="Open Lorenz Chaotic Circuit">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/lorenz.jpg"
-              alt="Lorenz Chaotic Circuit cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              Lorenz project cover image
-              <small>Place image at: assets/img/lorenz.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>Lorenz Chaotic Circuit</h3>
-            <span class="pill">nonlinear systems</span>
-          </div>
-
-          <p class="muted">
-            An interactive portfolio page exploring deterministic chaos, attractors, and the translation of equations into analog circuits.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> Lorenz system, circuit implementation, interactive visualization</li>
-            <li><strong>Artifacts:</strong> showcase page, visuals</li>
-          </ul>
-
-          <div class="proj-actions">
-            <span class="link">Open →</span>
-          </div>
-        </a>
-
-        <!-- PID Control Demo -->
-        <a class="proj proj-link" href="./pid-control-demo.html" aria-label="Open PID Control Demo">
-          <div class="proj-cover">
-            <img
-              src="../assets/img/pid-control-demo.jpg"
-              alt="PID Control Demo cover"
-              onload="this.nextElementSibling.style.display='none';"
-              onerror="this.style.display='none';"
-            />
-            <div class="cover-ph">
-              PID project cover image
-              <small>Place image at: assets/img/pid-control-demo.jpg</small>
-            </div>
-          </div>
-
-          <div class="proj-top">
-            <h3>PID Control Demo</h3>
-            <span class="pill">control systems</span>
-          </div>
-
-          <p class="muted">
-            An interactive PID simulator showing how proportional, integral, and derivative gains affect response, overshoot, and stability.
-          </p>
-
-          <ul class="list">
-            <li><strong>Focus:</strong> control intuition, parameter tuning, drone-inspired response</li>
-            <li><strong>Artifacts:</strong> simulator, demo page</li>
           </ul>
 
           <div class="proj-actions">
@@ -312,7 +223,7 @@
       </div>
 
       <div class="hint">
-        This page is a directory only. Detailed writeups live in each project page. Images are loaded from <code>assets/img/</code>.
+        This page is a directory only. Detailed writeups live in each project page. Images are loaded from <code>assets/img/</code> with no subfolders.
       </div>
     </section>
 
