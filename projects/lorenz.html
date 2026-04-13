@@ -7,14 +7,12 @@
   <style>
     :root {
       --bg: #061018;
-      --bg-2: #0b1620;
       --panel: rgba(10, 20, 29, 0.86);
       --panel-2: rgba(14, 27, 38, 0.92);
       --text: #ecfff8;
       --muted: #9fbcb1;
       --accent: #6affc9;
       --accent-2: #79dfff;
-      --line: rgba(255, 255, 255, 0.08);
       --shadow: 0 20px 46px rgba(0, 0, 0, 0.32);
       --radius: 22px;
       --max: 1200px;
@@ -135,7 +133,6 @@
 
     .hero-grid,
     .two-col,
-    .three-col,
     .split-grid {
       display: grid;
       gap: 1.25rem;
@@ -148,10 +145,6 @@
 
     .two-col {
       grid-template-columns: 1fr 1fr;
-    }
-
-    .three-col {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .split-grid {
@@ -197,8 +190,7 @@
     }
 
     .eyebrow,
-    .section-label,
-    .chip {
+    .section-label {
       display: inline-flex;
       align-items: center;
       gap: 0.45rem;
@@ -489,25 +481,14 @@
       object-fit: cover;
     }
 
+    .media-frame.diagram img,
+    .media-frame.diagram video {
+      object-fit: contain;
+      background: #091118;
+    }
+
     .media-frame.tall {
       min-height: 360px;
-    }
-
-    .media-frame.placeholder {
-      display: grid;
-      place-items: center;
-      padding: 1.1rem;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .media-frame.placeholder::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border-radius: 12px;
-      border: 1px dashed rgba(106, 255, 201, 0.24);
-      pointer-events: none;
     }
 
     .media-caption {
@@ -607,7 +588,6 @@
     @media (max-width: 1020px) {
       .hero-grid,
       .two-col,
-      .three-col,
       .split-grid,
       .media-grid,
       .compare-grid {
@@ -850,11 +830,8 @@ dz/dt = xy - b z</pre>
         <div class="media-grid" style="margin-bottom:1.25rem;">
           <article class="card media-card">
             <h3>Draft work and hand calculation</h3>
-            <div class="media-frame placeholder" data-file="assets/img/lorenz-handcalc-draft.png">
-              <div>
-                <strong>Place your draft image here</strong>
-                <p style="margin:0.55rem 0 0;">assets/img/lorenz-handcalc-draft.png</p>
-              </div>
+            <div class="media-frame diagram">
+              <img src="assets/img/lorenz-handcalc-draft.png" alt="Draft work and hand calculation" />
             </div>
             <p class="media-caption">
               Use this section to show handwritten derivations, parameter notes, early block relationships, or any intermediate reasoning that helped move the project from equations toward circuit form.
@@ -874,19 +851,13 @@ dz/dt = xy - b z</pre>
             </div>
             <div class="carousel-track" id="circuitCarousel">
               <article class="carousel-card">
-                <div class="media-frame placeholder" data-file="assets/img/lorenz-circuit-1.png">
-                  <div>
-                    <strong>Place your first circuit image here</strong>
-                    <p style="margin:0.55rem 0 0;">assets/img/lorenz-circuit-1.png</p>
-                  </div>
+                <div class="media-frame diagram">
+                  <img src="assets/img/lorenz-circuit-1.png" alt="Circuit diagram 1" />
                 </div>
               </article>
               <article class="carousel-card">
-                <div class="media-frame placeholder" data-file="assets/img/lorenz-circuit-2.png">
-                  <div>
-                    <strong>Place your second circuit image here</strong>
-                    <p style="margin:0.55rem 0 0;">assets/img/lorenz-circuit-2.png</p>
-                  </div>
+                <div class="media-frame diagram">
+                  <img src="assets/img/lorenz-circuit-2.png" alt="Circuit diagram 2" />
                 </div>
               </article>
             </div>
@@ -908,11 +879,8 @@ dz/dt = xy - b z</pre>
         <div class="two-col" style="margin-bottom:1.25rem;">
           <article class="card media-card">
             <h3>Main schematic overview</h3>
-            <div class="media-frame placeholder" data-file="assets/img/lorenz-schematic-overview.png">
-              <div>
-                <strong>Place your main schematic image here</strong>
-                <p style="margin:0.55rem 0 0;">assets/img/lorenz-schematic-overview.png</p>
-              </div>
+            <div class="media-frame diagram">
+              <img src="assets/img/lorenz-schematic-overview.png" alt="Main schematic overview" />
             </div>
             <p class="media-caption">
               This can serve as the clearest single-view summary of the full system architecture after earlier iterations were refined.
@@ -921,11 +889,8 @@ dz/dt = xy - b z</pre>
 
           <article class="card media-card">
             <h3>PCB CAD / board layout</h3>
-            <div class="media-frame placeholder" data-file="assets/img/lorenz-pcb-cad.png">
-              <div>
-                <strong>Place your PCB CAD image here</strong>
-                <p style="margin:0.55rem 0 0;">assets/img/lorenz-pcb-cad.png</p>
-              </div>
+            <div class="media-frame diagram">
+              <img src="assets/img/lorenz-pcb-cad.png" alt="Lorenz PCB CAD layout" />
             </div>
             <p class="media-caption">
               Use this section to highlight routing decisions, block organization, layout constraints, or the difference between conceptual design and physical board realization.
@@ -936,11 +901,10 @@ dz/dt = xy - b z</pre>
         <div class="two-col">
           <article class="card media-card">
             <h3>Oscilloscope video</h3>
-            <div class="media-frame tall placeholder" id="oscilloscopeVideoWrap" data-file="assets/video/lorenz-oscilloscope.mp4">
-              <div>
-                <strong>Place your oscilloscope video here</strong>
-                <p style="margin:0.55rem 0 0;">assets/video/lorenz-oscilloscope.mp4</p>
-              </div>
+            <div class="media-frame tall diagram">
+              <video controls muted loop playsinline>
+                <source src="assets/video/lorenz-oscilloscope.mp4" type="video/mp4" />
+              </video>
             </div>
             <p class="video-note">
               This is one of the strongest pieces of evidence on the page because it shows the physical system producing observable behavior rather than remaining only a theoretical or simulated construct.
@@ -1016,7 +980,6 @@ dz/dt = xy - b z</pre>
   </footer>
 
   <script>
-    // ---------- Interactive attractor canvas ----------
     const canvas = document.getElementById('lorenzCanvas');
     const ctx = canvas.getContext('2d');
     const resetBtn = document.getElementById('resetAttractorBtn');
@@ -1131,7 +1094,6 @@ dz/dt = xy - b z</pre>
 
     function setSystemButtonStyles() {
       Object.entries(systemButtons).forEach(([key, button]) => {
-        if (!button) return;
         button.style.background = key === state.system ? 'rgba(106, 255, 201, 0.16)' : 'rgba(0, 0, 0, 0.32)';
         button.style.borderColor = key === state.system ? 'rgba(106, 255, 201, 0.4)' : 'rgba(255, 255, 255, 0.12)';
       });
@@ -1301,7 +1263,6 @@ dz/dt = xy - b z</pre>
 
     initInteractiveAttractor();
 
-    // ---------- Horizontal carousel ----------
     const carousel = document.getElementById('circuitCarousel');
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
@@ -1316,45 +1277,6 @@ dz/dt = xy - b z</pre>
 
     nextBtn.addEventListener('click', () => {
       carousel.scrollBy({ left: carouselScrollAmount(), behavior: 'smooth' });
-    });
-
-    // ---------- Optional media placeholders ----------
-    function mountImagePlaceholder(frame) {
-      const file = frame.dataset.file;
-      const img = new Image();
-      img.loading = 'lazy';
-      img.alt = file;
-      img.src = file;
-      img.onload = () => {
-        frame.classList.remove('placeholder');
-        frame.innerHTML = '';
-        frame.appendChild(img);
-      };
-    }
-
-    document.querySelectorAll('.media-frame[data-file]').forEach((frame) => {
-      const file = frame.dataset.file;
-      if (file.toLowerCase().endsWith('.mp4')) return;
-      mountImagePlaceholder(frame);
-    });
-
-    const videoWrap = document.getElementById('oscilloscopeVideoWrap');
-    const videoPath = videoWrap.dataset.file;
-    const video = document.createElement('video');
-    video.controls = true;
-    video.muted = true;
-    video.loop = true;
-    video.playsInline = true;
-
-    const source = document.createElement('source');
-    source.src = videoPath;
-    source.type = 'video/mp4';
-    video.appendChild(source);
-
-    video.addEventListener('loadeddata', () => {
-      videoWrap.classList.remove('placeholder');
-      videoWrap.innerHTML = '';
-      videoWrap.appendChild(video);
     });
   </script>
 </body>
