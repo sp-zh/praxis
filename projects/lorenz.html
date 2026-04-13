@@ -732,15 +732,19 @@
             <canvas id="lorenzCanvas"></canvas>
             <div class="scope-ui">
               <div class="scope-badges">
-                <span class="scope-badge">XY / XZ phase projection</span>
+                <span class="scope-badge">Interactive phase portrait</span>
                 <span class="scope-badge">Continuous trace</span>
                 <span class="scope-badge">Manual reset only</span>
               </div>
               <div class="scope-actions">
+                <button class="scope-button" id="randomizeStartBtn" type="button">Change initial state</button>
+                <button class="scope-button" id="systemLorenzBtn" type="button">Lorenz</button>
+                <button class="scope-button" id="systemChuaBtn" type="button">Chua</button>
+                <button class="scope-button" id="systemChenBtn" type="button">Chen</button>
                 <button class="scope-button" id="resetAttractorBtn" type="button">Reset trace</button>
               </div>
             </div>
-            <div class="scope-label">Lorenz attractor</div>
+            <div class="scope-label" id="scopeSystemLabel">Lorenz attractor</div>
           </div>
         </aside>
       </div>
@@ -846,7 +850,7 @@ dz/dt = xy - b z</pre>
         <div class="media-grid" style="margin-bottom:1.25rem;">
           <article class="card media-card">
             <h3>Draft work and hand calculation</h3>
-            <div class="media-frame tall placeholder" data-file="img/lorenz-handcalc-draft.png">
+            <div class="media-frame placeholder" data-file="img/lorenz-handcalc-draft.png">
               <div>
                 <strong>Place your draft image here</strong>
                 <p style="margin:0.55rem 0 0;">img/lorenz-handcalc-draft.png</p>
@@ -872,29 +876,18 @@ dz/dt = xy - b z</pre>
               <article class="carousel-card">
                 <div class="media-frame placeholder" data-file="img/lorenz-circuit-1.png">
                   <div>
-                    <strong>Circuit diagram 1</strong>
+                    <strong>Place your first circuit image here</strong>
                     <p style="margin:0.55rem 0 0;">img/lorenz-circuit-1.png</p>
                   </div>
                 </div>
-                <p class="media-caption"><strong>View 1.</strong> Suggested use: early implementation, nonlinear core, or first full architecture.</p>
               </article>
               <article class="carousel-card">
                 <div class="media-frame placeholder" data-file="img/lorenz-circuit-2.png">
                   <div>
-                    <strong>Circuit diagram 2</strong>
+                    <strong>Place your second circuit image here</strong>
                     <p style="margin:0.55rem 0 0;">img/lorenz-circuit-2.png</p>
                   </div>
                 </div>
-                <p class="media-caption"><strong>View 2.</strong> Suggested use: revised coupling, cleaned schematic, or another subsystem view.</p>
-              </article>
-              <article class="carousel-card">
-                <div class="media-frame placeholder" data-file="img/lorenz-circuit-3.png">
-                  <div>
-                    <strong>Circuit diagram 3</strong>
-                    <p style="margin:0.55rem 0 0;">img/lorenz-circuit-3.png</p>
-                  </div>
-                </div>
-                <p class="media-caption"><strong>View 3.</strong> Suggested use: final implementation or the most complete circuit representation.</p>
               </article>
             </div>
           </article>
@@ -1023,35 +1016,141 @@ dz/dt = xy - b z</pre>
   </footer>
 
   <script>
-    // ---------- Lorenz attractor canvas ----------
+    // ---------- Interactive attractor canvas ----------
     const canvas = document.getElementById('lorenzCanvas');
     const ctx = canvas.getContext('2d');
     const resetBtn = document.getElementById('resetAttractorBtn');
+    const randomizeBtn = document.getElementById('randomizeStartBtn');
+    const systemButtons = {
+      lorenz: document.getElementById('systemLorenzBtn'),
+      chua: document.getElementById('systemChuaBtn'),
+      chen: document.getElementById('systemChenBtn')
+    };
+    const scopeSystemLabel = document.getElementById('scopeSystemLabel');
 
     let width = 0;
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let animationFrameId = null;
 
-    const lorenz = {
-      sigma: 10,
-      rho: 28,
-      beta: 8 / 3,
-      dt: 0.0048,
-      x: 0.01,
-      y: 0,
-      z: 0,
+    const state = {
+      system: 'lorenz',
+      values: { x: 0.01, y: 0, z: 0 },
       points: []
     };
 
     const MAX_POINTS = 9000;
 
-    function resetLorenzState() {
-      lorenz.x = 0.01;
-      lorenz.y = 0;
-      lorenz.z = 0;
-      lorenz.points = [];
+    const systems = {
+      lorenz: {
+        label: 'Lorenz attractor',
+        dt: 0.0048,
+        warmup: 1200,
+        seed: () => ({ x: 0.01, y: 0, z: 0 }),
+        randomSeed: () => ({
+          x: 0.01 + (Math.random() - 0.5) * 0.1,
+          y: (Math.random() - 0.5) * 0.1,
+          z: (Math.random() - 0.5) * 0.1
+        }),
+        derivative: ({ x, y, z }) => ({
+          dx: 10 * (y - x),
+          dy: x * (28 - z) - y,
+          dz: x * y - (8 / 3) * z
+        }),
+        project: ({ x, z }) => {
+          const scale = Math.min(width, height) * 0.018;
+          return {
+            px: width * 0.5 + x * scale,
+            py: height * 0.54 - (z - 24) * scale * 0.78
+          };
+        }
+      },
+      chua: {
+        label: 'Chua attractor',
+        dt: 0.0032,
+        warmup: 2200,
+        seed: () => ({ x: 0.15, y: 0, z: 0 }),
+        randomSeed: () => ({
+          x: 0.15 + (Math.random() - 0.5) * 0.18,
+          y: (Math.random() - 0.5) * 0.14,
+          z: (Math.random() - 0.5) * 0.14
+        }),
+        derivative: ({ x, y, z }) => {
+          const alpha = 15.6;
+          const beta = 28;
+          const m0 = -1.143;
+          const m1 = -0.714;
+          const h = m1 * x + 0.5 * (m0 - m1) * (Math.abs(x + 1) - Math.abs(x - 1));
+          return {
+            dx: alpha * (y - x - h),
+            dy: x - y + z,
+            dz: -beta * y
+          };
+        },
+        project: ({ x, z }) => {
+          const scale = Math.min(width, height) * 0.11;
+          return {
+            px: width * 0.5 + x * scale,
+            py: height * 0.52 - z * scale * 0.6
+          };
+        }
+      },
+      chen: {
+        label: 'Chen attractor',
+        dt: 0.0026,
+        warmup: 2000,
+        seed: () => ({ x: 0.1, y: 0, z: 0 }),
+        randomSeed: () => ({
+          x: 0.1 + (Math.random() - 0.5) * 0.14,
+          y: (Math.random() - 0.5) * 0.14,
+          z: (Math.random() - 0.5) * 0.14
+        }),
+        derivative: ({ x, y, z }) => {
+          const a = 35;
+          const b = 3;
+          const c = 28;
+          return {
+            dx: a * (y - x),
+            dy: (c - a) * x - x * z + c * y,
+            dz: x * y - b * z
+          };
+        },
+        project: ({ x, z }) => {
+          const scale = Math.min(width, height) * 0.028;
+          return {
+            px: width * 0.5 + x * scale,
+            py: height * 0.56 - (z - 18) * scale
+          };
+        }
+      }
+    };
+
+    function currentSystem() {
+      return systems[state.system];
+    }
+
+    function setSystemButtonStyles() {
+      Object.entries(systemButtons).forEach(([key, button]) => {
+        if (!button) return;
+        button.style.background = key === state.system ? 'rgba(106, 255, 201, 0.16)' : 'rgba(0, 0, 0, 0.32)';
+        button.style.borderColor = key === state.system ? 'rgba(106, 255, 201, 0.4)' : 'rgba(255, 255, 255, 0.12)';
+      });
+      scopeSystemLabel.textContent = currentSystem().label;
+    }
+
+    function assignSeed(seedValues) {
+      state.values = { ...seedValues };
+      state.points = [];
       drawScopeBackground();
+    }
+
+    function resetWithDefaultSeed() {
+      assignSeed(currentSystem().seed());
+    }
+
+    function randomizeInitialState() {
+      assignSeed(currentSystem().randomSeed());
+      for (let i = 0; i < 240; i++) stepSystemRK4();
     }
 
     function resizeCanvas() {
@@ -1065,48 +1164,40 @@ dz/dt = xy - b z</pre>
       drawScopeBackground();
     }
 
-    function lorenzDerivative(x, y, z) {
-      return {
-        dx: lorenz.sigma * (y - x),
-        dy: x * (lorenz.rho - z) - y,
-        dz: x * y - lorenz.beta * z
-      };
+    function derivativeFor(values) {
+      return currentSystem().derivative(values);
     }
 
-    function stepLorenzRK4() {
-      const dt = lorenz.dt;
-      const x = lorenz.x;
-      const y = lorenz.y;
-      const z = lorenz.z;
+    function stepSystemRK4() {
+      const cfg = currentSystem();
+      const dt = cfg.dt;
+      const s = state.values;
 
-      const k1 = lorenzDerivative(x, y, z);
-      const k2 = lorenzDerivative(
-        x + 0.5 * dt * k1.dx,
-        y + 0.5 * dt * k1.dy,
-        z + 0.5 * dt * k1.dz
-      );
-      const k3 = lorenzDerivative(
-        x + 0.5 * dt * k2.dx,
-        y + 0.5 * dt * k2.dy,
-        z + 0.5 * dt * k2.dz
-      );
-      const k4 = lorenzDerivative(
-        x + dt * k3.dx,
-        y + dt * k3.dy,
-        z + dt * k3.dz
-      );
+      const k1 = derivativeFor(s);
+      const k2 = derivativeFor({
+        x: s.x + 0.5 * dt * k1.dx,
+        y: s.y + 0.5 * dt * k1.dy,
+        z: s.z + 0.5 * dt * k1.dz
+      });
+      const k3 = derivativeFor({
+        x: s.x + 0.5 * dt * k2.dx,
+        y: s.y + 0.5 * dt * k2.dy,
+        z: s.z + 0.5 * dt * k2.dz
+      });
+      const k4 = derivativeFor({
+        x: s.x + dt * k3.dx,
+        y: s.y + dt * k3.dy,
+        z: s.z + dt * k3.dz
+      });
 
-      lorenz.x += (dt / 6) * (k1.dx + 2 * k2.dx + 2 * k3.dx + k4.dx);
-      lorenz.y += (dt / 6) * (k1.dy + 2 * k2.dy + 2 * k3.dy + k4.dy);
-      lorenz.z += (dt / 6) * (k1.dz + 2 * k2.dz + 2 * k3.dz + k4.dz);
+      s.x += (dt / 6) * (k1.dx + 2 * k2.dx + 2 * k3.dx + k4.dx);
+      s.y += (dt / 6) * (k1.dy + 2 * k2.dy + 2 * k3.dy + k4.dy);
+      s.z += (dt / 6) * (k1.dz + 2 * k2.dz + 2 * k3.dz + k4.dz);
 
-      const scale = Math.min(width, height) * 0.018;
-      const px = width * 0.5 + lorenz.x * scale;
-      const py = height * 0.54 - (lorenz.z - 24) * scale * 0.78;
-
-      lorenz.points.push({ x: px, y: py });
-      if (lorenz.points.length > MAX_POINTS) {
-        lorenz.points.shift();
+      const { px, py } = cfg.project(s);
+      state.points.push({ x: px, y: py });
+      if (state.points.length > MAX_POINTS) {
+        state.points.shift();
       }
     }
 
@@ -1138,16 +1229,16 @@ dz/dt = xy - b z</pre>
       ctx.fillStyle = 'rgba(2, 8, 13, 0.08)';
       ctx.fillRect(0, 0, width, height);
 
-      if (lorenz.points.length < 2) return;
+      if (state.points.length < 2) return;
 
       ctx.save();
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
 
-      for (let i = 1; i < lorenz.points.length; i++) {
-        const p0 = lorenz.points[i - 1];
-        const p1 = lorenz.points[i];
-        const t = i / lorenz.points.length;
+      for (let i = 1; i < state.points.length; i++) {
+        const p0 = state.points[i - 1];
+        const p1 = state.points[i];
+        const t = i / state.points.length;
         ctx.strokeStyle = `rgba(106, 255, 201, ${0.035 + t * 0.72})`;
         ctx.lineWidth = 0.65 + t * 1.9;
         ctx.beginPath();
@@ -1156,7 +1247,7 @@ dz/dt = xy - b z</pre>
         ctx.stroke();
       }
 
-      const last = lorenz.points[lorenz.points.length - 1];
+      const last = state.points[state.points.length - 1];
       const glow = ctx.createRadialGradient(last.x, last.y, 0, last.x, last.y, 18);
       glow.addColorStop(0, 'rgba(121, 223, 255, 0.95)');
       glow.addColorStop(0.35, 'rgba(106, 255, 201, 0.34)');
@@ -1168,34 +1259,47 @@ dz/dt = xy - b z</pre>
       ctx.restore();
     }
 
-    function animateLorenz() {
-      for (let i = 0; i < 5; i++) {
-        stepLorenzRK4();
-      }
+    function animateSystem() {
+      for (let i = 0; i < 5; i++) stepSystemRK4();
       drawTrace();
-      animationFrameId = requestAnimationFrame(animateLorenz);
+      animationFrameId = requestAnimationFrame(animateSystem);
     }
 
-    function initLorenz() {
-      resizeCanvas();
-      resetLorenzState();
-      for (let i = 0; i < 1200; i++) {
-        stepLorenzRK4();
+    function warmupSystem() {
+      for (let i = 0; i < currentSystem().warmup; i++) {
+        stepSystemRK4();
       }
+    }
+
+    function switchSystem(systemKey) {
+      state.system = systemKey;
+      setSystemButtonStyles();
+      resetWithDefaultSeed();
+      warmupSystem();
+    }
+
+    function initInteractiveAttractor() {
+      resizeCanvas();
+      setSystemButtonStyles();
+      resetWithDefaultSeed();
+      warmupSystem();
       drawScopeBackground();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      animateLorenz();
+      animateSystem();
     }
 
     resetBtn.addEventListener('click', () => {
-      resetLorenzState();
-      for (let i = 0; i < 300; i++) {
-        stepLorenzRK4();
-      }
+      resetWithDefaultSeed();
+      for (let i = 0; i < 240; i++) stepSystemRK4();
     });
 
+    randomizeBtn.addEventListener('click', randomizeInitialState);
+    systemButtons.lorenz.addEventListener('click', () => switchSystem('lorenz'));
+    systemButtons.chua.addEventListener('click', () => switchSystem('chua'));
+    systemButtons.chen.addEventListener('click', () => switchSystem('chen'));
     window.addEventListener('resize', resizeCanvas);
-    initLorenz();
+
+    initInteractiveAttractor();
 
     // ---------- Horizontal carousel ----------
     const carousel = document.getElementById('circuitCarousel');
